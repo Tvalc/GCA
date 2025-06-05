@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+COMPLETELY NEW FILE: GCA_FIX_VERSION.html
+CREATED ON: 2025-05-16 13:10
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>GCA Fixed Version</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #000;
+      color: #00ff00;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.8);
+      padding: 20px;
+      border: 1px solid #00ff00;
+    }
+    button {
+      background: #004400;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #006600;
+    }
+    .log {
+      background: #111;
+      border: 1px solid #333;
+      padding: 10px;
+      height: 200px;
+      overflow-y: auto;
+      margin-top: 20px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GCA Fixed Version Test</h1>
+    <p>This page is designed to help diagnose and fix the issues with keyboard movement and relic clicking.</p>
+    
+    <div>
+      <h2>Test Options</h2>
+      <button id="testKeyboard">Test Keyboard Input</button>
+      <button id="testRelics">Test Relic System</button>
+      <button id="loadOriginal">Load Original Game</button>
+    </div>
+    
+    <div class="log" id="log"></div>
+  </div>
+
+  <script>
+    // Logging function
+    function log(message) {
+      const logElem = document.getElementById('log');
+      const entry = document.createElement('div');
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logElem.appendChild(entry);
+      logElem.scrollTop = logElem.scrollHeight;
+      console.log(message);
+    }
+    
+    // Clear localStorage
+    localStorage.clear();
+    log('localStorage cleared');
+    
+    // Test keyboard input
+    document.getElementById('testKeyboard').addEventListener('click', () => {
+      log('Keyboard test started - press any key');
+      
+      // Create test area
+      const testArea = document.createElement('div');
+      testArea.style.width = '100px';
+      testArea.style.height = '100px';
+      testArea.style.background = 'red';
+      testArea.style.position = 'relative';
+      testArea.style.margin = '20px auto';
+      document.querySelector('.container').appendChild(testArea);
+      
+      const box = document.createElement('div');
+      box.style.width = '20px';
+      box.style.height = '20px';
+      box.style.background = 'white';
+      box.style.position = 'absolute';
+      box.style.left = '40px';
+      box.style.top = '40px';
+      testArea.appendChild(box);
+      
+      let x = 40;
+      let y = 40;
+      
+      // Add key listeners
+      document.addEventListener('keydown', (e) => {
+        log(`Key pressed: ${e.key}`);
+        
+        switch(e.key) {
+          case 'w':
+          case 'ArrowUp':
+            y = Math.max(0, y - 5);
+            break;
+          case 's':
+          case 'ArrowDown':
+            y = Math.min(80, y + 5);
+            break;
+          case 'a':
+          case 'ArrowLeft':
+            x = Math.max(0, x - 5);
+            break;
+          case 'd':
+          case 'ArrowRight':
+            x = Math.min(80, x + 5);
+            break;
+        }
+        
+        box.style.left = x + 'px';
+        box.style.top = y + 'px';
+      });
+    });
+    
+    // Test relic system
+    document.getElementById('testRelics').addEventListener('click', () => {
+      log('Relic test started');
+      
+      // Create relics container
+      const relicsContainer = document.createElement('div');
+      relicsContainer.style.display = 'flex';
+      relicsContainer.style.flexWrap = 'wrap';
+      relicsContainer.style.gap = '10px';
+      relicsContainer.style.margin = '20px 0';
+      document.querySelector('.container').appendChild(relicsContainer);
+      
+      // Sample relics
+      const relics = [
+        { id: 'relic1', name: 'Glitch Stick', level: 3, equipped: false },
+        { id: 'relic2', name: 'Mystery Orb', level: 2, equipped: false },
+        { id: 'relic3', name: 'Wand of Tests', level: 4, equipped: false }
+      ];
+      
+      // Create relic elements
+      relics.forEach(relic => {
+        const relicElem = document.createElement('div');
+        relicElem.style.border = `1px solid ${relic.equipped ? '#00ff00' : '#555'}`;
+        relicElem.style.padding = '10px';
+        relicElem.style.width = '150px';
+        relicElem.style.backgroundColor = relic.equipped ? 'rgba(0,255,0,0.2)' : 'transparent';
+        relicElem.style.cursor = 'pointer';
+        
+        relicElem.innerHTML = `
+          <div style="font-weight: bold">${relic.name}</div>
+          <div>Level: ${relic.level}</div>
+          <div style="color: ${relic.equipped ? '#00ff00' : '#aaa'}">
+            ${relic.equipped ? 'Equipped' : 'Click to equip'}
+          </div>
+        `;
+        
+        relicElem.addEventListener('click', () => {
+          log(`Clicked on relic: ${relic.name}`);
+          
+          // Reset all relics
+          relics.forEach(r => r.equipped = false);
+          
+          // Toggle this relic
+          relic.equipped = !relic.equipped;
+          
+          // Refresh the view
+          document.getElementById('testRelics').click();
+        });
+        
+        relicsContainer.appendChild(relicElem);
+      });
+    });
+    
+    // Load original game
+    document.getElementById('loadOriginal').addEventListener('click', () => {
+      log('Loading original game...');
+      setTimeout(() => {
+        window.location.href = 'GCAWorking.html';
+      }, 1000);
+    });
+    
+    // Initialization
+    log('Test page initialized');
+    log('Click a button above to start testing');
+  </script>
+</body>
+</html>
