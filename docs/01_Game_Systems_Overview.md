@@ -1,4 +1,4 @@
-# Glitter Cloud Adventure: Game Systems Overview
+# Glitter Cloud Adventure: Game Systems Overview V1
 
 ## Introduction
 
