@@ -1,4 +1,4 @@
-# Glitter Cloud Adventure: Story Overview
+# Glitter Cloud Adventure: Story Overview For Narrative
 
 ## Core Narrative
 
