@@ -1,4 +1,4 @@
-# Glitter Cloud Adventure: Game Systems Overview Test
+# Glitter Cloud Adventure: Game Systems Overview
 
 ## Introduction
 
