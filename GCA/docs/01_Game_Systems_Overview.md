@@ -1,4 +1,4 @@
-# Glitter Cloud Adventure: Game Systems Overview Tony v 
+# Glitter Cloud Adventure: Game Systems Overview Tony v
 
 ## Introduction
 
