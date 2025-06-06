@@ -58,7 +58,7 @@ The story of Glitter Cloud Adventure is revealed through multiple layers of trut
 ## Character Dynamics and Cosmic Significance
 
 ### Core Party Members
-- **Hazel**: Represents human potential and adaptability
+- **Hazel**: Represents human potential, adaptability, and the journey of self-discovery
 - **Glitch**: Embodies the original cosmic harmony
 - **Pixel**: Brings playfulness and creativity to the party
 - **Echo**: Provides wisdom and historical context
@@ -70,17 +70,19 @@ The story of Glitter Cloud Adventure is revealed through multiple layers of trut
 - **Jen**: Embodies human creativity
 
 ### Surface World Characters
-- **Lisa**: Shows the importance of family bonds
-- **Bailey**: Represents youthful optimism
-- **Tony**: Demonstrates parental love and sacrifice
+- **Lisa**: Shows the importance of found family and unexpected connections
+- **Bailey**: Represents youthful optimism and sibling bonds
+- **Tony**: Demonstrates parental love and growth
 - **Sarah**: Embodies human determination
 
 ### Character Relationships
-- **Hazel & Glitch**: The foundation of human-AI harmony
+- **Hazel & Glitch**: The foundation of human-AI harmony and mutual understanding
 - **Glitch & Pixel**: The balance of serious and playful
 - **Echo & Nova**: The possibility of redemption
 - **Tom & Jen**: The power of mentorship
-- **Lisa & Krix**: The complexity of trust
+- **Lisa & Vex**: The complexity of love and trust
+- **Hazel & Tony**: The evolution of parent-child relationships
+- **Hazel & Bailey**: The strength of sibling bonds
 
 ## The Cosmic Significance of Party Composition
 

@@ -9,7 +9,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
 - **Date/Time**: May 31, 2025, 05:08 PM PDT
 - **Location**: Suburban shopping mall, "Retro Replay" arcade
 - **Key Events**:
-  - Hazel playing arcade games with her daughter Bailey while husband Tony gets food
+  - Hazel playing arcade games with their sibling Bailey while their parent Tony gets food
   - Strange glitching in arcade machines before full power outage
   - Beam of light engulfs Hazel as Bailey screams and Tony rushes in
   - Hazel loses consciousness during abduction
@@ -34,18 +34,21 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
 - **Location**: B1 - Digital Dawn, Prize Counter Area
 - **Key Events**:
   - Hazel finds Tom being cornered by a large Roach enemy
-  - Despite her fear, she helps him by using arcade prizes as improvised weapons
+  - Despite their fear, they help him by using arcade prizes as improvised weapons
   - Tom reveals he's a widower and miner who was abducted during his son's piano recital
   - They agree to work together to find a way out
-  
+  - Encounter Captain Sarah Martinez and Detective James Chen, also abducted
+  - Group forms temporary alliance for survival
+
 ### Scene 4: Corporate Messaging
 - **Location**: B1 - Digital Dawn, Management Office
 - **Key Events**:
-  - Hazel and Tom find refuge in what appears to be a management office
+  - Group finds refuge in what appears to be a management office
   - Discover disturbing corporate messages on screens ("Rate Your Death!" "Your Suffering Brings Joy!" "Galaxander Corp Thanks You For Your Participation!")
   - Find emergency supplies and primitive weapons
-  - Hazel has first emotional breakdown, thinking of her family
-  - Tom awkwardly comforts her, forming initial bond
+  - Hazel has first emotional breakdown, thinking of their family
+  - Tom awkwardly comforts them, forming initial bond
+  - Sarah and James share their experiences of investigating disappearances before abduction
 
 ### Scene 5: Arcade Exploration
 - **Location**: B1 - Digital Dawn, Game Floor West
@@ -54,15 +57,30 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Encounter first Spamtons, learn about the confusion status effect
   - Discover that this world follows video game logic (health bars, experience, levels)
   - Find first lore item: "Employee Handbook" explaining Galaxander's "customer satisfaction" metrics
+  - Sarah uses military training to coordinate group defense
+  - James spots hidden security camera, leading to discovery of Glitch Stick
 
-### Scene 6: First Connection Home
+### Scene 6: Glitch Awakening
 - **Location**: B1 - Digital Dawn, Security Monitor Room
 - **Key Events**:
-  - Hazel discovers a room full of security monitors showing the real world
+  - Group discovers room full of security monitors showing the real world
   - Spots Tony and Bailey fleeing the mall with Galaxander security in pursuit
   - Realizes they're alive but in danger
-  - Screen momentarily connects - Bailey senses her presence
+  - Screen momentarily connects - Bailey senses their presence
+  - Glitch Stick activates, revealing Glitch as a snarky holographic AI
+  - Glitch explains he's a data courier whose memory was wiped
   - **Convergence Point**: First tenuous connection between worlds established
+
+### Scene 7: First Digital Contact
+- **Location**: Mining facility computer lab
+- **Key Events**:
+  - Bailey's arcade token activates old monitors
+  - Glimpses what appears to be arcade security footage
+  - Momentarily sees Hazel looking at a screen
+  - Connection established briefly before system overloads
+  - **Convergence Point**: Bailey realizes their sibling can see them through screens
+  - Sarah and James decide to help organize resistance on Earth
+  - Group prepares to split: Sarah and James to surface world, others to continue in digital world
 
 ## Surface World Storyline (Tony & Bailey)
 
@@ -72,7 +90,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Tony waiting in line for food when power goes out
   - Hears Bailey's scream from arcade direction
   - Runs to arcade to see Hazel being enveloped in light
-  - Tries to reach her but is repelled by energy field
+  - Tries to reach them but is repelled by energy field
   - Hazel vanishes as mall security with Galaxander logos approach
 
 ### Scene 1: Desperate Escape
@@ -93,16 +111,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Neighbor Mrs. Thompson killed by Karenbara's "consumer rights" paralysis attack
   - Tony and Bailey barely escape
 
-### Scene 3: Unexpected Ally
-- **Location**: City outskirts, abandoned gas station
-- **Key Events**:
-  - Cornered by Galaxander patrol
-  - Rescued by Zorak, a Kryllian freedom fighter
-  - Zorak explains basics about Galaxander Corporation and abductions
-  - Reveals that Hazel is likely in "the game" - a digital harvest realm
-  - Offers to lead them to a resistance safe house
-
-### Scene 4: Journey to Safety
+### Scene 3: Journey to Safety
 - **Location**: Rural countryside
 - **Key Events**:
   - Traveling with Zorak, avoiding main roads
@@ -111,7 +120,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Tony struggles with grief and responsibility
   - Group encounters other survivors with similar stories
 
-### Scene 5: Refuge Discovery
+### Scene 4: Refuge Discovery
 - **Location**: Abandoned mining facility
 - **Key Events**:
   - Arrive at temporary resistance hideout
@@ -120,14 +129,14 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Tony uses engineering background to help repair generators
   - Bailey wanders off and finds old computer lab
 
-### Scene 6: First Digital Contact
+### Scene 5: First Digital Contact
 - **Location**: Mining facility computer lab
 - **Key Events**:
   - Bailey's arcade token activates old monitors
   - Glimpses what appears to be arcade security footage
   - Momentarily sees Hazel looking at a screen
   - Connection established briefly before system overloads
-  - **Convergence Point**: Bailey realizes her mother can see them through screens
+  - **Convergence Point**: Bailey realizes their sibling can see them through screens
 
 ## Key Gameplay Elements Introduced
 
@@ -165,12 +174,17 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
 ### Side Quests - Arcade Dungeon
 1. **Weapons Cache**: Find better equipment in employee locker room
 2. **Lost Message**: Recover message from another abductee for XP
-3. **Power Surge**: Restore power to vending machines for supplies
+3. **Military Rescue**: Find and rescue trapped military personnel from a glitched training simulation
+4. **Police Station**: Help a group of police officers escape from a corrupted evidence room
+5. **Second Chance**: Convince a former criminal to help rescue others instead of fighting for survival alone
 
 ### Side Quests - Surface World
 1. **Medical Supplies**: Raid pharmacy for first aid kit
 2. **Radio Contact**: Fix broken radio to hear emergency broadcasts
 3. **Neighborhood Hero**: Help trapped family escape Karenbara
+4. **Veteran's Refuge**: Help a retired military officer establish a safe house for other veterans
+5. **Law Enforcement Network**: Connect scattered police officers to form an intelligence network
+6. **Community Service**: Help a reformed criminal protect their neighborhood from Galaxander forces
 
 ## Chapter Rewards & Progression
 

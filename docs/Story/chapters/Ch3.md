@@ -12,7 +12,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Party discovers passage to next zone through maintenance tunnels
   - Environment shifts from arcade theme to cloud/data center aesthetic
   - Brief tutorial on using FURY to unlock Glitch's abilities
-  - Hazel reflects on her family, using their memory as motivation
+  - Hazel reflects on their family, using their memory as motivation
 
 ### Scene 2: Cloud Storage
 - **Location**: B2 - Cloudy with Data, Server Farm
@@ -68,7 +68,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Party learns how to convert FURY into resources for real world
   - Hazel sends healing data packets through portal
   - Receives message confirming receipt from "someone named Bailey"
-  - Emotional moment as Hazel realizes her daughter is alive and helping
+  - Emotional moment as Hazel realizes their sibling is alive and helping
   - Krix warns that extended connections risk detection by Galaxander
   - Portal stabilizes but remains limited in what can be transferred
 
@@ -80,7 +80,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Glitch's memory partially returns - recalls transporting important data before capture
   - Lisa theorizes that defeating bosses might allow them to reach game boundary
   - Party commits to pushing deeper into the system
-  - Hazel's resolve strengthens with the connection to her family
+  - Hazel's resolve strengthens with the connection to their family
 
 ## Surface World Storyline (Tony & Bailey)
 
@@ -127,7 +127,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Bailey's device suddenly activates during experiment
   - Receives fragmentary data packets from digital world
   - Technical team identifies them as healing algorithms
-  - Bailey recognizes signature pattern as her mother's work
+  - Bailey recognizes signature pattern as their sibling's work
   - Lena works to establish more stable connection
 
 ### Scene 6: Portal Development
@@ -146,7 +146,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Portal allows limited data and energy transfer
   - Healing algorithms from digital world applied to injured resistance members
   - Bailey sends message that transmits successfully to Hazel
-  - Emotional moment as Tony records brief message for Hazel
+  - Emotional moment as Tony records brief message for their child
   - Portal stability limited but functional
   - Zorak recognizes technology as similar to other survivor worlds
 
@@ -196,11 +196,17 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
 1. **Memory Fragments**: Help Glitch recover memory shards in data center
 2. **Alien Technology**: Help Krix repair damaged communication device
 3. **Homesick**: Find visual data of Earth to comfort party members
+4. **Elite Forces**: Rescue a team of elite military hackers trapped in a data encryption puzzle
+5. **Cyber Police**: Help a digital forensics team escape from a corrupted evidence database
+6. **Digital Redemption**: Help a former cybercriminal use their skills to protect the data center
 
 ### Side Quests - Surface World
 1. **Family Treasures**: Recover personal items from abandoned homes for refugees
 2. **Signal Booster**: Set up relay stations to extend resistance communication
 3. **Corporate Mole**: Determine if the defector can be trusted
+4. **Military Intelligence**: Help establish a military intelligence network using captured Galaxander tech
+5. **Police Network**: Connect scattered police departments to share information about Galaxander
+6. **Rehabilitation Center**: Help establish a program to rehabilitate former criminals into resistance fighters
 
 ## Chapter Rewards & Progression
 

@@ -458,11 +458,20 @@ This document outlines the core game systems, their responsibilities, and how th
 - Event triggering based on player actions
 - Achievement tracking
 
+**Quest System:**
+- All quests are given by Glitch, who acts as the player's guide
+- Glitch's memory fragments unlock new quests
+- Quest progression tied to Glitch's memory recovery
+- Quest rewards often help Glitch recover more memories
+- Quest dialogue reflects Glitch's snarky personality
+- Quest objectives often involve exploring areas Glitch remembers
+
 **Interactions:**
 - Receives location data from World System
 - Triggers cutscenes through UI System
 - Provides quest objectives to various systems
 - Reports story progress to unlock new content
+- Integrates with Glitch's memory system
 
 ### 10. Save System
 

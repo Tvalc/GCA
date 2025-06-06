@@ -186,13 +186,53 @@ Chapter 5 sees Hazel's party entering the Corporate Headquarters zone, where the
 
 ### Side Quests - Arcade Dungeon
 1. **Cosmic Archives**: Recover lost Architect knowledge
+   - Reward: Gains access to ancient cosmic technology blueprints
+   - Bonus: Resistance base gets advanced cosmic defense systems
+
 2. **Drone Network**: Help Protocol-7 contact other loyal drones
+   - Reward: Establishes network of loyal drones throughout corporate HQ
+   - Bonus: Reveals hidden corporate facilities and supply routes
+
 3. **Memory Fragments**: Find more of Glitch's past
+   - Reward: Unlocks new portal energy patterns
+   - Bonus: Increases portal stability by 25%
+
+4. **Elite Forces**: Rescue trapped special forces from a corrupted training simulation
+   - Reward: Gains access to advanced military tactics database
+   - Bonus: Resistance fighters get +20% combat effectiveness
+
+5. **Cyber Police**: Help digital forensics team recover corporate evidence
+   - Reward: Obtains detailed corporate security protocols
+   - Bonus: Reduces detection chance during missions by 30%
+
+6. **Digital Redemption**: Help former corporate hacker protect the archives
+   - Reward: Gains access to corporate backdoor systems
+   - Bonus: Unlocks special missions with unique corporate intel
 
 ### Side Quests - Surface World
 1. **Cosmic Technology**: Research ancient patterns
+   - Reward: Develops new cosmic-based weapons
+   - Bonus: All resistance weapons deal 25% more damage
+
 2. **Resistance Network**: Establish communication with other cells
+   - Reward: Creates global resistance communication network
+   - Bonus: Unlocks special missions from other resistance cells
+
 3. **Family History**: Recover personal items from home
+   - Reward: Strengthens family connection across dimensions
+   - Bonus: Portal connection becomes more stable during family interactions
+
+4. **Military Intelligence**: Help establish military command center
+   - Reward: Gains access to military satellite network
+   - Bonus: Reveals all Galaxander facilities within 100km
+
+5. **Police Network**: Connect with international law enforcement
+   - Reward: Establishes global early warning system
+   - Bonus: Resistance gets 24-hour advance notice of corporate movements
+
+6. **Rehabilitation Center**: Help establish criminal rehabilitation program
+   - Reward: Gains access to underground networks worldwide
+   - Bonus: Unlocks special missions with unique rewards and allies
 
 ## Chapter Rewards & Progression
 

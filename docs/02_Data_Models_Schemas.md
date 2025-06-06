@@ -2108,42 +2108,51 @@ Player: {
   title: "Find the Glitch Stick",
   description: "Locate the mysterious Glitch Stick in the Arcade Basement.",
   type: "main",                   // "main", "side", "repeatable"
-  giver: "glitch_guide",
-  giverDialogue: "dialogue_find_relic_start",
-  completionDialogue: "dialogue_find_relic_complete",
+  giver: "glitch",                // Always Glitch
+  giverDialogue: {
+    start: "dialogue_find_relic_start",
+    progress: "dialogue_find_relic_progress",
+    complete: "dialogue_find_relic_complete",
+    memoryFragment: "memory_fragment_relic"  // Memory fragment unlocked by quest
+  },
   objectives: [
     { 
       id: "explore_arcade_basement",
       type: "explore", 
       areaId: "arcade_basement",
-      description: "Explore the Arcade Basement"
+      description: "Explore the Arcade Basement",
+      glitchMemory: "memory_arcade_basement"  // Memory triggered by objective
     },
     { 
       id: "interact_glitch_pedestal",
       type: "interact", 
       objectId: "glitch_stick_pedestal",
-      description: "Examine the strange pedestal"
+      description: "Examine the strange pedestal",
+      glitchMemory: "memory_pedestal"
     },
     { 
       id: "collect_glitch_stick",
       type: "collect", 
       itemId: "glitch_stick", 
       count: 1,
-      description: "Obtain the Glitch Stick"
+      description: "Obtain the Glitch Stick",
+      glitchMemory: "memory_stick_collection"
     }
   ],
   rewards: [
     { type: "item", itemId: "healing_potion", count: 3 },
     { type: "experience", amount: 100 },
     { type: "currency", amount: 50 },
-    { type: "relic", relicId: "glitch_stick" }
+    { type: "relic", relicId: "glitch_stick" },
+    { type: "memory", memoryId: "glitch_memory_relic" }  // Memory fragment reward
   ],
   requiredLevel: 1,
   prerequisiteQuests: [],
   followupQuests: ["power_up_stick"],
   storylineRequirements: {
     chapter: 1,
-    scene: 2
+    scene: 2,
+    glitchMemoryLevel: 1  // Required Glitch memory level
   },
   expireConditions: {},         // Conditions under which quest expires
   failConditions: {}            // Conditions under which quest fails

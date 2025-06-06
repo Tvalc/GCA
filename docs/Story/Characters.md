@@ -13,14 +13,15 @@
 
 #### Hazel Brooks
 - **Role**: Main protagonist, reluctant hero
-- **Background**: 35, software engineer and mother of Bailey
-- **Appearance**: Athletic build, practical short hair with purple tips, utility clothing with makeshift armor pieces
+- **Background**: 35, software engineer and daughter of Tony
+- **Appearance**: Athletic build, practical short hair with purple tips, utility clothing with makeshift armor pieces, androgynous features
 - **Personality**: Analytical, resourceful, protective, occasionally sarcastic
-- **Motivation**: Return to her family (Tony and Bailey) on Earth
+- **Motivation**: Return to their family (Tony and Bailey) on Earth
 - **Special Abilities**: 
   - "Code Breaker": Can identify weaknesses in digital entities
   - "Maternal Instinct": Increased defense when protecting companions
 - **Character Arc**: From shocked victim to determined leader who understands the digital world's true nature
+- **Identity**: Nonbinary, uses they/them pronouns
 
 #### Glitch
 - **Role**: Digital guide, cosmic entity
@@ -33,6 +34,8 @@
   - "Digital Disruption": Creates temporary pathways through corrupted code
   - "Cosmic Harmony": Can temporarily restore balance to corrupted systems
 - **Character Arc**: From self-interested guide to committed ally as his memories of being Harmonia return
+- **Story Arc**: Found in Chapter 1 within the Glitch Stick, becomes permanent party member
+- **Party Availability**: Chapters 1-10
 
 ### Arcade Dungeon Characters
 
@@ -159,7 +162,7 @@
 ### Surface World Characters (Playable in Strategy Mode)
 
 #### Tony Brooks
-- **Role**: Resistance leader, Hazel's husband
+- **Role**: Resistance leader, Hazel's father
 - **Background**: 37, former military engineer
 - **Appearance**: Rugged, practical military surplus clothing, stress lines, determined eyes
 - **Personality**: Strategic, protective, occasionally reckless when family is concerned
@@ -194,8 +197,8 @@
   - "Battle Meditation": Improves defensive capabilities of nearby units
   - "Kryllian Technology": Access to advanced weapons and defense systems
 - **Character Arc**: From reluctant ally to invested mentor who sees Earth as his adopted home
-- **Story Arc**: Joins in Chapter 3, becomes crucial resistance leader
-- **Party Availability**: Chapters 3-10 (surface world)
+- **Story Arc**: Introduced in Chapter 1, becomes crucial resistance leader in Chapter 3
+- **Party Availability**: Chapters 1-10 (surface world)
 
 #### Lena Nakamura
 - **Role**: Corporate defector, intelligence specialist
@@ -207,8 +210,8 @@
   - "Inside Knowledge": Reveals information about corporate facilities
   - "Sabotage Expert": Enhanced ability to disable enemy systems
 - **Character Arc**: From distrusted outsider to valued team member who finds redemption
-- **Story Arc**: Joins in Chapter 4, becomes key resistance strategist
-- **Party Availability**: Chapters 4-10 (surface world)
+- **Story Arc**: Introduced in Chapter 2, becomes key resistance strategist in Chapter 4
+- **Party Availability**: Chapters 2-10 (surface world)
 
 ## Character Relationships and Dynamics
 
@@ -221,7 +224,7 @@
 - **Lyra & Vex**: Peace and war dynamic, learning from each other
 - **Krix & Lyra**: Ancient wisdom meets modern compassion
 - **Lisa & Vex**: Unlikely romance between human tech genius and alien warrior, tested by betrayal and redemption
-- **Hazel & Tony**: Long-distance love story across digital and physical worlds, strengthened by their shared mission
+- **Hazel & Tony**: Family across worlds, strengthened by their shared mission
 
 ### Love Stories and Betrayals
 
@@ -236,15 +239,16 @@
   - Betrayal comes from a place of love and protection rather than malice
   - Resolution involves combining Lisa's tech skills with Vex's warrior abilities
 
-#### Hazel & Tony: Love Across Worlds
-- **Beginning**: Separated by digital abduction, maintaining connection through Bailey
-- **Development**: Their love grows stronger through their shared mission to protect Earth
-- **Conflict**: Tony's growing connection with Lena Nakamura creates temporary tension
-- **Resolution**: Realize their love is strengthened by their individual growth and shared purpose
+#### Hazel & Tony: Family Across Worlds
+- **Beginning**: Parent and child separated by digital abduction, maintaining connection through Bailey
+- **Development**: Their bond grows stronger through their shared mission to protect Earth
+- **Conflict**: Tony's growing connection with Lena Nakamura creates temporary tension with Hazel
+- **Resolution**: Realize their family bond is strengthened by their individual growth and shared purpose
 - **Unique Elements**:
-  - Love story spans both digital and physical worlds
-  - Their daughter Bailey becomes the bridge between their worlds
-  - Their relationship evolves beyond traditional romance to cosmic partnership
+  - Family story spans both digital and physical worlds
+  - Their child/sibling Bailey becomes the bridge between their worlds
+  - Their relationship evolves beyond traditional family dynamics to cosmic partnership
+  - Tony's journey to understand and support Hazel's nonbinary identity becomes part of their bond
 
 ### Party Composition Effects
 - **Hazel + Glitch + Pixel**: Special cosmic awareness abilities

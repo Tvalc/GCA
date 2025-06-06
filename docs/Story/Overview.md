@@ -15,7 +15,7 @@ Glitter Cloud Adventure tells the story of a cosmic conflict that began with the
 ## Character Story Arcs
 
 ### Core Party Members
-- **Hazel**: Main protagonist, grows from victim to leader
+- **Hazel**: Main protagonist, grows from victim to leader, navigating their identity and cosmic purpose
 - **Glitch**: Cosmic entity recovering his identity as Harmonia
 
 ### Arcade Dungeon Characters
@@ -38,6 +38,7 @@ Glitter Cloud Adventure tells the story of a cosmic conflict that began with the
 - Digital vs physical reality
 - Corporate dystopia and resistance
 - Family bonds across dimensions
+- Identity and self-discovery
 - The price of technological advancement
 - The human cost of entertainment
 - Cosmic balance and corruption
@@ -55,7 +56,7 @@ The game follows a 10-chapter structure where events in one world directly impac
 - First encounters with Roaches and Spamtons
 - Tony and Bailey witness the abduction and escape initial danger
 - **Party Formation**: Hazel, Tom, Lisa join
-- **Convergence Point**: Hazel discovers her family can see her through arcade screens
+- **Convergence Point**: Hazel discovers their family can see them through arcade screens
 
 ### Chapter 2: Forming Alliances / Finding Refuge
 - Hazel meets Jen and forms core party
@@ -111,7 +112,7 @@ The game follows a 10-chapter structure where events in one world directly impac
 - Discovery of Harmony Splinter when Glitch Stick is nearly destroyed
 - Glitch's most intact memories and powers begin to manifest
 - **Party Changes**: Tom and Jen return, final party formations
-- **Convergence Point**: Family reunion across dimensional barrier
+- **Convergence Point**: Family reunion across dimensional barrier, Hazel and Tony's relationship strengthened through mutual understanding
 
 ### Chapter 10: Final Convergence / Ultimate Showdown
 - Breaching the Cyber Citadel and entering the Source Code Realm

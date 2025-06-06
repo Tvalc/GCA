@@ -26,7 +26,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
 - **Location**: B1 - Digital Dawn, High Score Lounge
 - **Key Events**:
   - Alarm sounds - enemies breaching safe zone perimeter
-  - In the chaos, Lisa's sister is separated from the group
+  - In the chaos, Lisa's sibling is separated from the group
   - Hazel, Tom, and Lisa fight together to secure a section of the lounge
   - Lisa's technical skills complement Hazel and Tom's more direct approach
   - Formal party formation with UI notification: "Party Formed!"
@@ -88,15 +88,20 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
   - Resistance needs supplies from abandoned research station
   - Tony volunteers for mission to prove his worth
   - Bailey insists on coming along, claiming her token can help
+  - Sarah and James arrive, bringing military and police expertise
+  - Sarah takes command of security operations
+  - James establishes intelligence network
 
 ### Scene 2: Supply Run Planning
 - **Location**: Mining Facility, Strategy Room
 - **Key Events**:
-  - Tony studies maps of research station with Zorak
+  - Tony studies maps of research station with Sarah and James
   - Bailey experiments with arcade token, discovering it reacts to technology
-  - Meet Lena, ex-Galaxander engineer, who recognizes token's significance
-  - Lena explains tokens are connection points between worlds
-  - Team assembled: Tony, Bailey, Zorak, Lena
+  - Meet Dr. Chen, a former Galaxander researcher who recognizes token's significance
+  - Dr. Chen explains tokens are connection points between worlds
+  - Team assembled: Tony, Bailey, Sarah, James, and two resistance fighters
+  - Sarah coordinates security for the mission
+  - James plans infiltration routes
 
 ### Scene 3: Journey to Research Station
 - **Location**: Suburban Wasteland
@@ -105,7 +110,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
   - Encounter Karenbara patrol, learn about paralysis effect
   - Zorak demonstrates combat prowess against corporate enemies
   - Bailey's token glows stronger as they approach research station
-  - Tony reflects on memories of Hazel, develops motivation
+  - Tony reflects on memories of their child Hazel, develops motivation
 
 ### Scene 4: Infiltrating the Station
 - **Location**: Abandoned Galaxander Research Station
@@ -118,9 +123,9 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
 ### Scene 5: The Secret Lab
 - **Location**: Research Station, Secure Laboratory
 - **Key Events**:
-  - Bailey and Lena discover dimensional research lab
+  - Bailey and Dr. Chen discover dimensional research lab
   - Find prototype communication device compatible with token
-  - Lena reveals she worked in "Doomsday Division: Customer Service"
+  - Dr. Chen reveals they worked in "Doomsday Division: Customer Service"
   - Explains Galaxander harvests human emotions through digital world
   - Alarm sounds - Galaxander security detected the group
 
@@ -188,11 +193,17 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
 1. **Lost Keepsake**: Find photo of Tom's son for emotional closure
 2. **System Hack**: Help Lisa access secret menu in arcade machine
 3. **Artistic Vision**: Help Jen recreate meaningful mural from Earth
+4. **Special Forces**: Rescue a squad of special forces soldiers trapped in a combat simulation
+5. **SWAT Team**: Help a SWAT team escape from a corrupted training scenario
+6. **Redemption Arc**: Help a former hacker use their skills to protect other survivors
 
 ### Side Quests - Surface World
 1. **Medical Emergency**: Find antibiotics for sick resistance member
 2. **Signal Boost**: Repair communication tower to extend resistance range
 3. **Memory Lane**: Recover family photos from Tony and Hazel's home
+4. **Military Outpost**: Help establish a forward operating base for military resistance
+5. **Police Precinct**: Secure and fortify a police station as a resistance safe house
+6. **Rehabilitation**: Help a former criminal gang establish a community defense force
 
 ## Chapter Rewards & Progression
 

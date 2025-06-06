@@ -1488,3 +1488,45 @@ The UI adjusts based on the device's resolution and aspect ratio:
 This UI design document outlines the complete user interface architecture for Glitter Cloud Adventure. The UI system prioritizes clarity, consistency, and immersion while supporting the game's dual-storyline structure. The component-based approach allows for modular development and easy updates as the game evolves.
 
 The next design document will cover the Combat System Design, detailing the mechanics of the dice-based combat system and how it integrates with character progression.
+
+### Quest UI
+
+#### Quest Log Screen
+- Quest list with categories (Main, Side, Completed)
+- Quest details panel
+- Quest progress tracking
+- Quest rewards preview
+- Glitch's memory fragment preview
+- Quest giver info (Glitch)
+- Quest dialogue history
+- Quest map markers
+
+#### Quest Details Panel
+- Quest title and description
+- Quest objectives list
+- Progress indicators
+- Reward preview
+- Glitch's memory fragment info
+- Quest giver portrait (Glitch)
+- Quest dialogue options
+- Quest map integration
+
+#### Quest Dialogue
+- Glitch's dialogue options
+- Quest acceptance/rejection
+- Quest progress updates
+- Quest completion dialogue
+- Memory fragment reveals
+- Quest hints and tips
+- Quest rewards collection
+- Quest follow-up options
+
+#### Quest Map
+- Quest location markers
+- Quest area boundaries
+- Quest path indicators
+- Quest objective locations
+- Glitch's memory fragment locations
+- Quest giver location (Glitch)
+- Quest completion zones
+- Quest reward collection points

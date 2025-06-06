@@ -193,13 +193,53 @@ Chapter 4 focuses on major confrontations in both worlds. In the arcade dungeon,
 
 ### Side Quests - Arcade Dungeon
 1. **Corrupted Data**: Help Glitch process memory fragments
+   - Reward: Unlocks new portal energy patterns for surface world weapons
+   - Bonus: Increases portal stability by 15%
+
 2. **Alien Communications**: Help Krix establish contact with other agents
+   - Reward: Gains access to Zyltharian technology blueprints
+   - Bonus: Resistance base gets advanced alien defense systems
+
 3. **System Optimization**: Find upgrade components in server architecture
+   - Reward: Improves data transfer efficiency
+   - Bonus: Reduces resource costs for portal operations by 20%
+
+4. **Military Network**: Rescue trapped military hackers from a data encryption puzzle
+   - Reward: Gains access to military-grade encryption protocols
+   - Bonus: Resistance communications become untraceable by Galaxander
+
+5. **Police Database**: Help digital forensics team recover evidence
+   - Reward: Obtains detailed maps of Galaxander facilities
+   - Bonus: Reveals hidden supply caches and safe routes
+
+6. **Digital Redemption**: Help former cybercriminal protect the data center
+   - Reward: Gains access to underground hacker network
+   - Bonus: Unlocks black market trading for rare resources
 
 ### Side Quests - Surface World
 1. **Medical Necessity**: Find specialized medicine for injured team member
+   - Reward: Establishes medical supply chain
+   - Bonus: Resistance members recover 25% faster from injuries
+
 2. **Token Enhancement**: Gather materials to boost Bailey's token capabilities
+   - Reward: Improves token's connection to digital world
+   - Bonus: Portal energy weapons deal 30% more damage
+
 3. **Safe House Network**: Establish civilian evacuation routes
+   - Reward: Creates network of safe houses
+   - Bonus: Reduces detection chance during missions by 20%
+
+4. **Military Intelligence**: Help establish military intelligence network
+   - Reward: Gains access to military satellite network
+   - Bonus: Reveals Galaxander patrol routes and schedules
+
+5. **Police Network**: Connect scattered police departments
+   - Reward: Establishes early warning system
+   - Bonus: Resistance gets advance notice of corporate movements
+
+6. **Rehabilitation Center**: Help establish criminal rehabilitation program
+   - Reward: Gains access to underground networks
+   - Bonus: Unlocks special missions with unique rewards
 
 ## Chapter Rewards & Progression
 

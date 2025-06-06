@@ -185,13 +185,53 @@ Chapter 6 takes Hazel's party into the chaotic Deep Web zone, where they encount
 
 ### Side Quests - Arcade Dungeon
 1. **Memory Recovery**: Help Glitch remember more
+   - Reward: Unlocks advanced portal energy patterns
+   - Bonus: Increases portal stability by 35%
+
 2. **Archive Protection**: Assist Mnemosyne
+   - Reward: Gains access to complete cosmic history database
+   - Bonus: Resistance gets advanced warning of corporate tactics
+
 3. **Cosmic History**: Learn about the original order
+   - Reward: Develops new cosmic-based defense systems
+   - Bonus: Resistance base becomes immune to corporate surveillance
+
+4. **Elite Forces**: Rescue trapped special forces from memory archives
+   - Reward: Gains access to advanced military strategy database
+   - Bonus: Resistance fighters get +30% combat effectiveness
+
+5. **Cyber Police**: Help digital forensics team recover evidence
+   - Reward: Obtains complete corporate security protocols
+   - Bonus: Reduces detection chance during missions by 40%
+
+6. **Digital Redemption**: Help former corporate hacker protect the archives
+   - Reward: Gains access to corporate core systems
+   - Bonus: Unlocks special missions with unique corporate intel
 
 ### Side Quests - Surface World
 1. **Supply Line Map**: Document corporate network
+   - Reward: Creates complete map of Galaxander's supply chain
+   - Bonus: Reveals all corporate facilities and supply routes
+
 2. **Technology Recovery**: Gather cosmic tech
+   - Reward: Develops advanced cosmic-based weapons
+   - Bonus: All resistance weapons deal 35% more damage
+
 3. **Resistance Network**: Strengthen connections
+   - Reward: Establishes global resistance coordination system
+   - Bonus: Unlocks special missions from international resistance cells
+
+4. **Military Intelligence**: Help establish global military command
+   - Reward: Gains access to worldwide military resources
+   - Bonus: Reveals all Galaxander facilities globally
+
+5. **Police Network**: Connect with international law enforcement
+   - Reward: Establishes global law enforcement alliance
+   - Bonus: Resistance gets 48-hour advance notice of corporate movements
+
+6. **Rehabilitation Center**: Help establish global rehabilitation program
+   - Reward: Gains access to worldwide underground networks
+   - Bonus: Unlocks special missions with unique rewards and allies
 
 ## Chapter Rewards & Progression
 
