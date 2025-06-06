@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Game Engine</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #181818;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #game-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            image-rendering: pixelated;
+        }
+        #debug-ui {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 14px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            z-index: 10;
+            font-family: monospace;
+            pointer-events: none;
+        }
+        #loading-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2em;
+            z-index: 100;
+            transition: opacity 0.3s;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <div id="loading-screen">
+            <div>Loading Game...</div>
+        </div>
+        <div id="debug-ui" style="display:none;"></div>
+    </div>
+    <script>
+    // --- Config ---
+    const GRID_SIZE = 32;
+    const PLAYER_COLOR = '#00ff00';
+    const WALL_COLOR = '#ff3333';
+    const FLOOR_COLOR = '#222';
+    const DEBUG_MODE = true;
+
+    // --- Game State ---
+    const GameState = {
+        INIT: 'INIT',
+        LOADING: 'LOADING',
+        PLAYING: 'PLAYING',
+        PAUSED: 'PAUSED',
+        GAME_OVER: 'GAME_OVER'
+    };
+
+    // --- Input Manager ---
+    class InputManager {
+        constructor() {
+            this.keys = new Set();
+            window.addEventListener('keydown', e => this.keys.add(e.key.toLowerCase()));
+            window.addEventListener('keyup', e => this.keys.delete(e.key.toLowerCase()));
+            window.addEventListener('blur', () => this.keys.clear());
+        }
+        isDown(key) {
+            return this.keys.has(key.toLowerCase());
+        }
+    }
+
+    // --- Entity ---
+    class Entity {
+        constructor(x, y, w, h, color) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.color = color;
+            this.vx = 0;
+            this.vy = 0;
+        }
+        getBounds() {
+            return {x: this.x, y: this.y, w: this.w, h: this.h};
+        }
+    }
+
+    // --- Player ---
+    class Player extends Entity {
+        constructor(x, y) {
+            super(x, y, GRID_SIZE, GRID_SIZE, PLAYER_COLOR);
+            this.speed = 200;
+        }
+        update(dt, input, collisionSystem) {
+            let vx = 0, vy = 0;
+            if (input.isDown('arrowup') || input.isDown('w')) vy -= 1;
+            if (input.isDown('arrowdown') || input.isDown('s')) vy += 1;
+            if (input.isDown('arrowleft') || input.isDown('a')) vx -= 1;
+            if (input.isDown('arrowright') || input.isDown('d')) vx += 1;
+            if (vx !== 0 && vy !== 0) { vx *= Math.SQRT1_2; vy *= Math.SQRT1_2; }
+            this.vx = vx * this.speed;
+            this.vy = vy * this.speed;
+            const oldX = this.x, oldY = this.y;
+            this.x += this.vx * dt;
+            this.y += this.vy * dt;
+            if (collisionSystem && collisionSystem.checkCollision(this)) {
+                this.x = oldX;
+                this.y = oldY;
+            }
+        }
+    }
+
+    // --- Collision System ---
+    class CollisionSystem {
+        constructor(map) {
+            this.map = map;
+        }
+        checkCollision(entity) {
+            const bounds = entity.getBounds();
+            const minX = Math.floor(bounds.x / GRID_SIZE);
+            const minY = Math.floor(bounds.y / GRID_SIZE);
+            const maxX = Math.floor((bounds.x + bounds.w - 1) / GRID_SIZE);
+            const maxY = Math.floor((bounds.y + bounds.h - 1) / GRID_SIZE);
+            for (let y = minY; y <= maxY; y++) {
+                for (let x = minX; x <= maxX; x++) {
+                    if (this.map[y] && this.map[y][x] === 1) return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    // --- Camera System ---
+    class Camera {
+        constructor(game) {
+            this.game = game;
+            this.x = 0;
+            this.y = 0;
+        }
+        update() {
+            const player = this.game.player;
+            const mapWidthPx = this.game.map[0].length * GRID_SIZE;
+            const mapHeightPx = this.game.map.length * GRID_SIZE;
+            const canvasW = this.game.canvas.width;
+            const canvasH = this.game.canvas.height;
+            // Center camera on player, clamp to map bounds
+            this.x = Math.max(0, Math.min(player.x + player.w/2 - canvasW/2, mapWidthPx - canvasW));
+            this.y = Math.max(0, Math.min(player.y + player.h/2 - canvasH/2, mapHeightPx - canvasH));
+        }
+    }
+
+    // --- Game Class ---
+    class Game {
+        constructor() {
+            this.state = GameState.INIT;
+            this.input = new InputManager();
+            this.canvas = document.getElementById('game-canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.entities = [];
+            this.player = null;
+            this.map = [];
+            this.collisionSystem = null;
+            this.lastTime = 0;
+            this.fps = 0;
+            this.frameCount = 0;
+            this.lastFpsUpdate = 0;
+            this.camera = new Camera(this);
+            this.resize();
+            window.addEventListener('resize', () => this.resize());
+        }
+        resize() {
+            const container = document.getElementById('game-container');
+            this.canvas.width = container.clientWidth;
+            this.canvas.height = container.clientHeight;
+        }
+        async init() {
+            this.state = GameState.LOADING;
+            await this.load();
+            this.state = GameState.PLAYING;
+            document.getElementById('loading-screen').classList.add('hidden');
+            this.loop(performance.now());
+        }
+        async load() {
+            // Generate a simple map: 20x15, walls around, some obstacles
+            const w = 20, h = 15;
+            this.map = Array.from({length: h}, (_, y) =>
+                Array.from({length: w}, (_, x) =>
+                    (x === 0 || y === 0 || x === w-1 || y === h-1) ? 1 : 0
+                )
+            );
+            // Add obstacles
+            this.map[5][5] = 1; this.map[5][6] = 1;
+            this.map[6][5] = 1; this.map[6][6] = 1;
+            this.collisionSystem = new CollisionSystem(this.map);
+            // Player
+            this.player = new Player(10 * GRID_SIZE, 10 * GRID_SIZE);
+            this.entities = [this.player];
+        }
+        loop(ts) {
+            requestAnimationFrame(ts2 => this.loop(ts2));
+            const dt = Math.min((ts - this.lastTime) / 1000, 0.1);
+            this.lastTime = ts;
+            this.update(dt);
+            this.render();
+            this.updateFps(ts);
+        }
+        update(dt) {
+            if (this.state !== GameState.PLAYING) return;
+            for (const e of this.entities) {
+                if (e.update) e.update(dt, this.input, this.collisionSystem);
+            }
+            this.camera.update();
+        }
+        render() {
+            // Clear
+            this.ctx.fillStyle = FLOOR_COLOR;
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            // Camera offset
+            const camX = this.camera.x;
+            const camY = this.camera.y;
+            // Draw map
+            for (let y = 0; y < this.map.length; y++) {
+                for (let x = 0; x < this.map[0].length; x++) {
+                    const screenX = x * GRID_SIZE - camX;
+                    const screenY = y * GRID_SIZE - camY;
+                    if (this.map[y][x] === 1) {
+                        this.ctx.fillStyle = WALL_COLOR;
+                        this.ctx.fillRect(screenX, screenY, GRID_SIZE, GRID_SIZE);
+                    }
+                    this.ctx.strokeStyle = '#333';
+                    this.ctx.lineWidth = 1;
+                    this.ctx.strokeRect(screenX, screenY, GRID_SIZE, GRID_SIZE);
+                }
+            }
+            // Draw entities
+            for (const e of this.entities) {
+                this.ctx.fillStyle = e.color;
+                this.ctx.fillRect(e.x - camX, e.y - camY, e.w, e.h);
+            }
+            // Debug UI
+            if (DEBUG_MODE) {
+                const debug = document.getElementById('debug-ui');
+                debug.style.display = 'block';
+                debug.innerHTML = `FPS: ${this.fps}<br>Position: ${Math.floor(this.player.x)}, ${Math.floor(this.player.y)}<br>State: ${this.state}<br>Entities: ${this.entities.length}`;
+            }
+        }
+        updateFps(ts) {
+            this.frameCount++;
+            if (ts - this.lastFpsUpdate > 1000) {
+                this.fps = this.frameCount;
+                this.frameCount = 0;
+                this.lastFpsUpdate = ts;
+            }
+        }
+    }
+
+    // --- Start Game ---
+    window.addEventListener('load', () => {
+        const game = new Game();
+        window.game = game;
+        game.init();
+    });
+    </script>
+</body>
+</html> 

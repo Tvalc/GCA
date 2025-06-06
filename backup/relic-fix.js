@@ -174,10 +174,10 @@ console.log('%c[CRITICAL FIX] Initializing emergency relic system override', 'co
           const glitchStick = {
             name: 'Glitch Stick',
             display_name: 'Glitch Stick',
-            description: 'A magical staff that gives the wielder control over the code of reality.',
-            slot: 'relic_1',
+            description: 'A mysterious artifact that seems to flicker between realities.',
+            slot: 'RELIC_1',
             equipped: true,
-            isRelic: true,  // Mark as relic
+            isRelic: true,
             stats: {
               strength: player.relics.glitchStick.level,
               dexterity: player.relics.glitchStick.level,
@@ -379,7 +379,7 @@ console.log('%c[CRITICAL FIX] Initializing emergency relic system override', 'co
     const glitchStick = {
       name: 'Glitch Stick',
       display_name: 'Glitch Stick',
-      description: 'A magical staff that gives the wielder control over the code of reality.',
+      description: 'A mysterious artifact that seems to flicker between realities.',
       slot: 'RELIC_1',
       equipped: true,
       isRelic: true,

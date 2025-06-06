@@ -1890,7 +1890,7 @@ Player: {
     },
     {
       level: 2,
-      name: "Basic Shop Access",
+      name: "Visit the Bodega",
       description: "+2 to all stats, summon your guide who will let you access a shop to buy and sell consumable items",
       furyRequired: 300,
       statBonus: { all: 2 },
@@ -1905,7 +1905,72 @@ Player: {
         }
       ]
     },
-    // Levels 3-6...
+    {
+      level: 3,
+      name: "Get to Work",
+      description: "+3 to all stats, access to receive and complete quests",
+      furyRequired: 400,
+      statBonus: { all: 3 },
+      abilities: [
+        {
+          id: "quest_system",
+          name: "Quest System",
+          type: "utility",
+          mpCost: 0,
+          cooldown: 0,
+          description: "Access the quest system to receive and complete quests."
+        }
+      ]
+    },
+    {
+      level: 4,
+      name: "Bodega Superstore",
+      description: "+4 to all stats, enhanced shop access",
+      furyRequired: 500,
+      statBonus: { all: 4 },
+      abilities: [
+        {
+          id: "enhanced_shop",
+          name: "Enhanced Shop",
+          type: "utility",
+          mpCost: 10,
+          cooldown: 30,
+          description: "Access an enhanced shop with better selection and prices."
+        }
+      ]
+    },
+    {
+      level: 5,
+      name: "Major Pain",
+      description: "+5 to all stats, conscripted enemies add a bonus to XP and Gold + upgraded when sent to the front line",
+      furyRequired: 600,
+      statBonus: { all: 5 },
+      abilities: [
+        {
+          id: "conscript_boost",
+          name: "Conscript Boost",
+          type: "passive",
+          description: "Conscripted enemies provide bonus XP and Gold, and are upgraded when deployed."
+        }
+      ]
+    },
+    {
+      level: 6,
+      name: "Guide's Blessing",
+      description: "+6 to all stats, heal party, restore MP, adds a bonus to all conscripted enemies",
+      furyRequired: 700,
+      statBonus: { all: 6 },
+      abilities: [
+        {
+          id: "guide_blessing",
+          name: "Guide's Blessing",
+          type: "active",
+          mpCost: 50,
+          cooldown: 300,
+          description: "Heal party, restore MP, and provide a bonus to all conscripted enemies."
+        }
+      ]
+    }
   ],
   masterBonus: {
     description: "All abilities from this relic remain available even when unequipped.",

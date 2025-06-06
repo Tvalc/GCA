@@ -1,4 +1,3 @@
-```
 ┌───────────────────────────────────────────────────────────────────────────────┐
 │                        COMPREHENSIVE LOOT SYSTEM (v1.0)                      │
 ├───────────────────────────────────────────────────────────────────────────────┤
@@ -313,18 +312,20 @@
 ┌───────────────────────────────────────────────────────────────────────────────┐
 │  GLITCH STICK (Relic)                                                       │
 ├───────────────────────────────────────────────────────────────────────────────┤
-│  A mysterious USB stick that contains... something.                         │
+│  A mysterious artifact that seems to flicker between realities.             │
 │  Max Level: 6 | Fury to Next Level: Varies by level                        │
 ├───────────────────────────────────────────────────────────────────────────────┤
 │  ABILITIES BY LEVEL:                                                         │
 │  • Lv.1: Reality Guide - +1 to all stats, summon your guide to give you a   │
 │           hint about what to do next                                        │
 │  • Lv.2: Visit the Bodega - +2 to all stats, access to buy/sell consumables │
-│  • Lv.3: Get to Work - +3 to all stats, access to recieve and complete quests │
-│  • Lv.4: Bodega Superstore - +4 to all stats, enhanced shop access         │
-│  • Lv.5: Major Pain - +5 to all stats, conscripted enemies add a bonus to XP and Gold + upgraded when sent to the front line │
-│  • Lv.6: Guide's Blessing - +6 to all stats, heal party, restore MP, adds a bonus to all conscripted enemies      │
-│                                                                                                                   │
+│  • Lv.3: Get to Work - +3 to all stats, access to buy/sell consumables,     │
+│           armor, and weapons                                                │
+│  • Lv.4: Bodega Superstore - +4 to all stats, access to buy/sell consumables,│
+│           armor, and weapons                                                │
+│  • Lv.5: Relic Fusion - +5 to all stats, fuse relic pieces together         │
+│  • Lv.6: Guide's Blessing - +6 to all stats, heal party and restore MP     │
+│           (once every 20 fights)                                           │
 └───────────────────────────────────────────────────────────────────────────────┘
 
 ### Relic System
