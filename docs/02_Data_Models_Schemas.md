@@ -2364,3 +2364,216 @@ Player: {
 These data models provide a comprehensive foundation for implementing all the major systems in Glitter Cloud Adventure. The schemas are designed to be flexible enough to handle the game's complex requirements while maintaining clear organization.
 
 As development progresses, these schemas may be refined or extended, but they serve as a solid starting point for implementing the core game systems. The next design document will cover the UI Flow & Screens, which will define the user experience and interface components.
+
+## Character System
+
+### Character Schema
+```javascript
+{
+  id: String,
+  name: String,
+  type: "player" | "enemy" | "npc",
+  role: String,
+  background: String,
+  appearance: {
+    sprite: String,
+    portrait: String,
+    animations: {
+      idle: String,
+      attack: String,
+      special: String,
+      hurt: String
+    }
+  },
+  stats: {
+    level: Number,
+    experience: Number,
+    strength: Number,
+    dexterity: Number,
+    vitality: Number,
+    intelligence: Number,
+    luck: Number,
+    cosmicAffinity: Number  // New stat for cosmic powers
+  },
+  abilities: [{
+    id: String,
+    name: String,
+    type: "active" | "passive" | "cosmic",
+    description: String,
+    cost: {
+      type: "mp" | "hp" | "cosmic",
+      amount: Number
+    },
+    effects: [{
+      type: String,
+      value: Number,
+      duration: Number
+    }],
+    cooldown: Number,
+    unlockLevel: Number
+  }],
+  relationships: [{
+    characterId: String,
+    level: Number,  // 0-100
+    type: "friendship" | "rivalry" | "mentorship" | "cosmic",
+    effects: [{
+      type: String,
+      value: Number
+    }]
+  }],
+  cosmicPowers: [{
+    id: String,
+    name: String,
+    description: String,
+    unlocked: Boolean,
+    level: Number,
+    effects: [{
+      type: String,
+      value: Number
+    }]
+  }],
+  partyStatus: {
+    isInParty: Boolean,
+    position: Number,  // 0-3 for active party members
+    formation: "front" | "back"
+  }
+}
+```
+
+### Party Schema
+```javascript
+{
+  id: String,
+  name: String,
+  maxSize: 4,  // Updated from 6 to 4
+  members: [{
+    characterId: String,
+    position: Number,  // 0-3
+    formation: "front" | "back"
+  }],
+  relationships: [{
+    character1Id: String,
+    character2Id: String,
+    level: Number,
+    type: String,
+    effects: [{
+      type: String,
+      value: Number
+    }]
+  }],
+  cosmicBalance: {
+    harmony: Number,  // 0-100
+    chaos: Number,    // 0-100
+    stability: Number // 0-100
+  },
+  formationBonuses: [{
+    type: String,
+    value: Number,
+    requirements: [{
+      characterId: String,
+      position: Number
+    }]
+  }]
+}
+```
+
+### Character Progression
+```javascript
+{
+  characterId: String,
+  level: Number,
+  experience: Number,
+  statPoints: Number,
+  skillPoints: Number,
+  cosmicPoints: Number,  // New resource for cosmic powers
+  unlockedAbilities: [String],
+  relationshipProgress: [{
+    characterId: String,
+    currentLevel: Number,
+    nextLevel: Number,
+    points: Number
+  }],
+  cosmicProgression: {
+    harmonyLevel: Number,
+    chaosLevel: Number,
+    stabilityLevel: Number,
+    unlockedPowers: [String]
+  }
+}
+```
+
+### Party Management
+```javascript
+{
+  activeParty: {
+    id: String,
+    members: [String],  // Character IDs
+    formation: "standard" | "offensive" | "defensive" | "cosmic",
+    bonuses: [{
+      type: String,
+      value: Number
+    }]
+  },
+  availableCharacters: [String],  // Character IDs
+  restPoints: [{
+    id: String,
+    location: String,
+    availableCharacters: [String]
+  }],
+  partyHistory: [{
+    timestamp: Date,
+    action: "swap" | "formation" | "rest",
+    details: {
+      characterIn: String,
+      characterOut: String,
+      position: Number
+    }
+  }]
+}
+```
+
+### Cosmic Power System
+```javascript
+{
+  characterId: String,
+  cosmicPowers: [{
+    id: String,
+    name: String,
+    type: "harmony" | "chaos" | "stability",
+    level: Number,
+    unlocked: Boolean,
+    effects: [{
+      type: String,
+      value: Number,
+      duration: Number
+    }],
+    requirements: {
+      harmonyLevel: Number,
+      chaosLevel: Number,
+      stabilityLevel: Number
+    }
+  }],
+  cosmicBalance: {
+    harmony: Number,
+    chaos: Number,
+    stability: Number
+  },
+  cosmicCombos: [{
+    id: String,
+    name: String,
+    characters: [String],
+    effects: [{
+      type: String,
+      value: Number
+    }],
+    requirements: {
+      relationshipLevel: Number,
+      cosmicBalance: {
+        harmony: Number,
+        chaos: Number,
+        stability: Number
+      }
+    }
+  }]
+}
+```

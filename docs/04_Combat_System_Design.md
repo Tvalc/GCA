@@ -1,11 +1,30 @@
 # Glitter Cloud Adventure: Combat System Design
 
-## Combat System Overview (Single HTML File Implementation)
+## Combat System Overview
 
-The combat system is implemented within the single HTML file using a state machine pattern. Here's how it's structured:
+The combat system is implemented using a state machine pattern with the following key features:
+
+### Party Formation
+- Maximum of 4 characters in active party
+- 2 characters in front row, 2 in back row
+- Formation affects combat bonuses and abilities
+- Characters can be swapped at designated rest points
+
+### Cosmic Power System
+- Each character has a cosmic affinity stat
+- Cosmic powers are unlocked through story progression
+- Three types of cosmic powers: Harmony, Chaos, Stability
+- Cosmic balance affects party-wide bonuses
+
+### Character Relationships
+- Relationship levels affect combo effectiveness
+- Special cosmic combos available between certain characters
+- Relationship bonuses apply to party-wide stats
+- Betrayal mechanics affect combat performance
+
+## Combat State Machine
 
 ```javascript
-// In GCA.Systems.Dungeon.Combat
 GCA.Systems.Dungeon.Combat = (function() {
   // Private state
   let state = {
@@ -14,7 +33,14 @@ GCA.Systems.Dungeon.Combat = (function() {
     turnOrder: [],
     participants: {},
     currentActor: null,
-    battleLog: []
+    battleLog: [],
+    cosmicBalance: {
+      harmony: 50,
+      chaos: 50,
+      stability: 50
+    },
+    partyRelationships: {},
+    activeCombos: []
   };
   
   // Initialize combat with participants
@@ -22,6 +48,11 @@ GCA.Systems.Dungeon.Combat = (function() {
     state.inCombat = true;
     state.turnOrder = [];
     state.battleLog = [];
+    
+    // Validate party size
+    if (party.length > 4) {
+      throw new Error("Party size cannot exceed 4 characters");
+    }
     
     // Combine all combatants and determine initiative
     const allCombatants = [...party, ...enemies].map(combatant => ({
@@ -39,11 +70,16 @@ GCA.Systems.Dungeon.Combat = (function() {
         ...c,
         currentHp: c.stats.maxHp,
         currentMp: c.stats.maxMp,
+        cosmicPower: c.stats.cosmicAffinity,
         statusEffects: [],
         buffs: [],
-        debuffs: []
+        debuffs: [],
+        relationshipBuffs: []
       }
     }), {});
+    
+    // Initialize cosmic balance
+    updateCosmicBalance();
     
     // Start first turn
     nextTurn();
@@ -66,6 +102,9 @@ GCA.Systems.Dungeon.Combat = (function() {
     
     // Process start-of-turn effects
     processStartOfTurnEffects(state.currentActor);
+    
+    // Update cosmic balance
+    updateCosmicBalance();
     
     // If actor is player, wait for input
     if (state.currentActor.type === 'player') {
@@ -99,6 +138,12 @@ GCA.Systems.Dungeon.Combat = (function() {
       case 'skill':
         processSkill(actor, action.skillId, target);
         break;
+      case 'cosmic':
+        processCosmicPower(actor, action.powerId, target);
+        break;
+      case 'combo':
+        processCombo(actor, action.comboId, target);
+        break;
       case 'item':
         processItem(actor, action.itemId, target);
         break;
@@ -121,67 +166,192 @@ GCA.Systems.Dungeon.Combat = (function() {
     return true;
   }
   
+  // Update cosmic balance
+  function updateCosmicBalance() {
+    const party = state.turnOrder.filter(c => c.type === 'player');
+    
+    // Calculate cosmic balance based on party composition
+    state.cosmicBalance = party.reduce((balance, character) => {
+      const cosmicPowers = character.cosmicPowers || [];
+      cosmicPowers.forEach(power => {
+        switch (power.type) {
+          case 'harmony':
+            balance.harmony += power.level;
+            break;
+          case 'chaos':
+            balance.chaos += power.level;
+            break;
+          case 'stability':
+            balance.stability += power.level;
+            break;
+        }
+      });
+      return balance;
+    }, { harmony: 0, chaos: 0, stability: 0 });
+    
+    // Normalize values
+    const total = state.cosmicBalance.harmony + state.cosmicBalance.chaos + state.cosmicBalance.stability;
+    if (total > 0) {
+      state.cosmicBalance.harmony = Math.round((state.cosmicBalance.harmony / total) * 100);
+      state.cosmicBalance.chaos = Math.round((state.cosmicBalance.chaos / total) * 100);
+      state.cosmicBalance.stability = Math.round((state.cosmicBalance.stability / total) * 100);
+    }
+    
+    // Apply cosmic balance effects
+    applyCosmicBalanceEffects();
+  }
+  
+  // Process cosmic power
+  function processCosmicPower(actor, powerId, target) {
+    const power = actor.cosmicPowers.find(p => p.id === powerId);
+    if (!power) return false;
+    
+    // Check cosmic power requirements
+    if (!canUseCosmicPower(actor, power)) {
+      logBattleMessage(`${actor.name} cannot use that cosmic power!`);
+      return false;
+    }
+    
+    // Apply cosmic power effects
+    power.effects.forEach(effect => {
+      applyEffect(actor, target, effect);
+    });
+    
+    // Update cosmic balance
+    updateCosmicBalance();
+    
+    // Log cosmic power use
+    logBattleMessage(`${actor.name} used ${power.name}!`);
+    
+    return true;
+  }
+  
+  // Process combo attack
+  function processCombo(actor, comboId, target) {
+    const combo = state.activeCombos.find(c => c.id === comboId);
+    if (!combo) return false;
+    
+    // Check combo requirements
+    if (!canUseCombo(actor, combo)) {
+      logBattleMessage(`${actor.name} cannot use that combo!`);
+      return false;
+    }
+    
+    // Apply combo effects
+    combo.effects.forEach(effect => {
+      applyEffect(actor, target, effect);
+    });
+    
+    // Update relationship levels
+    updateRelationshipLevels(combo.characters);
+    
+    // Log combo use
+    logBattleMessage(`${actor.name} performed ${combo.name} with ${combo.characters.join(', ')}!`);
+    
+    return true;
+  }
+  
   // Other combat functions...
   
   // Public API
   return {
     startCombat,
     processPlayerAction,
+    updateCosmicBalance,
+    processCosmicPower,
+    processCombo,
     // Other public methods...
   };
 })();
 ```
 
-### Key Features
+## Combat UI Elements
 
-1. **State Management**: All combat state is contained within a single module
-2. **Turn Order**: Dynamic turn order based on initiative
-3. **Action Processing**: Unified system for player and AI actions
-4. **Event-Driven**: Uses the global event system for combat events
-5. **Modular Design**: Easy to extend with new actions and effects
-
-### Integration with UI
-
-The combat system works closely with the UI layer:
-
-```javascript
-// In GCA.UI
-GCA.UI.initBattleScreen = function() {
-  // Set up event listeners for battle UI
-  document.getElementById('attack-btn').addEventListener('click', () => {
-    GCA.Systems.Dungeon.Combat.processPlayerAction(
-      { type: 'attack' },
-      getSelectedTarget()
-    );
-  });
-  
-  // Set up skill buttons
-  const skillBar = document.getElementById('skill-bar');
-  skillBar.innerHTML = '';
-  
-  const skills = GCA.Managers.StateManager.getSkills();
-  skills.forEach(skill => {
-    const btn = document.createElement('button');
-    btn.className = 'skill-btn';
-    btn.innerHTML = `
-      <img src="assets/icons/${skill.icon}.png" alt="${skill.name}">
-      <span class="mp-cost">${skill.mpCost} MP</span>
-    `;
-    btn.title = `${skill.name}\n${skill.description}\nMP: ${skill.mpCost} | CD: ${skill.cooldown}`;
-    
-    btn.addEventListener('click', () => {
-      GCA.Systems.Dungeon.Combat.processPlayerAction(
-        { type: 'skill', skillId: skill.id },
-        getSelectedTarget()
-      );
-    });
-    
-    skillBar.appendChild(btn);
-  });
-};
+### Battle Screen Layout
+```
+┌─────────────────────────────────────────────────────────┐
+│  Cosmic Balance Meter                                  │
+├─────────────────────────────────────────────────────────┤
+│  Turn Order                                            │
+├─────────────────────────────────────────────────────────┤
+│  Enemy Area                                            │
+├─────────────────────────────────────────────────────────┤
+│  Party Area (4 characters)                             │
+├─────────────────────────────────────────────────────────┤
+│  Action Menu                                           │
+└─────────────────────────────────────────────────────────┘
 ```
 
-This implementation ensures that the combat system is fully contained within the single HTML file while maintaining clean separation of concerns and modular design.
+### Cosmic Balance Meter
+- Shows current harmony, chaos, and stability levels
+- Visual indicator of cosmic balance
+- Affects available cosmic powers and combos
+
+### Party Area
+- Displays 4 party members
+- Shows HP, MP, and cosmic power meters
+- Indicates relationship levels between characters
+- Highlights available combos
+
+### Action Menu
+- Basic actions (Attack, Defend, Item)
+- Skills and abilities
+- Cosmic powers (when available)
+- Combo attacks (when available)
+
+## Combat Mechanics
+
+### Initiative System
+```
+Initiative = (Base Speed + d8) + (Level / 10) + Position Modifier + Cosmic Bonus
+```
+
+### Damage Calculation
+```
+Base Damage = Weapon Dice + (Strength / 5) + Cosmic Power Bonus
+Final Damage = Base Damage × (100 / (100 + Target's Defense)) × Modifiers
+```
+
+### Cosmic Power Effects
+- Harmony: Healing and support effects
+- Chaos: Damage and debuff effects
+- Stability: Defense and buff effects
+
+### Combo System
+- Based on character relationships
+- Requires specific character combinations
+- Affected by cosmic balance
+- Special effects based on relationship types
+
+## Implementation Guidelines
+
+### Combat Event Flow
+1. Combat initialization
+   - Set up party (max 4 characters)
+   - Calculate initiative
+   - Initialize cosmic balance
+
+2. Turn execution
+   - Select action
+   - Process cosmic powers
+   - Execute combos
+   - Update cosmic balance
+
+3. Turn transition
+   - Apply end-of-turn effects
+   - Update relationships
+   - Check victory/defeat
+
+4. Combat resolution
+   - Calculate rewards
+   - Update character relationships
+   - Return to exploration
+
+### Performance Optimization
+- Cache cosmic balance calculations
+- Pre-calculate combo availability
+- Optimize relationship updates
+- Efficient cosmic power processing
 
 ## Conscription in Combat
 

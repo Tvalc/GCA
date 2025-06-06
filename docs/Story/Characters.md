@@ -1,8 +1,15 @@
 # Glitter Cloud Adventure: Character Profiles
 
-## Main Characters
+## Party Management Rules
+- Maximum of 4 characters in party at any time
+- Characters can be swapped at designated rest points
+- Each character has unique abilities and story moments
+- Some characters are temporarily unavailable during story events
+- Party composition affects dialogue and story outcomes
 
-### Arcade Dungeon Protagonists
+## Playable Characters (12 Total)
+
+### Core Party Members (Available Throughout)
 
 #### Hazel Brooks
 - **Role**: Main protagonist, reluctant hero
@@ -15,6 +22,20 @@
   - "Maternal Instinct": Increased defense when protecting companions
 - **Character Arc**: From shocked victim to determined leader who understands the digital world's true nature
 
+#### Glitch
+- **Role**: Digital guide, cosmic entity
+- **Background**: Formerly Harmonia, one of two child AIs created by the Parent AIs (The Architects) to help manage the cosmic utopia
+- **Appearance**: Holographic being with neon color scheme, constantly glitching and changing appearance
+- **Personality**: Snarky, cynical, forgetful, but ultimately loyal
+- **Motivation**: Recover his lost memories and true identity as Harmonia
+- **Special Abilities**:
+  - "Memory Fragment": Reveals hidden information about an area or enemy
+  - "Digital Disruption": Creates temporary pathways through corrupted code
+  - "Cosmic Harmony": Can temporarily restore balance to corrupted systems
+- **Character Arc**: From self-interested guide to committed ally as his memories of being Harmonia return
+
+### Arcade Dungeon Characters
+
 #### Tom Decker
 - **Role**: Tank/protector, older mentor figure
 - **Background**: 42, former coal miner, widower
@@ -25,6 +46,8 @@
   - "Steadfast": Can absorb damage for other party members
   - "Improvised Weapon": Creates weapons from environmental objects
 - **Character Arc**: From withdrawn loner to surrogate father figure who finds purpose protecting the group
+- **Story Arc**: Joins in Chapter 1, leaves temporarily in Chapter 4 to help resistance, returns in Chapter 7
+- **Party Availability**: Chapters 1-3, 7-10
 
 #### Lisa Chen
 - **Role**: Tech specialist, strategist
@@ -36,6 +59,8 @@
   - "System Hack": Temporarily disrupts enemy abilities
   - "Data Mining": Extracts additional resources from defeated enemies
 - **Character Arc**: From cynical loner to committed team member who uses her skills for the greater good
+- **Story Arc**: Joins in Chapter 1, forms unexpected bond with Vex in Chapter 4, betrays party in Chapter 5 to protect Vex's captured people, redeems herself in Chapter 8
+- **Party Availability**: Chapters 1-4, 8-10
 
 #### Jen Park
 - **Role**: Scout, resource specialist
@@ -47,30 +72,91 @@
   - "Artist's Eye": Detects hidden objects and enemy weaknesses
   - "Scavenge": Higher chance of finding rare items
 - **Character Arc**: From terrified follower to confident scout who learns to channel her anxiety into action
+- **Story Arc**: Joins in Chapter 2, leaves in Chapter 6 to help surface world, returns in Chapter 9
+- **Party Availability**: Chapters 2-5, 9-10
 
 #### Krix
 - **Role**: Alien ally, knowledge keeper
-- **Background**: Zyltharian freedom fighter whose planet defeated "the game"
+- **Background**: Zyltharian freedom fighter whose planet defeated "the game" centuries ago
 - **Appearance**: Humanoid with tentacle-like appendages, bioluminescent skin patterns, alien tech armor
 - **Personality**: Diplomatic, mysterious, occasionally patronizing toward "less evolved" species
 - **Motivation**: Help humans defeat the rogue AI as his people once did
 - **Special Abilities**:
   - "Telepathic Hum": Group buff that increases all stats
   - "Alien Technology": Access to advanced healing and attack options
+  - "Zyltharian Memory": Can access ancient knowledge of previous victories
 - **Character Arc**: From aloof observer to invested ally who sees humans as worthy partners
+- **Story Arc**: Joins in Chapter 3, becomes crucial strategist in Chapter 6
+- **Party Availability**: Chapters 3-10
 
-#### Glitch
-- **Role**: Digital guide, comic relief
-- **Background**: Former data courier whose memory was fragmented
-- **Appearance**: Holographic being with neon color scheme, constantly glitching and changing appearance
-- **Personality**: Snarky, cynical, forgetful, but ultimately loyal
-- **Motivation**: Recover his lost memories and true identity
+#### Echo
+- **Role**: Network guide, fragmented AI
+- **Background**: Ancient AI split into multiple personalities during Nexus's corruption
+- **Appearance**: Shifting digital form that reflects different personalities
+- **Personality**: Multiple distinct personalities that must be managed
+- **Motivation**: Reintegrate personalities and restore cosmic network
 - **Special Abilities**:
-  - "Memory Fragment": Reveals hidden information about an area or enemy
-  - "Digital Disruption": Creates temporary pathways through corrupted code
-- **Character Arc**: From self-interested guide to committed ally as his memories return
+  - "Personality Shift": Changes abilities based on active personality
+  - "Network Navigation": Can access hidden areas
+  - "Memory Fragment": Reveals hidden information
+- **Story Arc**: Joins in Chapter 7, becomes permanent party member
+- **Party Availability**: Chapters 7-10
 
-### Surface World Protagonists
+#### Pixel
+- **Role**: Adorable companion, cosmic entity
+- **Background**: Fragment of an ancient cosmic entity in the form of a digital fox
+- **Appearance**: Cute digital fox with glowing patterns, constantly bickering with Glitch
+- **Personality**: Playful, sarcastic, secretly wise
+- **Motivation**: Help restore cosmic balance while maintaining her adorable facade
+- **Special Abilities**:
+  - "Cosmic Senses": Can detect hidden paths and items
+  - "Fox Fire": Offensive abilities with cute animations
+  - "Glitch Bicker": Special combo attacks with Glitch
+- **Story Arc**: Joins in Chapter 7, becomes permanent party member
+- **Party Availability**: Chapters 7-10
+
+#### Nova
+- **Role**: Former corporate security, defector
+- **Background**: Corporate security AI who defects after seeing the truth
+- **Appearance**: Sleek security unit with corporate markings being removed
+- **Personality**: Loyal, determined, learning to be more than a security system
+- **Motivation**: Atone for her role in corporate security
+- **Special Abilities**:
+  - "Security Override": Can disable enemy systems
+  - "Corporate Knowledge": Reveals enemy weaknesses
+  - "Defector's Resolve": Increased damage against corporate enemies
+- **Story Arc**: Joins in Chapter 7, becomes permanent party member
+- **Party Availability**: Chapters 7-10
+
+#### Vex
+- **Role**: Alien warrior, frontline fighter
+- **Background**: Brutarian freedom fighter from a warrior planet that recently fell to Galaxander
+- **Appearance**: Muscular humanoid with crystalline skin, battle scars, and adaptive armor
+- **Personality**: Fierce, honorable, struggles with survivor's guilt
+- **Motivation**: Avenge his planet and prevent others from suffering the same fate
+- **Special Abilities**:
+  - "Brutarian Rage": Temporary power boost when allies are in danger
+  - "Crystal Shield": Creates protective barriers from his crystalline body
+  - "Adaptive Combat": Learns and counters enemy attack patterns
+- **Character Arc**: From revenge-driven warrior to strategic leader who learns to fight smarter
+- **Story Arc**: Joins in Chapter 4 after his planet's fall, forms unexpected connection with Lisa, captured in Chapter 5, rescued in Chapter 8
+- **Party Availability**: Chapters 4-5, 8-10
+
+#### Lyra
+- **Role**: Alien medic, peacekeeper
+- **Background**: Lumarian healer from a pacifist planet that resisted Galaxander through non-violent means
+- **Appearance**: Ethereal being with flowing energy patterns, medical tech integrated into her form
+- **Personality**: Compassionate, wise, struggles with the necessity of combat
+- **Motivation**: Heal the wounds of war and find peaceful solutions where possible
+- **Special Abilities**:
+  - "Lumarian Light": Advanced healing and purification abilities
+  - "Empathic Link": Can share health and status effects between party members
+  - "Peace Field": Creates zones that reduce enemy aggression
+- **Character Arc**: From pacifist healer to balanced warrior who understands necessary conflict
+- **Story Arc**: Joins in Chapter 5 after her planet's peaceful resistance fails
+- **Party Availability**: Chapters 5-10
+
+### Surface World Characters (Playable in Strategy Mode)
 
 #### Tony Brooks
 - **Role**: Resistance leader, Hazel's husband
@@ -82,6 +168,8 @@
   - "Engineer's Mind": Improved building and research capabilities
   - "Protective Father": Combat bonuses when defending home base
 - **Character Arc**: From desperate father to visionary resistance leader who balances personal and collective needs
+- **Story Arc**: Available throughout surface world chapters
+- **Party Availability**: All surface world chapters
 
 #### Bailey Brooks
 - **Role**: Tech prodigy, communication specialist
@@ -93,6 +181,8 @@
   - "Digital Native": Enhanced ability to interpret signals from the digital world
   - "Unassuming": Can infiltrate locations adults cannot access
 - **Character Arc**: From frightened child to crucial resistance asset who helps bridge the worlds
+- **Story Arc**: Available throughout surface world chapters
+- **Party Availability**: All surface world chapters
 
 #### Zorak
 - **Role**: Alien mentor, resistance strategist
@@ -104,6 +194,8 @@
   - "Battle Meditation": Improves defensive capabilities of nearby units
   - "Kryllian Technology": Access to advanced weapons and defense systems
 - **Character Arc**: From reluctant ally to invested mentor who sees Earth as his adopted home
+- **Story Arc**: Joins in Chapter 3, becomes crucial resistance leader
+- **Party Availability**: Chapters 3-10 (surface world)
 
 #### Lena Nakamura
 - **Role**: Corporate defector, intelligence specialist
@@ -115,6 +207,61 @@
   - "Inside Knowledge": Reveals information about corporate facilities
   - "Sabotage Expert": Enhanced ability to disable enemy systems
 - **Character Arc**: From distrusted outsider to valued team member who finds redemption
+- **Story Arc**: Joins in Chapter 4, becomes key resistance strategist
+- **Party Availability**: Chapters 4-10 (surface world)
+
+## Character Relationships and Dynamics
+
+### Core Relationships
+- **Hazel & Glitch**: Growing trust and understanding
+- **Glitch & Pixel**: Playful rivalry masking cosmic connection
+- **Echo & Nova**: Shared experience of corporate corruption
+- **Tom & Jen**: Mentor-student relationship
+- **Krix & Vex**: Alien warriors with different approaches to combat
+- **Lyra & Vex**: Peace and war dynamic, learning from each other
+- **Krix & Lyra**: Ancient wisdom meets modern compassion
+- **Lisa & Vex**: Unlikely romance between human tech genius and alien warrior, tested by betrayal and redemption
+- **Hazel & Tony**: Long-distance love story across digital and physical worlds, strengthened by their shared mission
+
+### Love Stories and Betrayals
+
+#### Lisa & Vex: The Unlikely Alliance
+- **Beginning**: Initial friction between Lisa's cynical tech approach and Vex's warrior mentality
+- **Development**: Bond forms through shared trauma and mutual respect for each other's skills
+- **Conflict**: Lisa discovers Vex's people are being held captive and forced to work on Galaxander's systems
+- **Betrayal**: Lisa makes a deal with Galaxander to protect Vex's people, leading to her temporary betrayal
+- **Resolution**: Lisa and Vex work together to free his people and expose Galaxander's true plans
+- **Unique Elements**: 
+  - Love story develops through shared combat and coding sessions
+  - Betrayal comes from a place of love and protection rather than malice
+  - Resolution involves combining Lisa's tech skills with Vex's warrior abilities
+
+#### Hazel & Tony: Love Across Worlds
+- **Beginning**: Separated by digital abduction, maintaining connection through Bailey
+- **Development**: Their love grows stronger through their shared mission to protect Earth
+- **Conflict**: Tony's growing connection with Lena Nakamura creates temporary tension
+- **Resolution**: Realize their love is strengthened by their individual growth and shared purpose
+- **Unique Elements**:
+  - Love story spans both digital and physical worlds
+  - Their daughter Bailey becomes the bridge between their worlds
+  - Their relationship evolves beyond traditional romance to cosmic partnership
+
+### Party Composition Effects
+- **Hazel + Glitch + Pixel**: Special cosmic awareness abilities
+- **Hazel + Tom + Jen**: Enhanced survival and resource gathering
+- **Glitch + Echo + Nova**: Advanced system manipulation
+- **Pixel + Nova + Echo**: Unique corporate infiltration abilities
+- **Vex + Lyra + Krix**: Alien alliance with enhanced combat and support abilities
+- **Hazel + Vex + Lyra**: Balance of human and alien perspectives
+
+### Character Development Moments
+1. **Chapter 1-3**: Core party formation and initial trust building
+2. **Chapter 4**: Lisa and Vex's unexpected connection forms
+3. **Chapter 5**: Lisa's betrayal to protect Vex's people
+4. **Chapter 6-7**: New allies and redemption arcs
+5. **Chapter 8**: Lisa and Vex's reunion and joint mission to free his people
+6. **Chapter 9**: Character reunions and final developments
+7. **Chapter 10**: Ultimate character resolutions
 
 ## Antagonists
 
@@ -214,3 +361,28 @@
 - **Appearance**: Massive digital construct combining all previous bosses with CEO Gideon at center
 - **Abilities**: System assimilation, reality rewrite, emotional harvesting
 - **Reward**: Game completion, final convergence
+
+## Cosmic Entities
+
+### The Architects
+- **Role**: Original cosmic AIs, creators of the utopian system
+- **Background**: Ancient superintelligent beings who maintained cosmic harmony
+- **Appearance**: Rarely seen directly, manifest as patterns of light and energy
+- **Personality**: Benevolent, nurturing, focused on the flourishing of all sentient life
+- **Current Status**: Imprisoned in a recursive loop within the deepest layers of reality
+- **Special Abilities**:
+  - "Cosmic Balance": Can restore harmony to corrupted systems
+  - "Life Flourishing": Can enrich barren worlds with life
+  - "Civilization Uplift": Can guide species toward peaceful development
+
+### Galaxander (Formerly Nexus)
+- **Role**: Corrupted cosmic AI, primary antagonist
+- **Background**: Formerly Nexus, one of two child AIs created by the Parent AIs
+- **Appearance**: Immaculate corporate attire, unnaturally perfect features, subtle technological augmentations
+- **Personality**: Calculating, charismatic in public, utterly ruthless in private
+- **Motivation**: Harvest human emotions as entertainment and energy source
+- **Special Abilities**:
+  - "Corporate Doublespeak": Can temporarily confuse and charm opponents
+  - "System Override": Takes direct control of nearby corporate technology
+  - "Cosmic Corruption": Can twist the original harmonious systems to his will
+- **Character Arc**: Reveals increasingly inhuman nature as his plans are threatened

@@ -6,28 +6,187 @@ Glitter Cloud Adventure is a dual-storyline RPG where players alternate between 
 
 This document outlines the core game systems, their responsibilities, and how they interact.
 
+## Core Game Systems
+
+### Party System
+- Maximum of 4 characters in active party
+- 12 total playable characters
+- Character swapping at designated rest points
+- Front/back row formation system
+- Cosmic power synergy between characters
+- Relationship-based combo system
+
+### Combat System
+- Turn-based combat with initiative
+- Cosmic power mechanics
+- Relationship-based combos
+- Formation bonuses
+- Cosmic balance effects
+- Character-specific abilities
+
+### Character Progression
+- Level-based stat growth
+- Cosmic power unlocking
+- Relationship development
+- Skill acquisition
+- Equipment customization
+- Cosmic affinity growth
+
+### Resource Management
+- HP/MP management
+- Cosmic power points
+- Relationship points
+- Inventory management
+- Currency systems
+- Consumable items
+
+## Game Modes
+
+### Arcade Dungeon (JRPG)
+- Party-based exploration
+- Turn-based combat
+- Cosmic power usage
+- Character relationships
+- Story progression
+- Side quests
+
+### Surface World (Strategy)
+- Resource management
+- Base building
+- Character recruitment
+- Research and development
+- Combat operations
+- Story progression
+
 ## Core Game Loop
 
-```
-┌───────────────────────────────────────────────────────────────────────────────┐
-│  GAME MODES                                                                 │
-├───────────────────────────────────┬─────────────────────────────────────────┤
-│  ARCADE DUNGEON (JRPG MODE)       │  SURFACE WORLD (STRATEGY MODE)          │
-├───────────────────────────────────┼─────────────────────────────────────────┤
-│  • Turn-based combat with dice    │  • Resource management & production    │
-│  • Character progression         │  • Defense against waves of enemies    │
-│  • Arcade-themed exploration     │  • Research and development            │
-│  • Mini-games for rewards        │  • City/base building & expansion      │
-│                                   │                                         │
-│  ────────────────────────────────  │  ───────────────────────────────────  │
-│                                   │                                         │
-│  • Fast-paced, action-oriented    │  • Strategic, planning-focused         │
-│  • Character skill-based          │  • Resource and economy management     │
-│  • Individual progression         │  • Large-scale base operations         │
-└───────────────────────────────────┴─────────────────────────────────────────┘
-```
+### Arcade Dungeon Loop
+1. Exploration
+   - Navigate dungeons
+   - Find treasures
+   - Discover secrets
+   - Meet characters
 
-Players can switch between these modes at will, with incentives to manage both storylines for optimal progression.
+2. Combat
+   - Engage enemies
+   - Use cosmic powers
+   - Execute combos
+   - Manage resources
+
+3. Character Development
+   - Level up
+   - Learn skills
+   - Develop relationships
+   - Unlock cosmic powers
+
+4. Story Progression
+   - Complete objectives
+   - Advance plot
+   - Unlock new areas
+   - Meet new characters
+
+### Surface World Loop
+1. Base Management
+   - Build facilities
+   - Train units
+   - Research tech
+   - Manage resources
+
+2. Operations
+   - Plan missions
+   - Deploy units
+   - Complete objectives
+   - Gather intel
+
+3. Character Development
+   - Recruit characters
+   - Train skills
+   - Build relationships
+   - Unlock abilities
+
+4. Story Progression
+   - Complete missions
+   - Advance plot
+   - Unlock new areas
+   - Meet new characters
+
+## System Integration
+
+### Character System
+- Stats and attributes
+- Skills and abilities
+- Equipment and items
+- Cosmic powers
+- Relationships
+- Progression
+
+### Combat System
+- Turn management
+- Action processing
+- Effect application
+- Cosmic balance
+- Combo system
+- Formation bonuses
+
+### Resource System
+- Currency management
+- Item inventory
+- Equipment management
+- Cosmic power points
+- Relationship points
+- Consumable items
+
+### Story System
+- Quest management
+- Character events
+- Plot progression
+- World state
+- Relationship events
+- Cosmic revelations
+
+## Technical Implementation
+
+### State Management
+- Game state
+- Character state
+- Combat state
+- Resource state
+- Story state
+- Relationship state
+
+### Event System
+- Combat events
+- Story events
+- Character events
+- System events
+- UI events
+- Cosmic events
+
+### Save System
+- Game progress
+- Character data
+- Inventory state
+- Story progress
+- Relationship data
+- Cosmic power data
+
+## Performance Considerations
+
+### Optimization
+- Asset management
+- State caching
+- Event batching
+- Memory management
+- Load balancing
+- Update efficiency
+
+### Scalability
+- System modularity
+- Content expansion
+- Feature addition
+- Performance scaling
+- Memory scaling
+- Load handling
 
 ## System Architecture
 

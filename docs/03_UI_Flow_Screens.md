@@ -4,6 +4,186 @@
 
 This document defines the user interface architecture, screen flows, and UI components for Glitter Cloud Adventure. The UI is designed to support both dungeon (JRPG) and surface (strategy) gameplay modes while maintaining a cohesive visual style and intuitive navigation.
 
+## Core UI Screens
+
+### Main Menu
+```
+┌─────────────────────────────────────────────────────────┐
+│  Glitter Cloud Adventure                                │
+├─────────────────────────────────────────────────────────┤
+│  [New Game]                                            │
+│  [Continue]                                            │
+│  [Options]                                             │
+│  [Credits]                                             │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Party Management Screen
+```
+┌─────────────────────────────────────────────────────────┐
+│  Party Management                                      │
+├─────────────────────────────────────────────────────────┤
+│  Active Party (4/4)                                    │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐                      │
+│  │Char1│ │Char2│ │Char3│ │Char4│                      │
+│  └─────┘ └─────┘ └─────┘ └─────┘                      │
+├─────────────────────────────────────────────────────────┤
+│  Available Characters                                  │
+│  [Character List with Stats]                           │
+├─────────────────────────────────────────────────────────┤
+│  Cosmic Balance                                        │
+│  [Harmony] [Chaos] [Stability]                         │
+├─────────────────────────────────────────────────────────┤
+│  [Save Formation] [Return]                             │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Battle Screen
+```
+┌─────────────────────────────────────────────────────────┐
+│  Cosmic Balance Meter                                  │
+│  [Harmony] [Chaos] [Stability]                         │
+├─────────────────────────────────────────────────────────┤
+│  Turn Order                                            │
+│  [Character Icons with Turn Indicators]                │
+├─────────────────────────────────────────────────────────┤
+│  Enemy Area                                            │
+│  [Enemy Sprites with HP Bars]                          │
+├─────────────────────────────────────────────────────────┤
+│  Party Area (4 characters)                             │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐                      │
+│  │Char1│ │Char2│ │Char3│ │Char4│                      │
+│  └─────┘ └─────┘ └─────┘ └─────┘                      │
+├─────────────────────────────────────────────────────────┤
+│  Action Menu                                           │
+│  [Attack] [Skills] [Cosmic] [Combo] [Items] [Defend]   │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Character Status Screen
+```
+┌─────────────────────────────────────────────────────────┐
+│  Character Status                                      │
+├─────────────────────────────────────────────────────────┤
+│  Basic Info                                            │
+│  Name: [Character Name]                                │
+│  Level: [Level]                                        │
+│  HP: [Current/Total]                                   │
+│  MP: [Current/Total]                                   │
+├─────────────────────────────────────────────────────────┤
+│  Stats                                                 │
+│  Strength: [Value]                                     │
+│  Defense: [Value]                                      │
+│  Speed: [Value]                                        │
+│  Cosmic Affinity: [Value]                              │
+├─────────────────────────────────────────────────────────┤
+│  Cosmic Powers                                         │
+│  [List of Available Powers]                            │
+├─────────────────────────────────────────────────────────┤
+│  Relationships                                         │
+│  [Relationship Status with Other Characters]           │
+└─────────────────────────────────────────────────────────┘
+```
+
+## UI Flow States
+
+### Game Start Flow
+1. Main Menu
+   - New Game → Character Creation
+   - Continue → Load Game
+   - Options → Settings Menu
+   - Credits → Credits Screen
+
+2. Character Creation
+   - Select Character Class
+   - Customize Appearance
+   - Set Initial Stats
+   - Choose Starting Cosmic Power
+
+3. Initial Tutorial
+   - Basic Movement
+   - Combat Basics
+   - Party Management
+   - Cosmic Power Usage
+
+### Combat Flow
+1. Battle Initiation
+   - Enemy Encounter Animation
+   - Party Formation Check
+   - Cosmic Balance Initialization
+   - Turn Order Calculation
+
+2. Turn Execution
+   - Action Selection
+   - Target Selection
+   - Effect Animation
+   - Status Update
+
+3. Combat Resolution
+   - Victory/Defeat Screen
+   - Reward Distribution
+   - Experience Gain
+   - Relationship Updates
+
+### Party Management Flow
+1. Character Selection
+   - View Available Characters
+   - Check Party Requirements
+   - Verify Cosmic Balance
+   - Confirm Changes
+
+2. Formation Management
+   - Front/Back Row Assignment
+   - Cosmic Power Synergy
+   - Relationship Bonuses
+   - Save Formation
+
+## UI Components
+
+### Cosmic Balance Meter
+- Visual representation of cosmic balance
+- Color-coded sections for Harmony, Chaos, Stability
+- Dynamic updates during combat
+- Affects available actions and combos
+
+### Relationship Indicators
+- Shows relationship levels between characters
+- Indicates available combos
+- Displays relationship bonuses
+- Updates after story events
+
+### Action Menu
+- Context-sensitive options
+- Cosmic power availability
+- Combo attack indicators
+- Item usage restrictions
+
+## Implementation Guidelines
+
+### Screen Transitions
+- Smooth fade effects
+- Context preservation
+- State management
+- Error handling
+
+### Input Handling
+- Keyboard shortcuts
+- Controller support
+- Touch controls
+- Context-sensitive help
+
+### Performance Optimization
+- Asset preloading
+- State caching
+- Efficient updates
+- Memory management
+
+### Accessibility Features
+- Color blind mode
+- Text scaling
+- Audio cues
+- Control customization
+
 ## Guide System (Glitch Stick Lv.1)
 
 ### Guide Summoning
