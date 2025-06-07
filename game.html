@@ -61,6 +61,22 @@
             opacity: 0;
             pointer-events: none;
         }
+        #bestiary-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            border: 1px solid #666;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            z-index: 10;
+        }
+        #bestiary-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
     </style>
 </head>
 <body>
@@ -70,7 +86,9 @@
             <div>Loading Game...</div>
         </div>
         <div id="debug-ui" style="display:none;"></div>
+        <button id="bestiary-btn">Bestiary</button>
     </div>
+    <script src="bestiary.js"></script>
     <script>
     // --- Config ---
     const GRID_SIZE = 32;
@@ -197,6 +215,7 @@
             this.frameCount = 0;
             this.lastFpsUpdate = 0;
             this.camera = new Camera(this);
+            this.bestiary = null;
             this.resize();
             window.addEventListener('resize', () => this.resize());
         }
@@ -210,6 +229,11 @@
             await this.load();
             this.state = GameState.PLAYING;
             document.getElementById('loading-screen').classList.add('hidden');
+            
+            // Initialize bestiary
+            this.bestiary = new Bestiary(this);
+            document.getElementById('bestiary-btn').onclick = () => this.bestiary.show();
+            
             this.loop(performance.now());
         }
         async load() {
@@ -282,6 +306,12 @@
                 this.fps = this.frameCount;
                 this.frameCount = 0;
                 this.lastFpsUpdate = ts;
+            }
+        }
+        // Add method to record monster kills
+        recordMonsterKill(monsterName) {
+            if (this.bestiary) {
+                this.bestiary.recordKill(monsterName);
             }
         }
     }

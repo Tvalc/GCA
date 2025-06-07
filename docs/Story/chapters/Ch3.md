@@ -41,6 +41,7 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Zylthar won their game and gained advanced technology
   - Zyltharians now work with Survivor Confederation to help other planets
   - Glitch appears skeptical of Krix, creating tension
+  - As Krix explains the cosmic truth, Glitch's skepticism is tinged with flashes of fragmented cosmic memories. The party senses that Glitch's role in the conflict may be deeper than even he realizes.
 
 ### Scene 5: Proving Worth
 - **Location**: B2 - Cloudy with Data, Testing Chamber
@@ -51,6 +52,8 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
   - Tom provides strength, Lisa hacks systems, Jen identifies weak points, Hazel coordinates
   - Successful completion impresses Krix who formally joins the party
   - Party dynamics shift as they adjust to the alien ally
+  - With Krix's addition, the party now consists of Hazel, Tom, Lisa, Jen, and Krix. The group receives a UI notification: "Party Full – Maximum 4 Members." Players must choose which four characters to keep active, with the others available at rest points.
+  - The teamwork challenge not only tests the party's abilities but also strengthens their bonds. Successful coordination unlocks the first party combo ability, emphasizing the importance of relationships for survival and progression.
 
 ### Scene 6: Resource Node
 - **Location**: B2 - Cloudy with Data, Data Transfer Station
@@ -168,6 +171,8 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
 - Party combo abilities
 - Resource transfer system
 - New enemy types in B2 zone
+- Party combo abilities
+- **Party System**: Up to 4 characters can be in the party at once. Party members can be swapped at rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 
 ### Surface World
 - Base building and management
@@ -225,3 +230,8 @@ Chapter 3 marks the expansion of both worlds as Hazel's party ventures into deep
 ## Transition to Chapter 4
 - Arcade Dungeon: Party prepares to challenge the Cloud Titan boss
 - Surface World: Resistance readies first attack on Galaxander supply factory
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow

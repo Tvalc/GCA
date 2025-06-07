@@ -39,6 +39,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - They agree to work together to find a way out
   - Encounter Captain Sarah Martinez and Detective James Chen, also abducted
   - Group forms temporary alliance for survival
+  - As Hazel and Tom regroup, they hear the sound of someone frantically typing behind a barricaded prize counter. Investigating, they meet **Lisa Chen**, a sharp-witted tech specialist who was abducted while debugging a corporate security app. Lisa, initially distrustful, quickly proves her value by hacking a prize terminal to create improvised EMP grenades. The trio forms a tentative alliance, each bringing unique skills to the group.
 
 ### Scene 4: Corporate Messaging
 - **Location**: B1 - Digital Dawn, Management Office
@@ -49,6 +50,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Hazel has first emotional breakdown, thinking of their family
   - Tom awkwardly comforts them, forming initial bond
   - Sarah and James share their experiences of investigating disappearances before abduction
+  - Among the corporate slogans, Hazel notices a strange symbol—a fractal spiral—repeated across several screens. For a brief moment, the screens flicker, and a deep, synthetic voice intones: "All realities converge in the service of Galaxander." The group is unsettled, sensing that the corporation's reach may extend far beyond Earth.
 
 ### Scene 5: Arcade Exploration
 - **Location**: B1 - Digital Dawn, Game Floor West
@@ -70,6 +72,8 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
   - Glitch Stick activates, revealing Glitch as a snarky holographic AI
   - Glitch explains he's a data courier whose memory was wiped
   - **Convergence Point**: First tenuous connection between worlds established
+  - As Glitch flickers into view, his holographic form momentarily distorts, displaying cryptic symbols and fragments of distant galaxies. He pauses, as if struggling to remember something important, then shakes it off with a snarky remark. Hazel feels an inexplicable sense of déjà vu, as if they and Glitch share a connection that goes beyond the digital world.
+  - Hazel and Glitch's first interaction is awkward but charged with a sense of destiny. Tom, observing their dynamic, steps into a protective role, forming the beginnings of a surrogate family unit within the chaos.
 
 ### Scene 7: First Digital Contact
 - **Location**: Mining facility computer lab
@@ -147,6 +151,7 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
 - Enemy types: Roaches and Spamtons
 - Status effects (Confusion)
 - Improvised weapons
+- **Party System**: Players can have up to 4 characters in their party at any time. Party members can be swapped at designated rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 
 ### Surface World
 - Basic movement and stealth mechanics
@@ -201,3 +206,8 @@ The first chapter introduces our dual storylines: Hazel's abduction into a digit
 ## Transition to Chapter 2
 - Arcade Dungeon: Hazel and Tom hear about other survivors gathering at the "High Score Lounge"
 - Surface World: Bailey's connection to the arcade token grows stronger as resistance plans next move
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow

@@ -30,6 +30,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
   - Hazel, Tom, and Lisa fight together to secure a section of the lounge
   - Lisa's technical skills complement Hazel and Tom's more direct approach
   - Formal party formation with UI notification: "Party Formed!"
+  - With Jen's addition, the party now consists of Hazel, Tom, Lisa, and Jen. The group receives a UI notification: "Party Full – Maximum 4 Members." Party management options become available at rest points.
 
 ### Scene 4: The Artist's Eye
 - **Location**: B1 - Digital Dawn, Arcade Gallery
@@ -40,6 +41,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
   - Demonstrates unique ability to spot weaknesses in digital structures
   - Scavenges a sharp crystal shard from defeated Crypto Bro enemy
   - Joins party after Hazel promises to help her find a way home
+  - Jen's trust in Hazel and the group is tentative but grows as they support her. Early party interactions hint at the importance of relationship development for survival and unlocking new abilities.
 
 ### Scene 5: Rumors of The Moderator
 - **Location**: B1 - Digital Dawn, Information Kiosk
@@ -77,6 +79,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
   - Introduces concept of "FURY" - emotion-based currency collected from battles
   - Hints at being a data courier whose memory was wiped
   - **Convergence Point**: Shows how Glitch Stick can tap into real-world communication systems
+  - As Glitch's holographic form stabilizes, he momentarily displays cosmic symbols and fragments of distant galaxies. The party senses that Glitch is more than just a data courier—there's a deeper, cosmic connection at play, though Glitch himself seems unaware of the full truth.
 
 ## Surface World Storyline (Tony & Bailey)
 
@@ -160,6 +163,7 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
 
 ### Arcade Dungeon
 - Party system mechanics
+- **Party System**: Up to 4 characters can be in the party at once. Party members can be swapped at rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 - Character special abilities
 - Boss battle mechanics
 - FURY as a resource
@@ -222,3 +226,8 @@ Chapter 2 focuses on expanding the core cast of characters and establishing temp
 ## Transition to Chapter 3
 - Arcade Dungeon: Glitch reveals a way to the next zone through a hidden debug menu
 - Surface World: Lena shares information about Galaxander's main production facility
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow

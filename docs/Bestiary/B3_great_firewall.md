@@ -2,26 +2,47 @@
 *"Where security is tight and access is restricted."*  
 **Special:** Enemies have +15% resistance to status effects in this stage
 
+## Overview
+A massive barrier of security protocols and defensive systems protecting the deeper layers of the network.
+
+## Enemies
+
+| Name | Type | HP | ATK | DEF | SPD | XP | GOLD | Drops |
+|------|------|----|-----|-----|-----|----|------|-------|
+| B3-1: FIREWALL SENTRY (Lv. 11) | Construct | 70 | 15 | 15 | 10 | 35-45 | 30-40 | 100% Firewall Fragment, 50% Digital Essence |
+| B3-2: PROTOCOL DRONE (Lv. 12) | Construct | 75 | 18 | 12 | 15 | 40-50 | 35-45 | 100% Protocol Data, 50% Digital Essence |
+| B3-3: DATA HOUND (Lv. 13) | Beast | 80 | 25 | 10 | 18 | 45-55 | 40-50 | 100% Beast Parts, 50% Digital Essence |
+| B3-4: BIT REAVER (Lv. 12) | Bug | 65 | 20 | 8 | 20 | 40-50 | 35-45 | 100% Bug Parts, 50% Digital Essence |
+| B3-5: VIPER (Lv. 13) | Beast | 85 | 28 | 12 | 15 | 45-55 | 40-50 | 100% Beast Parts, 50% Digital Essence |
+| B3-6: ANTIVIRUS (Lv. 13) | Construct | 90 | 22 | 20 | 12 | 45-55 | 40-50 | 100% Security Data, 50% Digital Essence |
+| B3-7: LOGIC BOMB (Lv. 14) | Mystic | 95 | 30 | 15 | 10 | 50-60 | 45-55 | 100% Mystic Essence, 50% Digital Essence |
+| B3-8: LOCKOUT (Lv. 14) | Construct | 100 | 25 | 25 | 8 | 50-60 | 45-55 | 100% Security Data, 50% Digital Essence |
+| B3-9: SURGE (Lv. 14) | Mystic | 85 | 35 | 10 | 20 | 50-60 | 45-55 | 100% Mystic Essence, 50% Digital Essence |
+| B3-10: TROJAN (Lv. 15) | Bug | 110 | 40 | 15 | 15 | 55-65 | 50-60 | 100% Bug Parts, 50% Digital Essence |
+| B3-11: ROOTKIT (Lv. 15) | Mystic | 120 | 35 | 20 | 12 | 55-65 | 50-60 | 100% Mystic Essence, 50% Digital Essence |
+| B3-12: FIREWALL TITAN (Lv. 16) | Construct | 150 | 45 | 30 | 10 | 60-70 | 55-65 | 100% Firewall Core, 50% Digital Essence |
+| B3-13: FIREWALL LORD (Lv. 17) | Mystic | 200 | 50 | 35 | 15 | 65-75 | 60-70 | 100% Mystic Essence, 50% Digital Essence |
+
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │  ENEMIES                                                                                                         │
 ├───────────────┬─────────┬──────┬─────┬─────┬─────┬──────────┬───────────┬─────────────────────────────────────────┤
 │  ENEMY        │ TYPE    │  HP  │ ATK │ DEF │ SPD │   XP     │   GOLD    │ DROPS                                  │
 ├───────────────┼─────────┼──────┼─────┼─────┼─────┼──────────┼───────────┼─────────────────────────────────────────┤
-│ 🛡️ B3-1: Firewall │ Common  │ 180  │ 40  │ 55  │ 35  │  80-120  │  50-100   │ 100% Circuit Scrap, 30% Security Protocol │
-│ 🤖 B3-2: Protocol │ Common  │ 120  │ 30  │ 40  │ 60  │  90-130  │  60-110   │ 100% Drone Parts, 25% Protocol Chip       │
-│ 🐕 B3-3: Data Hound│ Uncommon│ 220  │ 35  │ 45  │ 40  │ 100-150  │  75-125   │ 100% Data Claw, 40% Hound Fang            │
-│ 💀 B3-4: Bit Reaver│ Uncommon│ 200  │ 45  │ 35  │ 50  │ 110-160  │  80-130   │ 100% Corrupted Shard, 35% Glitch Fragment │
-│ 🐍 B3-5: Viper   │ Uncommon│ 160  │ 50  │ 30  │ 65  │ 120-170  │  85-135   │ 100% Venom Sac, 25% Neural Disruptor     │
-│ 🚑 B3-6: Antivirus│ Uncommon│ 280  │ 38  │ 42  │ 45  │ 130-180  │  90-140   │ 100% Vaccine Code, 20% System Patch      │
-│ 💣 B3-7: Logic Bomb│ Uncommon│ 170  │ 60  │ 25  │ 55  │ 140-190  │ 100-150   │ 100% Code Fragment, 15% Detonator        │
-│ 🔒 B3-8: Lockout  │ Uncommon│ 190  │ 35  │ 65  │ 30  │ 150-200  │ 110-160   │ 100% Access Key, 30% Authentication Token │
-│ 🔌 B3-9: Surge   │ Uncommon│ 145  │ 65  │ 20  │ 70  │ 160-210  │ 120-170   │ 100% Power Cell, 25% Overload Capacitor  │
-│ 🔗 B3-10: Trojan │ Elite   │ 230  │ 55  │ 40  │ 50  │ 170-220  │ 130-180   │ 100% Malicious Code, 20% Backdoor Key    │
-│ ⚙️ B3-11: Rootkit │ Elite   │ 260  │ 45  │ 50  │ 40  │ 180-230  │ 140-190   │ 100% Root Access, 15% Kernel Fragment    │
-│ 💻 B3-12: Core   │ Elite   │ 300  │ 60  │ 60  │ 30  │ 200-250  │ 150-200   │ 100% System Core, 10% Admin Credentials   │
-│ 💀 B3-13: Sub-Boss│ Sub-Boss│ 350  │ 65  │ 60  │ 40  │ 250-350  │ 180-280   │ 100% Malware Engine, 50% Exploit Code     │
-│ 🛡️ B3-14: Guardian│ Boss    │ 450  │ 70  │ 70  │ 30  │ 400-600  │ 250-450   │ 100% Firewall Core, 50% System Key       │
+│ 🛡️ B3-1: Firewall Sentry │ Construct │ 180 │ 40 │ 55 │ 35 │ 80-120 │ 50-100 │ 100% Circuit Scrap, 30% Security Protocol │
+│ 🤖 B3-2: Protocol Drone │ Construct │ 120 │ 30 │ 40 │ 60 │ 90-130 │ 60-110 │ 100% Drone Parts, 25% Protocol Chip │
+│ 🐕 B3-3: Data Hound │ Beast │ 220 │ 35 │ 45 │ 40 │ 100-150 │ 75-125 │ 100% Data Claw, 40% Hound Fang │
+│ 💀 B3-4: Bit Reaver │ Bug │ 200 │ 45 │ 35 │ 50 │ 110-160 │ 80-130 │ 100% Corrupted Shard, 35% Glitch Fragment │
+│ 🐍 B3-5: Viper │ Aquatic │ 160 │ 50 │ 30 │ 65 │ 120-170 │ 85-135 │ 100% Venom Sac, 25% Neural Disruptor │
+│ 🚑 B3-6: Antivirus │ Construct │ 280 │ 38 │ 42 │ 45 │ 130-180 │ 90-140 │ 100% Vaccine Code, 20% System Patch │
+│ 💣 B3-7: Logic Bomb │ Construct │ 170 │ 60 │ 25 │ 55 │ 140-190 │ 100-150 │ 100% Code Fragment, 15% Detonator │
+│ 🔒 B3-8: Lockout │ Mystic │ 190 │ 35 │ 65 │ 30 │ 150-200 │ 110-160 │ 100% Access Key, 30% Authentication Token │
+│ 🔌 B3-9: Surge │ Mystic │ 145 │ 65 │ 20 │ 70 │ 160-210 │ 120-170 │ 100% Power Cell, 25% Overload Capacitor │
+│ 🔗 B3-10: Trojan │ Bug │ 230 │ 55 │ 40 │ 50 │ 170-220 │ 130-180 │ 100% Malicious Code, 20% Backdoor Key │
+│ ⚙️ B3-11: Rootkit │ Bug │ 260 │ 45 │ 50 │ 40 │ 180-230 │ 140-190 │ 100% Root Access, 15% Kernel Fragment │
+│ 💻 B3-12: Core │ Mystic │ 300 │ 60 │ 60 │ 30 │ 200-250 │ 150-200 │ 100% System Core, 10% Admin Credentials │
+│ 💀 B3-13: Sub-Boss │ Beast │ 350 │ 65 │ 60 │ 40 │ 250-350 │ 180-280 │ 100% Malware Engine, 50% Exploit Code │
+│ 🛡️ B3-14: Guardian │ Construct │ 450 │ 70 │ 70 │ 30 │ 400-600 │ 250-450 │ 100% Firewall Core, 50% System Key │
 └───────────────┴─────────┴──────┴─────┴─────┴─────┴──────────┴───────────┴─────────────────────────────────────────┘
 ```
 

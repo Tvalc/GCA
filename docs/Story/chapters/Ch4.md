@@ -49,6 +49,7 @@ Chapter 4 focuses on major confrontations in both worlds. In the arcade dungeon,
   - Hazel experiences simulated failure where she never sees her family again
   - Group reconnects through combination of Glitch's hacking and emotional bonds
   - Final coordinated assault with special abilities damages Titan's core
+  - The party's ability to reconnect and coordinate during the data storm is only possible because of the emotional bonds they've developed. This moment reinforces the importance of relationships for overcoming cosmic challenges.
 
 ### Scene 6: Unexpected Ally
 - **Location**: B2 - Cloudy with Data, Central Server Chamber
@@ -72,6 +73,8 @@ Chapter 4 focuses on major confrontations in both worlds. In the arcade dungeon,
   - Party levels up significantly, unlocking new abilities with cosmic origins
   - Glitch experiences memory flashes that align with Titan's revelations but remains confused
   - **Convergence Point**: Cloud Titan helps strengthen portal connection, explains it's similar to ancient technology from before Galaxander's corruption
+  - With the party's victory and new abilities unlocked, the group now consists of Hazel, Tom, Lisa, Jen, Krix, and Glitch. The group receives a UI notification: "Party Full – Maximum 4 Members." Players must choose which four characters to keep active, with the others available at rest points.
+  - As the Cloud Titan shares memories of the cosmic order, Glitch experiences intense memory flashes—visions of ancient harmony, betrayal, and the Architects. The party senses that their journey is part of a much larger cosmic struggle, and Glitch's true identity as Harmonia is becoming clearer.
 
 ### Scene 8: Gateway to B3
 - **Location**: Transition from B2 (Cloudy with Data) to B3 (Corporate Headquarters)
@@ -165,6 +168,7 @@ Chapter 4 focuses on major confrontations in both worlds. In the arcade dungeon,
 - Multi-phase boss battles reflecting cosmic conflict patterns
 - Environmental hazards and puzzles with elements of ancient cosmic architecture
 - Alliance system with former enemies who retain pre-corruption memories
+- **Party System**: Up to 4 characters can be in the party at once. Party members can be swapped at rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 - Advanced FURY techniques that hint at its true nature as emotional energy harvesting
 - Zone transition mechanics that mirror ancient cosmic transportation systems
 
@@ -283,3 +287,8 @@ Chapter 4 focuses on major confrontations in both worlds. In the arcade dungeon,
 - Bailey's unusual connection to corporate technology
 - Glitch's recovering memories about critical data
 - Introduction of Corporate Headquarters zone
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow

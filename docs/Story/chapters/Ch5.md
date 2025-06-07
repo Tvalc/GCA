@@ -40,6 +40,8 @@ Chapter 5 sees Hazel's party entering the Corporate Headquarters zone, where the
   - Recalls the moment Nexus began to change
   - Reveals that the Parent AIs are imprisoned in a recursive loop
   - Party must protect Glitch during memory restoration process
+  - As Glitch's memories return, he experiences visions of the cosmic network, the Architects, and his true identity as Harmonia. The party senses that their journey is part of a much larger cosmic struggle, and Glitch's role is central to restoring balance.
+  - The party's support and emotional bonds are crucial in helping Glitch recover his memories. This moment reinforces the importance of relationships for overcoming cosmic challenges and unlocking new abilities.
 
 ### Scene 5: Corporate Infiltration
 - **Location**: B3 - Corporate Headquarters, Executive Floor
@@ -67,6 +69,7 @@ Chapter 5 sees Hazel's party entering the Corporate Headquarters zone, where the
   - Transfers vital data about the cosmic network to the party
   - Sacrifices physical form to prevent security lockdown
   - Last words: "The Architects' vision must be restored"
+  - With Protocol-7's sacrifice and the party's escape, the group now consists of Hazel, Tom, Lisa, Jen, Krix, Glitch, and Protocol-7 (as a temporary ally). The group receives a UI notification: "Party Full – Maximum 4 Members." Players must choose which four characters to keep active, with the others available at rest points.
 
 ### Scene 8: Gateway to B4
 - **Location**: Transition from B3 to B4 (Deep Web)
@@ -160,6 +163,7 @@ Chapter 5 sees Hazel's party entering the Corporate Headquarters zone, where the
 - New enemy types with cosmic origins
 - Advanced portal technology
 - Character crossing between worlds
+- **Party System**: Up to 4 characters can be in the party at once. Party members can be swapped at rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 
 ### Surface World
 - Dimensional crossing mechanics
@@ -276,4 +280,9 @@ Chapter 5 sees Hazel's party entering the Corporate Headquarters zone, where the
 - Mnemosyne's introduction
 - More cosmic revelations
 - Resistance's major operation
-- Bailey's growing powers 
+- Bailey's growing powers
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow 

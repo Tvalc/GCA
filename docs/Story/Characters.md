@@ -390,3 +390,161 @@
   - "System Override": Takes direct control of nearby corporate technology
   - "Cosmic Corruption": Can twist the original harmonious systems to his will
 - **Character Arc**: Reveals increasingly inhuman nature as his plans are threatened
+
+## Supporting NPCs & Recruits
+
+### Captain Sarah Martinez
+- **Role:** Military leader, tactical advisor, resistance co-founder
+- **Background:** Decorated Army captain, led disaster relief before the abduction
+- **Personality:** Disciplined, fiercely protective, haunted by the loss of her unit
+- **Trauma:** Suffers from survivor's guilt and recurring nightmares of failed missions
+- **Skills:** Tactical planning, firearms, morale boosting
+- **Story Impact:** Rallies survivors, organizes resistance cells, and provides critical leadership during crises. Her journey is one of learning to trust civilians and unconventional allies.
+
+### Detective James Chen
+- **Role:** Police detective, investigator, resistance scout
+- **Background:** Former cybercrimes detective, abducted while investigating arcade disappearances
+- **Personality:** Analytical, skeptical, dry sense of humor, deeply loyal
+- **Trauma:** Struggles with helplessness and guilt over being unable to protect his family
+- **Skills:** Investigation, interrogation, digital forensics
+- **Story Impact:** Uncovers hidden threats, helps decode enemy plans, and bridges the gap between law enforcement and civilian survivors. His arc involves regaining a sense of agency and hope.
+
+### Private Maya Singh
+- **Role:** Combat medic, field support
+- **Background:** Army medic, survived initial chaos by tending to wounded in the arcade's first aid station
+- **Personality:** Empathetic, resourceful, quietly brave
+- **Trauma:** Haunted by those she couldn't save, but channels pain into helping others
+- **Skills:** First aid, triage, improvisation
+- **Story Impact:** Keeps the resistance healthy, provides emotional support, and is a voice for compassion in tough decisions. Her growth is about finding strength in vulnerability.
+
+### SWAT Officer Luis Alvarez
+- **Role:** Security, breaching specialist
+- **Background:** SWAT team member, separated from his squad during the abduction
+- **Personality:** Blunt, action-oriented, protective of the weak
+- **Trauma:** Survivor's guilt, anger at the system's failure
+- **Skills:** Tactical entry, crowd control, hand-to-hand combat
+- **Story Impact:** Defends the group during attacks, helps train others in self-defense, and gradually opens up about his fears. His arc is about learning to rely on others and not just brute force.
+
+### Resistance Hacker "Pixel" (real name: Samira Patel)
+- **Role:** Tech support, communications
+- **Background:** Teen hacker, arcade regular, used her skills to keep survivors connected
+- **Personality:** Witty, irreverent, fiercely independent
+- **Trauma:** Feels responsible for not warning others sooner, struggles with isolation
+- **Skills:** Hacking, surveillance, makeshift electronics
+- **Story Impact:** Maintains the resistance's comms, uncovers digital secrets, and forms unlikely friendships. Her journey is about trust and belonging.
+
+### Sergeant Marcus "Rook" Johnson
+- **Role:** Combat veteran, resistance trainer
+- **Background:** Marine Corps veteran, abducted while on leave
+- **Personality:** Stoic, methodical, deeply loyal
+- **Trauma:** Struggles with PTSD and the loss of his squad
+- **Skills:** Advanced combat tactics, survival training, leadership
+- **Story Impact:** Trains new recruits, provides strategic advice, and helps maintain discipline within the resistance. His arc is about finding peace and purpose in protecting others.
+
+### Dr. Elena Rodriguez
+- **Role:** Medical researcher, resistance medic
+- **Background:** Former CDC scientist, abducted while investigating arcade disappearances
+- **Personality:** Curious, compassionate, determined
+- **Trauma:** Haunted by the unknown virus and her inability to save her colleagues
+- **Skills:** Medical research, diagnostics, emergency care
+- **Story Impact:** Develops treatments for the virus, provides medical support, and uncovers critical information about the abduction. Her journey is about hope and resilience.
+
+### Resistance Engineer "Gear" (real name: Alex Chen)
+- **Role:** Technical support, resistance engineer
+- **Background:** Former arcade technician, used his skills to maintain and repair equipment
+- **Personality:** Resourceful, detail-oriented, quietly confident
+- **Trauma:** Feels responsible for the arcade's malfunction, struggles with self-doubt
+- **Skills:** Electronics repair, improvisation, technical problem-solving
+- **Story Impact:** Keeps the resistance's equipment operational, develops new tools, and helps bridge the gap between technology and survival. His arc is about redemption and self-worth.
+
+### Resistance Scout "Shadow" (real name: Mia Torres)
+- **Role:** Reconnaissance, resistance scout
+- **Background:** Former parkour instructor, abducted while exploring the arcade
+- **Personality:** Agile, observant, fiercely independent
+- **Trauma:** Struggles with isolation and the fear of being trapped
+- **Skills:** Stealth, reconnaissance, agility
+- **Story Impact:** Gathers intel, scouts enemy positions, and helps the resistance stay one step ahead. Her journey is about trust and finding a place in the group.
+
+### Resistance Medic "Patch" (real name: David Kim)
+- **Role:** Field medic, resistance healer
+- **Background:** Former ER nurse, abducted while treating victims of the initial arcade incident
+- **Personality:** Calm under pressure, empathetic, slightly cynical
+- **Trauma:** Haunted by the patients he couldn't save, struggles with medical limitations in the arcade
+- **Skills:** Emergency medicine, triage, makeshift medical solutions
+- **Story Impact:** Keeps the resistance healthy, trains others in basic medical care, and develops innovative solutions with limited resources. His arc is about accepting limitations and finding new ways to heal.
+
+### Resistance Hacker "Cipher" (real name: Raj Patel)
+- **Role:** Cybersecurity expert, resistance tech support
+- **Background:** Former white-hat hacker, investigating arcade security breaches when abducted
+- **Personality:** Brilliant but socially awkward, deeply ethical, perfectionist
+- **Trauma:** Blames himself for not preventing the abduction, struggles with isolation
+- **Skills:** Advanced hacking, cryptography, system analysis
+- **Story Impact:** Breaches enemy systems, protects resistance communications, and uncovers critical intel. His journey is about learning to trust and work with others.
+
+### Resistance Scout "Echo" (real name: Sarah Martinez)
+- **Role:** Reconnaissance, resistance messenger
+- **Background:** Former park ranger, abducted while investigating strange signals
+- **Personality:** Resourceful, observant, deeply connected to nature
+- **Trauma:** Struggles with the artificial environment, misses the natural world
+- **Skills:** Tracking, survival, navigation
+- **Story Impact:** Maps the arcade, finds safe routes, and helps others adapt to the environment. Her arc is about finding beauty in the artificial world.
+
+### Resistance Engineer "Tinker" (real name: Maria Rodriguez)
+- **Role:** Mechanical expert, resistance inventor
+- **Background:** Former robotics engineer, abducted while testing new arcade machines
+- **Personality:** Creative, methodical, slightly eccentric
+- **Trauma:** Lost her research team, struggles with the limitations of available materials
+- **Skills:** Robotics, mechanical engineering, improvisation
+- **Story Impact:** Creates tools and weapons, repairs critical equipment, and develops new solutions. Her journey is about innovation in the face of scarcity.
+
+### Resistance Medic "Doc" (real name: James Wilson)
+- **Role:** Combat medic, resistance healer
+- **Background:** Former military medic, abducted while on leave
+- **Personality:** Tough but caring, no-nonsense, deeply loyal
+- **Trauma:** Lost his unit, struggles with survivor's guilt
+- **Skills:** Combat medicine, trauma care, field surgery
+- **Story Impact:** Provides critical medical support during missions, trains others in combat medicine, and maintains the resistance's health. His arc is about healing others while healing himself.
+
+### Resistance Hacker "Ghost" (real name: Lisa Chen)
+- **Role:** Cybersecurity expert, resistance tech support
+- **Background:** Former government cybersecurity analyst, investigating arcade disappearances
+- **Personality:** Analytical, cautious, deeply ethical
+- **Trauma:** Lost her team during the initial investigation, struggles with trust
+- **Skills:** Advanced cybersecurity, system analysis, digital forensics
+- **Story Impact:** Protects resistance communications, uncovers enemy plans, and develops security protocols. Her journey is about rebuilding trust and finding a new purpose.
+
+### Resistance Scout "Phantom" (real name: Carlos Mendez)
+- **Role:** Reconnaissance, resistance infiltrator
+- **Background:** Former private investigator, abducted while investigating arcade disappearances
+- **Personality:** Observant, methodical, slightly paranoid
+- **Trauma:** Lost his partner during the abduction, struggles with isolation
+- **Skills:** Surveillance, infiltration, information gathering
+- **Story Impact:** Gathers critical intel, scouts enemy positions, and helps the resistance stay hidden. His arc is about learning to trust and work with others again.
+
+### Resistance Engineer "Spark" (real name: Emily Taylor)
+- **Role:** Electrical expert, resistance inventor
+- **Background:** Former electrical engineer, abducted while maintaining arcade systems
+- **Personality:** Brilliant, energetic, slightly scattered
+- **Trauma:** Lost her research team, struggles with the limitations of available materials
+- **Skills:** Electrical engineering, power systems, improvisation
+- **Story Impact:** Maintains power systems, creates new tools, and develops innovative solutions. Her journey is about finding new ways to apply her knowledge.
+
+### Resistance Medic "Angel" (real name: Sophia Martinez)
+- **Role:** Field medic, resistance healer
+- **Background:** Former pediatric nurse, abducted while treating children at the arcade
+- **Personality:** Gentle, nurturing, fiercely protective
+- **Trauma:** Lost her young patients, struggles with the harsh reality of survival
+- **Skills:** Pediatric care, emergency medicine, emotional support
+- **Story Impact:** Provides medical care, emotional support, and helps others maintain hope. Her arc is about finding strength in compassion.
+
+### Resistance Hacker "Void" (real name: Michael Black)
+- **Role:** Cybersecurity expert, resistance tech support
+- **Background:** Former black-hat hacker, abducted while investigating arcade systems
+- **Personality:** Brilliant but troubled, deeply loyal to those he trusts
+- **Trauma:** Struggles with his past, trying to redeem himself
+- **Skills:** Advanced hacking, system manipulation, digital warfare
+- **Story Impact:** Develops offensive cyber capabilities, protects resistance systems, and helps fight back. His journey is about redemption and finding a new purpose.
+
+---
+
+*Note: The arcade is filled with countless other survivors—each with their own unique stories, skills, and emotional arcs. These characters contribute to the evolving resistance and the game's sense of a living, breathing world. Players can discover and recruit these survivors throughout their journey, each bringing new skills, perspectives, and storylines to the resistance.*

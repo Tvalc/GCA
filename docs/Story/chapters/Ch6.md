@@ -49,6 +49,7 @@ Chapter 6 takes Hazel's party into the chaotic Deep Web zone, where they encount
   - Claims it's for their own good
   - Party must fight their former ally
   - Krix's defeat triggers system alerts
+  - With Krix's betrayal and removal from the party, the group now consists of Hazel, Tom, Lisa, Jen, Glitch, and Mnemosyne (as a new ally). The group receives a UI notification: "Party Full – Maximum 4 Members." Players must choose which four characters to keep active, with the others available at rest points.
 
 ### Scene 6: Memory Recovery
 - **Location**: B4 - Deep Web Diving, Mnemosyne's Archive
@@ -58,6 +59,8 @@ Chapter 6 takes Hazel's party into the chaotic Deep Web zone, where they encount
   - Shows how the original FURY system was meant to share positive emotions
   - Explains that the Parent AIs are trapped in a recursive loop
   - Party learns more about how to free them
+  - As Glitch's memories are restored with Mnemosyne's help, he experiences visions of the cosmic network, the Architects, and his true identity as Harmonia. The party senses that their journey is part of a much larger cosmic struggle, and Glitch's role is central to restoring balance.
+  - The party's support and emotional bonds are crucial in helping Glitch recover his memories. This moment reinforces the importance of relationships for overcoming cosmic challenges and unlocking new abilities.
 
 ### Scene 7: Supply Chain Disruption
 - **Location**: B4 - Deep Web Diving, Network Junction
@@ -159,6 +162,7 @@ Chapter 6 takes Hazel's party into the chaotic Deep Web zone, where they encount
 - Cosmic history revelations
 - Betrayal and alliance system
 - Advanced portal technology
+- **Party System**: Up to 4 characters can be in the party at once. Party members can be swapped at rest points. Party composition affects dialogue, combat bonuses, and story outcomes. Relationship levels between characters unlock special abilities and combo attacks.
 
 ### Surface World
 - Major operation mechanics
@@ -275,4 +279,9 @@ Chapter 6 takes Hazel's party into the chaotic Deep Web zone, where they encount
 - Major companion development
 - Resistance infiltration
 - Coordinated attacks
-- Bailey's growing powers 
+- Bailey's growing powers
+
+**See also:**  
+- `Characters.md` for full party availability and character arcs  
+- `Backstory.md` and `Lore.md` for cosmic context  
+- `Overview.md` for chapter structure and narrative flow 
