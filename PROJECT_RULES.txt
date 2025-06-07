@@ -1,0 +1,2 @@
+SINGLE-FILE HTML RULE: All code, styles, and assets must be embedded in this file.
+MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and conflicting code. 

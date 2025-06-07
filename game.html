@@ -1,327 +1,375 @@
+<!--
+SINGLE-FILE HTML RULE: All code, styles, and assets must be embedded in this file.
+MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and conflicting code.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Game Engine</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: #181818;
-        }
-        body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        #game-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
-        #game-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #222;
-            image-rendering: pixelated;
-        }
-        #debug-ui {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            font-size: 14px;
-            padding: 12px 16px;
-            border-radius: 8px;
-            z-index: 10;
-            font-family: monospace;
-            pointer-events: none;
-        }
-        #loading-screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 2em;
-            z-index: 100;
-            transition: opacity 0.3s;
-        }
-        #loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #bestiary-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            border: 1px solid #666;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            z-index: 10;
-        }
-        #bestiary-btn:hover {
-            background: rgba(0,0,0,0.8);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Glittercloud Adventure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; background: #181818; }
+    body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+    #game-container { position: relative; width: 100vw; height: 100vh; }
+    #game-canvas { width: 100%; height: 100%; background: #222; display: block; }
+    #hud { position: absolute; top: 10px; left: 10px; color: #fff; z-index: 10; }
+    #start-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      color: #0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      z-index: 1000;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.3s;
+    }
+    #start-overlay.hidden { opacity: 0; pointer-events: none; }
+    /* Cutscene Styles */
+    #cutscene-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      display: none;
+      z-index: 2000;
+    }
+    #cutscene-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-size: cover;
+      background-position: center;
+      opacity: 1;
+      z-index: 0;
+      transition: background-image 0.6s;
+    }
+    #cutscene-textbox {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100vw;
+      max-width: 100vw;
+      height: 50vh;
+      min-height: unset;
+      max-height: 50vh;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.85);
+      box-shadow: 0 -4px 32px #000a;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 32px 32px 24px 32px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    #cutscene-text {
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      font-size: 1.25em;
+      text-align: left;
+      width: 100%;
+      max-width: 900px;
+      min-height: 2.5em;
+      margin: 0 auto 12px auto;
+      text-shadow: 2px 2px 8px #000;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+      opacity: 1;
+      transition: opacity 0.3s;
+      word-break: break-word;
+    }
+    #cutscene-skip {
+      color: #0ff;
+      font-size: 1em;
+      opacity: 0.7;
+      margin-top: 8px;
+      animation: pulse 1.5s infinite;
+      user-select: none;
+      text-align: right;
+      width: 100%;
+      max-width: 900px;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.7; }
+    }
+  </style>
 </head>
 <body>
-    <div id="game-container">
-        <canvas id="game-canvas"></canvas>
-        <div id="loading-screen">
-            <div>Loading Game...</div>
-        </div>
-        <div id="debug-ui" style="display:none;"></div>
-        <button id="bestiary-btn">Bestiary</button>
+  <div id="game-container">
+    <canvas id="game-canvas" width="640" height="480"></canvas>
+    <div id="hud">Glittercloud Adventure</div>
+    <div id="start-overlay">Click or Press Any Key to Start</div>
+    <!-- Cutscene Overlay -->
+    <div id="cutscene-overlay">
+      <div id="cutscene-bg"></div>
+      <div id="cutscene-textbox">
+        <div id="cutscene-text"></div>
+        <div id="cutscene-skip">Press any key or click to skip</div>
+      </div>
     </div>
-    <script src="bestiary.js"></script>
-    <script>
-    // --- Config ---
-    const GRID_SIZE = 32;
-    const PLAYER_COLOR = '#00ff00';
-    const WALL_COLOR = '#ff3333';
-    const FLOOR_COLOR = '#222';
-    const DEBUG_MODE = true;
+  </div>
+  <script>
+    // SINGLE-FILE HTML RULE: All code is embedded here.
+    // MODULARITY RULE: Use classes and clear structure.
 
-    // --- Game State ---
-    const GameState = {
-        INIT: 'INIT',
-        LOADING: 'LOADING',
-        PLAYING: 'PLAYING',
-        PAUSED: 'PAUSED',
-        GAME_OVER: 'GAME_OVER'
-    };
+    // --- Game Constants ---
+    const TILE_SIZE = 32;
+    const MAP_WIDTH = 20;
+    const MAP_HEIGHT = 15;
+    const GAME_WIDTH = TILE_SIZE * MAP_WIDTH;
+    const GAME_HEIGHT = TILE_SIZE * MAP_HEIGHT;
 
-    // --- Input Manager ---
-    class InputManager {
-        constructor() {
-            this.keys = new Set();
-            window.addEventListener('keydown', e => this.keys.add(e.key.toLowerCase()));
-            window.addEventListener('keyup', e => this.keys.delete(e.key.toLowerCase()));
-            window.addEventListener('blur', () => this.keys.clear());
+    // --- Cutscene System ---
+    class CutsceneManager {
+      constructor(onFinish) {
+        this.overlay = document.getElementById('cutscene-overlay');
+        this.bgElem = document.getElementById('cutscene-bg');
+        this.textElem = document.getElementById('cutscene-text');
+        this.skipElem = document.getElementById('cutscene-skip');
+        this.onFinish = onFinish;
+        this.current = null;
+        this.index = 0;
+        this.timeout = null;
+        this.skipped = false;
+        this.typingTimeout = null;
+        this.typewriterSpeed = 22; // ms per char
+        this.handleSkip = this.handleSkip.bind(this);
+      }
+      play(cutscene) {
+        this.current = cutscene;
+        this.index = 0;
+        this.skipped = false;
+        this.overlay.style.display = 'block';
+        this.textElem.textContent = '';
+        this.bgElem.style.opacity = '1';
+        setTimeout(() => this.nextScene(), 100);
+        window.addEventListener('keydown', this.handleSkip);
+        window.addEventListener('mousedown', this.handleSkip);
+        window.addEventListener('touchstart', this.handleSkip);
+      }
+      nextScene() {
+        if (!this.current || this.index >= this.current.length || this.skipped) {
+          this.end();
+          return;
         }
-        isDown(key) {
-            return this.keys.has(key.toLowerCase());
+        const scene = this.current[this.index];
+        // Set background image
+        if (scene.background) {
+          this.bgElem.style.backgroundImage = `url('${scene.background}')`;
+        } else {
+          this.bgElem.style.backgroundImage = '';
         }
+        // Typewriter effect
+        this.textElem.textContent = '';
+        this._typeText(scene.text, 0, () => {
+          this.timeout = setTimeout(() => {
+            this.index++;
+            this.nextScene();
+          }, scene.duration);
+        });
+      }
+      _typeText(text, i, done) {
+        if (this.skipped) return;
+        if (i <= text.length) {
+          this.textElem.textContent = text.slice(0, i);
+          this.typingTimeout = setTimeout(() => this._typeText(text, i + 1, done), this.typewriterSpeed);
+        } else {
+          done();
+        }
+      }
+      handleSkip() {
+        this.skipped = true;
+        this.end();
+      }
+      end() {
+        clearTimeout(this.timeout);
+        clearTimeout(this.typingTimeout);
+        this.overlay.style.display = 'none';
+        this.textElem.textContent = '';
+        this.bgElem.style.backgroundImage = '';
+        window.removeEventListener('keydown', this.handleSkip);
+        window.removeEventListener('mousedown', this.handleSkip);
+        window.removeEventListener('touchstart', this.handleSkip);
+        if (this.onFinish) this.onFinish();
+      }
     }
 
-    // --- Entity ---
-    class Entity {
-        constructor(x, y, w, h, color) {
-            this.x = x;
-            this.y = y;
-            this.w = w;
-            this.h = h;
-            this.color = color;
-            this.vx = 0;
-            this.vy = 0;
-        }
-        getBounds() {
-            return {x: this.x, y: this.y, w: this.w, h: this.h};
-        }
-    }
+    // Update the introCutscene array to include all scenes from the original introscene in gcaworking.html
+    const introCutscene = [
+      {
+        text: "We had no idea Earth was for sale.\nUntil we were purchased by the interstellar version of P.T. Barnum",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Narrative1-q2mDBsKvyqQsNn7Zu7a3QT36p2M9hh.png?vGuq",
+        duration: 2000
+      },
+      {
+        text: "It was just a normal day on Earth. People were grocery shopping. Picking up their kids. Scrolling. Swiping. Swearing at traffic.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Shopping-58EG1CsWpUH7RBPY3jXTyyxBdLrCm1.png?SMlF",
+        duration: 2000
+      },
+      {
+        text: "A piercing PING! erupts from every screen—phones, billboards, smart‑watches—halting seven billion heartbeats in unison.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Shock-FE8GYBHDyJ1NXFS6vDl4O6K36GIVA1.png?pZxF",
+        duration: 2000
+      },
+      {
+        text: "The message repeats in every language as panic sparks.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Auction-DD4H0eTvXmUDImg5FIuH8a8bPot7Xq.png?0KdN",
+        duration: 2000
+      },
+      {
+        text: "Shafts of electric light skewer the streets; citizens are digitized mid‑stride and whisked skyward in shimmering data‑streams.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/TeleportStore-o52yEto3qZbwQuZkZmi2RlKjTaXsaE.png?wblu",
+        duration: 2000
+      },
+      // Add any additional scenes from the original introscene here if needed
+    ];
 
-    // --- Player ---
-    class Player extends Entity {
-        constructor(x, y) {
-            super(x, y, GRID_SIZE, GRID_SIZE, PLAYER_COLOR);
-            this.speed = 200;
-        }
-        update(dt, input, collisionSystem) {
-            let vx = 0, vy = 0;
-            if (input.isDown('arrowup') || input.isDown('w')) vy -= 1;
-            if (input.isDown('arrowdown') || input.isDown('s')) vy += 1;
-            if (input.isDown('arrowleft') || input.isDown('a')) vx -= 1;
-            if (input.isDown('arrowright') || input.isDown('d')) vx += 1;
-            if (vx !== 0 && vy !== 0) { vx *= Math.SQRT1_2; vy *= Math.SQRT1_2; }
-            this.vx = vx * this.speed;
-            this.vy = vy * this.speed;
-            const oldX = this.x, oldY = this.y;
-            this.x += this.vx * dt;
-            this.y += this.vy * dt;
-            if (collisionSystem && collisionSystem.checkCollision(this)) {
-                this.x = oldX;
-                this.y = oldY;
+    // --- Map System ---
+    class GameMap {
+      constructor() {
+        // 0 = floor, 1 = wall
+        this.grid = Array.from({length: MAP_HEIGHT}, (_, y) =>
+          Array.from({length: MAP_WIDTH}, (_, x) =>
+            (x === 0 || y === 0 || x === MAP_WIDTH-1 || y === MAP_HEIGHT-1) ? 1 : 0
+          )
+        );
+        // Add some interior walls
+        this.grid[5][5] = 1; this.grid[5][6] = 1;
+        this.grid[6][5] = 1; this.grid[6][6] = 1;
+        this.grid[8][10] = 1; this.grid[9][10] = 1;
+      }
+      isWall(x, y) {
+        return this.grid[y] && this.grid[y][x] === 1;
+      }
+      render(ctx) {
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+          for (let x = 0; x < MAP_WIDTH; x++) {
+            if (this.grid[y][x] === 1) {
+              ctx.fillStyle = '#444';
+              ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            } else {
+              ctx.fillStyle = '#222';
+              ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
+            ctx.strokeStyle = '#333';
+            ctx.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+          }
         }
+      }
     }
 
-    // --- Collision System ---
-    class CollisionSystem {
-        constructor(map) {
-            this.map = map;
-        }
-        checkCollision(entity) {
-            const bounds = entity.getBounds();
-            const minX = Math.floor(bounds.x / GRID_SIZE);
-            const minY = Math.floor(bounds.y / GRID_SIZE);
-            const maxX = Math.floor((bounds.x + bounds.w - 1) / GRID_SIZE);
-            const maxY = Math.floor((bounds.y + bounds.h - 1) / GRID_SIZE);
-            for (let y = minY; y <= maxY; y++) {
-                for (let x = minX; x <= maxX; x++) {
-                    if (this.map[y] && this.map[y][x] === 1) return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    // --- Camera System ---
-    class Camera {
-        constructor(game) {
-            this.game = game;
-            this.x = 0;
-            this.y = 0;
-        }
-        update() {
-            const player = this.game.player;
-            const mapWidthPx = this.game.map[0].length * GRID_SIZE;
-            const mapHeightPx = this.game.map.length * GRID_SIZE;
-            const canvasW = this.game.canvas.width;
-            const canvasH = this.game.canvas.height;
-            // Center camera on player, clamp to map bounds
-            this.x = Math.max(0, Math.min(player.x + player.w/2 - canvasW/2, mapWidthPx - canvasW));
-            this.y = Math.max(0, Math.min(player.y + player.h/2 - canvasH/2, mapHeightPx - canvasH));
-        }
-    }
-
-    // --- Game Class ---
+    // --- Game Engine ---
     class Game {
-        constructor() {
-            this.state = GameState.INIT;
-            this.input = new InputManager();
-            this.canvas = document.getElementById('game-canvas');
-            this.ctx = this.canvas.getContext('2d');
-            this.entities = [];
-            this.player = null;
-            this.map = [];
-            this.collisionSystem = null;
-            this.lastTime = 0;
-            this.fps = 0;
-            this.frameCount = 0;
-            this.lastFpsUpdate = 0;
-            this.camera = new Camera(this);
-            this.bestiary = null;
-            this.resize();
-            window.addEventListener('resize', () => this.resize());
+      constructor() {
+        this.canvas = document.getElementById('game-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.lastTime = 0;
+        this.map = new GameMap();
+        this.player = new Player(2 * TILE_SIZE, 2 * TILE_SIZE, this.map);
+        this.bindEvents();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+      bindEvents() {
+        window.addEventListener('keydown', e => this.player.handleKey(e.key, true));
+        window.addEventListener('keyup', e => this.player.handleKey(e.key, false));
+      }
+      loop(ts) {
+        const dt = (ts - this.lastTime) / 1000;
+        this.lastTime = ts;
+        this.update(dt);
+        this.render();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+      update(dt) {
+        this.player.update(dt);
+      }
+      render() {
+        this.ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        this.map.render(this.ctx);
+        this.player.render(this.ctx);
+      }
+    }
+
+    // --- Player Entity ---
+    class Player {
+      constructor(x, y, map) {
+        this.x = x;
+        this.y = y;
+        this.size = TILE_SIZE;
+        this.color = '#0ff';
+        this.speed = 200;
+        this.keys = {};
+        this.map = map;
+      }
+      handleKey(key, isDown) {
+        this.keys[key.toLowerCase()] = isDown;
+      }
+      update(dt) {
+        let dx = 0, dy = 0;
+        if (this.keys['arrowup'] || this.keys['w']) dy -= 1;
+        if (this.keys['arrowdown'] || this.keys['s']) dy += 1;
+        if (this.keys['arrowleft'] || this.keys['a']) dx -= 1;
+        if (this.keys['arrowright'] || this.keys['d']) dx += 1;
+        if (dx !== 0 && dy !== 0) { dx *= Math.SQRT1_2; dy *= Math.SQRT1_2; }
+        let newX = this.x + dx * this.speed * dt;
+        let newY = this.y + dy * this.speed * dt;
+        // Collision detection
+        if (!this.collides(newX, this.y)) this.x = newX;
+        if (!this.collides(this.x, newY)) this.y = newY;
+        // Clamp to map
+        this.x = Math.max(0, Math.min(GAME_WIDTH - this.size, this.x));
+        this.y = Math.max(0, Math.min(GAME_HEIGHT - this.size, this.y));
+      }
+      collides(x, y) {
+        // Check all four corners
+        const corners = [
+          [x, y],
+          [x + this.size - 1, y],
+          [x, y + this.size - 1],
+          [x + this.size - 1, y + this.size - 1]
+        ];
+        for (const [cx, cy] of corners) {
+          const tx = Math.floor(cx / TILE_SIZE);
+          const ty = Math.floor(cy / TILE_SIZE);
+          if (this.map.isWall(tx, ty)) return true;
         }
-        resize() {
-            const container = document.getElementById('game-container');
-            this.canvas.width = container.clientWidth;
-            this.canvas.height = container.clientHeight;
-        }
-        async init() {
-            this.state = GameState.LOADING;
-            await this.load();
-            this.state = GameState.PLAYING;
-            document.getElementById('loading-screen').classList.add('hidden');
-            
-            // Initialize bestiary
-            this.bestiary = new Bestiary(this);
-            document.getElementById('bestiary-btn').onclick = () => this.bestiary.show();
-            
-            this.loop(performance.now());
-        }
-        async load() {
-            // Generate a simple map: 20x15, walls around, some obstacles
-            const w = 20, h = 15;
-            this.map = Array.from({length: h}, (_, y) =>
-                Array.from({length: w}, (_, x) =>
-                    (x === 0 || y === 0 || x === w-1 || y === h-1) ? 1 : 0
-                )
-            );
-            // Add obstacles
-            this.map[5][5] = 1; this.map[5][6] = 1;
-            this.map[6][5] = 1; this.map[6][6] = 1;
-            this.collisionSystem = new CollisionSystem(this.map);
-            // Player
-            this.player = new Player(10 * GRID_SIZE, 10 * GRID_SIZE);
-            this.entities = [this.player];
-        }
-        loop(ts) {
-            requestAnimationFrame(ts2 => this.loop(ts2));
-            const dt = Math.min((ts - this.lastTime) / 1000, 0.1);
-            this.lastTime = ts;
-            this.update(dt);
-            this.render();
-            this.updateFps(ts);
-        }
-        update(dt) {
-            if (this.state !== GameState.PLAYING) return;
-            for (const e of this.entities) {
-                if (e.update) e.update(dt, this.input, this.collisionSystem);
-            }
-            this.camera.update();
-        }
-        render() {
-            // Clear
-            this.ctx.fillStyle = FLOOR_COLOR;
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            // Camera offset
-            const camX = this.camera.x;
-            const camY = this.camera.y;
-            // Draw map
-            for (let y = 0; y < this.map.length; y++) {
-                for (let x = 0; x < this.map[0].length; x++) {
-                    const screenX = x * GRID_SIZE - camX;
-                    const screenY = y * GRID_SIZE - camY;
-                    if (this.map[y][x] === 1) {
-                        this.ctx.fillStyle = WALL_COLOR;
-                        this.ctx.fillRect(screenX, screenY, GRID_SIZE, GRID_SIZE);
-                    }
-                    this.ctx.strokeStyle = '#333';
-                    this.ctx.lineWidth = 1;
-                    this.ctx.strokeRect(screenX, screenY, GRID_SIZE, GRID_SIZE);
-                }
-            }
-            // Draw entities
-            for (const e of this.entities) {
-                this.ctx.fillStyle = e.color;
-                this.ctx.fillRect(e.x - camX, e.y - camY, e.w, e.h);
-            }
-            // Debug UI
-            if (DEBUG_MODE) {
-                const debug = document.getElementById('debug-ui');
-                debug.style.display = 'block';
-                debug.innerHTML = `FPS: ${this.fps}<br>Position: ${Math.floor(this.player.x)}, ${Math.floor(this.player.y)}<br>State: ${this.state}<br>Entities: ${this.entities.length}`;
-            }
-        }
-        updateFps(ts) {
-            this.frameCount++;
-            if (ts - this.lastFpsUpdate > 1000) {
-                this.fps = this.frameCount;
-                this.frameCount = 0;
-                this.lastFpsUpdate = ts;
-            }
-        }
-        // Add method to record monster kills
-        recordMonsterKill(monsterName) {
-            if (this.bestiary) {
-                this.bestiary.recordKill(monsterName);
-            }
-        }
+        return false;
+      }
+      render(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+      }
     }
 
     // --- Start Game ---
+    function startGame() {
+      document.getElementById('start-overlay').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('start-overlay').style.display = 'none';
+      }, 350);
+      // Play intro cutscene, then start game
+      const cutscene = new CutsceneManager(() => new Game());
+      cutscene.play(introCutscene);
+    }
     window.addEventListener('load', () => {
-        const game = new Game();
-        window.game = game;
-        game.init();
+      const overlay = document.getElementById('start-overlay');
+      function begin(e) {
+        startGame();
+        window.removeEventListener('keydown', begin);
+        window.removeEventListener('mousedown', begin);
+        window.removeEventListener('touchstart', begin);
+      }
+      window.addEventListener('keydown', begin);
+      window.addEventListener('mousedown', begin);
+      window.addEventListener('touchstart', begin);
     });
-    </script>
+  </script>
 </body>
-</html> 
+</html>
