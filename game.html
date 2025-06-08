@@ -17,18 +17,63 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     #start-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      color: #0ff;
+      background: url('https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/GlitterStart-eWtnNjTcWxXyheoQtPcBK9MDLQWYBK.png?koxn') center center/cover no-repeat;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 2em;
+      justify-content: flex-start;
       z-index: 1000;
-      cursor: pointer;
-      user-select: none;
       transition: opacity 0.3s;
     }
     #start-overlay.hidden { opacity: 0; pointer-events: none; }
+    #start-content {
+      margin-top: 50vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      transform: translateY(-50%);
+    }
+    #start-title {
+      font-size: 2.6em;
+      font-family: 'Monoton', 'Courier New', monospace;
+      text-align: center;
+      color: #edd628;
+      text-shadow: 0 0 7px #9932cc, 0 0 10px #9932cc, 0 0 21px #9932cc, 0 0 42px #9932cc;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    #start-btn {
+      background: linear-gradient(135deg, rgba(153,50,204,0.8) 0%, rgba(153,50,204,0.4) 100%);
+      border: 2px solid #9932cc;
+      color: #edd628;
+      font-family: 'Courier New', monospace;
+      font-size: 1.3em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px #000, 0 0 20px #000, 0 0 30px #9932cc;
+      box-shadow: 0 0 20px rgba(153,50,204,0.5);
+      border-radius: 25px;
+      min-width: 200px;
+      text-align: center;
+      padding: 15px 30px;
+      outline: none;
+      margin-bottom: 24px;
+      animation: buttonPulse 2s infinite;
+    }
+    #start-btn:hover {
+      background: linear-gradient(135deg, rgba(153,50,204,1) 0%, rgba(153,50,204,0.6) 100%);
+      transform: scale(1.05);
+      text-shadow: 0 0 20px #000, 0 0 30px #000, 0 0 40px #9932cc;
+      box-shadow: 0 0 30px rgba(153,50,204,0.7);
+    }
+    #start-credit {
+      color: #fff;
+      font-size: 0.9em;
+      opacity: 0.7;
+      text-shadow: 1px 1px 8px #000;
+    }
     /* Cutscene Styles */
     #cutscene-overlay {
       position: fixed;
@@ -52,20 +97,20 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       transform: translateX(-50%);
       width: 100vw;
       max-width: 100vw;
-      height: 50vh;
+      height: 35vh;
       min-height: unset;
-      max-height: 50vh;
+      max-height: 35vh;
       overflow-y: auto;
       background: rgba(0,0,0,0.85);
       box-shadow: 0 -4px 32px #000a;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
-      padding: 32px 32px 24px 32px;
+      padding: 24px 32px 16px 32px;
       z-index: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
+      align-items: flex-start;
+      justify-content: flex-start;
     }
     #cutscene-text {
       color: #0ff;
@@ -83,6 +128,9 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       transition: opacity 0.3s;
       word-break: break-word;
     }
+    #cutscene-text.galaxander {
+      font-size: 0.95em;
+    }
     #cutscene-skip {
       color: #0ff;
       font-size: 1em;
@@ -99,13 +147,258 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       50% { opacity: 0.3; }
       100% { opacity: 0.7; }
     }
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 7px #9932cc, 0 0 10px #9932cc, 0 0 21px #9932cc, 0 0 42px #9932cc;
+      }
+      to {
+        text-shadow: 0 0 10px #9932cc, 0 0 20px #9932cc, 0 0 30px #9932cc, 0 0 50px #9932cc;
+      }
+    }
+    @keyframes buttonPulse {
+      0% {
+        box-shadow: 0 0 20px rgba(153,50,204,0.5);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(153,50,204,0.7);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(153,50,204,0.5);
+      }
+    }
+    /* --- Menu Overlay Styles (inspired by gcaworking.html, clean version) --- */
+    #menu-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.95);
+      z-index: 3000;
+      display: none;
+      font-family: 'Luminari', 'Georgia', serif;
+    }
+    #menu-overlay.open {
+      display: flex !important;
+    }
+    #menu-content {
+      background: rgba(0,0,0,0.97);
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px #00ffff44;
+      color: #00ffff;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      border-bottom: 2px solid #00ffff44;
+      background: rgba(0,255,255,0.05);
+    }
+    .menu-title {
+      font-size: 1.4em;
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-party-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9em;
+    }
+    .menu-party-nav button {
+      background: none;
+      border: none;
+      color: #00ffff;
+      cursor: pointer;
+      font-size: 1.2em;
+      padding: 4px 8px;
+      transition: all 0.2s;
+    }
+    .menu-party-nav button:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .menu-close-btn {
+      background: none;
+      border: none;
+      color: #00ffff;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+    }
+    .menu-close-btn:hover {
+      color: #fff;
+      text-shadow: 0 0 15px #00ffff;
+      transform: scale(1.1);
+    }
+    .menu-content-wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .menu-main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 24px;
+      gap: 16px;
+    }
+    .menu-sidebar {
+      width: 300px;
+      border-left: 2px solid #00ffff44;
+      background: rgba(0,255,255,0.03);
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .menu-card {
+      background: rgba(0,255,255,0.05);
+      border: 1px solid #00ffff44;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .menu-card-title {
+      color: #fff;
+      font-size: 1.2em;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .menu-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .menu-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 8px;
+      background: rgba(0,255,255,0.03);
+      border-radius: 4px;
+    }
+    .menu-stat-label {
+      color: #fff;
+      opacity: 0.8;
+    }
+    .menu-stat-value {
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .menu-progress-bar {
+      height: 8px;
+      background: rgba(0,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 4px 0;
+    }
+    .menu-progress-fill {
+      height: 100%;
+      background: #00ffff;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .menu-tabs {
+      display: flex;
+      width: 100%;
+      border-top: 2px solid #00ffff44;
+      background: rgba(0,255,255,0.03);
+      margin: 0;
+      padding: 0;
+    }
+    .menu-tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #00ffff;
+      padding: 16px 12px;
+      font-size: 1.1em;
+      cursor: pointer;
+      text-align: center;
+      border-top: 2px solid transparent;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .menu-tab-btn:hover {
+      background: rgba(0,255,255,0.1);
+    }
+    .menu-tab-btn.active {
+      border-top: 2px solid #00ffff;
+      color: #fff;
+      background: rgba(0,255,255,0.15);
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .menu-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(0,255,255,0.03);
+      border: 1px solid #00ffff22;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .menu-list-item:hover {
+      background: rgba(0,255,255,0.08);
+      border-color: #00ffff44;
+    }
+    .menu-list-item.selected {
+      background: rgba(0,255,255,0.15);
+      border-color: #00ffff;
+    }
+    .menu-detail {
+      background: rgba(0,255,255,0.05);
+      border: 1px solid #00ffff44;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .menu-detail-title {
+      color: #fff;
+      font-size: 1.2em;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .menu-detail-content {
+      color: #00ffff;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      #menu-content { min-width: 90vw; min-height: 60vh; padding: 0; }
+      .menu-tab-content { padding: 10px 6px 0 6px; }
+    }
   </style>
 </head>
 <body>
   <div id="game-container">
     <canvas id="game-canvas" width="640" height="480"></canvas>
     <div id="hud">Glittercloud Adventure</div>
-    <div id="start-overlay">Click or Press Any Key to Start</div>
+    <div id="start-overlay">
+      <div id="start-content">
+        <div id="start-title">Glitter Cloud Adventure</div>
+        <button id="start-btn">Start Game</button>
+        <div id="start-credit">© Galaxander Corp. All Rights Reserved.</div>
+      </div>
+    </div>
     <!-- Cutscene Overlay -->
     <div id="cutscene-overlay">
       <div id="cutscene-bg"></div>
@@ -113,6 +406,101 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         <div id="cutscene-text"></div>
         <div id="cutscene-skip">Press any key or click to skip</div>
       </div>
+    </div>
+    <div id="menu-overlay">
+      <div id="menu-content">
+        <div class="menu-header">
+          <div class="menu-title">
+            <span>Menu</span>
+            <div class="menu-party-nav">
+              <button class="prev-party">◄</button>
+              <span class="menu-party-name">[Alex]</span>
+              <button class="next-party">►</button>
+              <span class="menu-party-count">1/3 Members</span>
+            </div>
+          </div>
+          <button class="menu-close-btn" id="menu-close-btn" title="Close">×</button>
+        </div>
+        <div class="menu-content-wrapper">
+          <div class="menu-main-content">
+            <!-- Character Tab -->
+            <div class="menu-tab-content" id="menu-tab-character">
+              <div class="menu-card">
+                <div class="menu-card-title">Character Info</div>
+                <div class="menu-stats-grid">
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">Level</span>
+                    <span class="menu-stat-value">5</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">Class</span>
+                    <span class="menu-stat-value">Flexecutioner</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">XP</span>
+                    <span class="menu-stat-value">1200/1500</span>
+                  </div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Vitals</div>
+                <div class="menu-stats-grid">
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">HP</span>
+                    <span class="menu-stat-value">85/85</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">MP</span>
+                    <span class="menu-stat-value">35/35</span>
+                  </div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: 100%"></div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: 70%"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Other tabs will be populated dynamically -->
+            <div class="menu-tab-content" id="menu-tab-inventory" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-skills" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-equipment" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-relics" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-party" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-quests" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-settings" style="display:none"></div>
+          </div>
+          <div class="menu-sidebar">
+            <div class="menu-detail">
+              <div class="menu-detail-title">Selected Item</div>
+              <div class="menu-detail-content">
+                Select an item to view details
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-tabs">
+          <button class="menu-tab-btn active" data-tab="character">Character</button>
+          <button class="menu-tab-btn" data-tab="inventory">Inventory</button>
+          <button class="menu-tab-btn" data-tab="skills">Skills</button>
+          <button class="menu-tab-btn" data-tab="equipment">Equipment</button>
+          <button class="menu-tab-btn" data-tab="relics">Relics</button>
+          <button class="menu-tab-btn" data-tab="party">Party</button>
+          <button class="menu-tab-btn" data-tab="quests">Quests</button>
+          <button class="menu-tab-btn" data-tab="settings">Settings</button>
+        </div>
+      </div>
+    </div>
+    <div id="debug-overlay" style="display:none; position:fixed; top:0; right:0; width:340px; max-width:100vw; height:100vh; background:rgba(0,0,0,0.92); color:#0ff; z-index:9999; font-size:0.95em; font-family:monospace; overflow-y:auto; pointer-events:auto; border-left:2px solid #0ff;">
+      <div style="padding:8px 12px; border-bottom:1px solid #0ff; display:flex; justify-content:space-between; align-items:center;">
+        <span><b>Debug Overlay</b></span>
+        <button id="debug-close-btn" style="background:none; border:none; color:#0ff; font-size:1.2em; cursor:pointer;">×</button>
+      </div>
+      <div id="debug-content" style="padding:10px;"></div>
     </div>
   </div>
   <script>
@@ -149,6 +537,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.overlay.style.display = 'block';
         this.textElem.textContent = '';
         this.bgElem.style.opacity = '1';
+        document.getElementById('start-overlay').style.display = 'none';
         setTimeout(() => this.nextScene(), 100);
         window.addEventListener('keydown', this.handleSkip);
         window.addEventListener('mousedown', this.handleSkip);
@@ -160,14 +549,16 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
           return;
         }
         const scene = this.current[this.index];
-        // Set background image
         if (scene.background) {
           this.bgElem.style.backgroundImage = `url('${scene.background}')`;
         } else {
           this.bgElem.style.backgroundImage = '';
         }
-        // Typewriter effect
         this.textElem.textContent = '';
+        this.textElem.className = '';
+        if (scene.text.includes('Galaxander')) {
+          this.textElem.classList.add('galaxander');
+        }
         this._typeText(scene.text, 0, () => {
           this.timeout = setTimeout(() => {
             this.index++;
@@ -197,6 +588,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         window.removeEventListener('keydown', this.handleSkip);
         window.removeEventListener('mousedown', this.handleSkip);
         window.removeEventListener('touchstart', this.handleSkip);
+        document.getElementById('start-overlay').style.display = 'flex';
         if (this.onFinish) this.onFinish();
       }
     }
@@ -228,7 +620,21 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/TeleportStore-o52yEto3qZbwQuZkZmi2RlKjTaXsaE.png?wblu",
         duration: 2000
       },
-      // Add any additional scenes from the original introscene here if needed
+      {
+        text: "In transit, bodies recompile—jeans into neon jumpsuits, flesh into pixel‑sheened avatars—stats and health bars flickering overhead.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Transformation-BzVmMb5tmkizSnIxX5rDDqv5YnvKF7.png?mppc",
+        duration: 2000
+      },
+      {
+        text: "Humanity rematerializes inside a boundless, zero‑G arcade. Cabinets ignite, revealing the grinning visage of Galaxander: 'Welcome, contestants! Your planet has been acquired by the Galaxander Corporation and all of you now star in the ultimate intergalactic game show.'",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/ArcadeWelcomeAnime-HTgSCgK8bb5l026TEsrtvxLs2WoovU.png?ixZi",
+        duration: 2500
+      },
+      {
+        text: "Alarms blare. Prize hatches on every claw machine burst open, spewing goblins that swarm the floor—Level One has begun.",
+        background: "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/c3AEorTjqZQC/Firrstfight-k99DrfTi1srSIFLGPo0tqI0oX2neX3.png?32eu",
+        duration: 2000
+      }
     ];
 
     // --- Map System ---
@@ -265,41 +671,327 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       }
     }
 
-    // --- Game Engine ---
-    class Game {
-      constructor() {
-        this.canvas = document.getElementById('game-canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.lastTime = 0;
-        this.map = new GameMap();
-        this.player = new Player(2 * TILE_SIZE, 2 * TILE_SIZE, this.map);
-        this.bindEvents();
-        requestAnimationFrame(this.loop.bind(this));
+    // --- Class Data (from gcaworking.html) ---
+    const CLASSES = {
+      ASPIRING: {
+        name: "Aspiring",
+        vitToHpMult: 5,
+        intToMpMult: 3,
+        strToAtkMult: 1,
+        vitToDefMult: 0.5,
+        dexToSpdMult: 1,
+        baseGrowth: {
+          strength: 1,
+          vitality: 1,
+          dexterity: 1,
+          intelligence: 1,
+          luck: 1,
+          charisma: 1,
+          fortune: 1
+        },
+        skillProgression: {}
+      },
+      FLEXECUTIONER: {
+        name: "Flexecutioner",
+        vitToHpMult: 7,
+        intToMpMult: 2,
+        strToAtkMult: 1.2,
+        vitToDefMult: 0.7,
+        dexToSpdMult: 0.7,
+        baseGrowth: {
+          strength: 1.2,
+          vitality: 1.0,
+          dexterity: 0.7,
+          intelligence: 0.4,
+          luck: 0.5,
+          charisma: 0.6,
+          fortune: 0.5
+        },
+        skillProgression: {
+          1: [{ name: "Power Strike", type: "active", mpCost: 5, cooldown: 3, description: "220% STR damage. 20% chance to Bleed (10% HP over 3 turns)." }],
+          3: [{ name: "Protein Shake", type: "passive", mpCost: 0, cooldown: 0, description: "+4% max HP & +5% HP regen in overworld" }],
+          5: [{ name: "Swole Stomp", type: "active", mpCost: 10, cooldown: 5, description: "Powerful AoE with stun chance." }]
+        }
+      },
+      RIZZLER: {
+        name: "Rizzler",
+        vitToHpMult: 4,
+        intToMpMult: 5,
+        strToAtkMult: 0.4,
+        vitToDefMult: 0.6,
+        dexToSpdMult: 0.8,
+        baseGrowth: {
+          strength: 0.4,
+          vitality: 0.6,
+          dexterity: 0.8,
+          intelligence: 1.0,
+          luck: 0.7,
+          charisma: 1.2,
+          fortune: 0.7
+        },
+        skillProgression: {
+          1: [{ name: "Charm", type: "active", mpCost: 4, cooldown: 2, description: "Chance to confuse enemy." }],
+          3: [{ name: "Viral Post", type: "active", mpCost: 8, cooldown: 4, description: "AoE debuff, lowers enemy defense." }],
+          5: [{ name: "Trendsetter", type: "passive", mpCost: 0, cooldown: 0, description: "Party-wide buff to speed." }]
+        }
+      },
+      "SUS-ASSASSIN": {
+        name: "Sus-Assassin",
+        vitToHpMult: 5,
+        intToMpMult: 3,
+        strToAtkMult: 0.8,
+        vitToDefMult: 0.7,
+        dexToSpdMult: 1.2,
+        baseGrowth: {
+          strength: 0.8,
+          vitality: 0.7,
+          dexterity: 1.2,
+          intelligence: 0.5,
+          luck: 1.0,
+          charisma: 0.8,
+          fortune: 1.0
+        },
+        skillProgression: {
+          1: [{ name: "Backstab", type: "active", mpCost: 6, cooldown: 3, description: "High crit chance attack." }],
+          3: [{ name: "Shadowmeld", type: "active", mpCost: 8, cooldown: 5, description: "Become untargetable for 1 turn." }],
+          5: [{ name: "Perfect Precision", type: "passive", mpCost: 0, cooldown: 0, description: "5% chance for attacks to ignore defense." }]
+        }
+      },
+      INFLUMANCER: {
+        name: "Influmancer",
+        vitToHpMult: 3,
+        intToMpMult: 7,
+        strToAtkMult: 0.3,
+        vitToDefMult: 0.5,
+        dexToSpdMult: 0.7,
+        baseGrowth: {
+          strength: 0.3,
+          vitality: 0.5,
+          dexterity: 0.7,
+          intelligence: 1.2,
+          luck: 0.9,
+          charisma: 1.0,
+          fortune: 0.9
+        },
+        skillProgression: {
+          1: [{ name: "Hype Wave", type: "active", mpCost: 7, cooldown: 3, description: "Party-wide heal." }],
+          3: [{ name: "Trending", type: "passive", mpCost: 0, cooldown: 0, description: "Status effects last 2 turns longer." }],
+          5: [{ name: "Reality Administrator", type: "passive", mpCost: 0, cooldown: 0, description: "15% chance for spells to cost 0 MP." }]
+        }
       }
-      bindEvents() {
-        window.addEventListener('keydown', e => this.player.handleKey(e.key, true));
-        window.addEventListener('keyup', e => this.player.handleKey(e.key, false));
+    };
+
+    // --- Skill Structure ---
+    // { name, type, mpCost, cooldown, description, unlocked (bool), levelUnlocked }
+
+    // --- Character System ---
+    class Character {
+      constructor(options = {}) {
+        // Core identity
+        this.id = options.id || `char_${Date.now()}_${Math.floor(Math.random()*10000)}`;
+        this.name = options.name || "Player";
+        this.class = options.class || "ASPIRING";
+        this.level = options.level || 1;
+        this.experience = options.experience || 0;
+        this.experienceToNextLevel = options.experienceToNextLevel || 100;
+        this.prestigeLevel = options.prestigeLevel || 0;
+        this.prestigeTalent = options.prestigeTalent || null;
+        this.prestigeAura = options.prestigeAura || null;
+        this.createdAt = options.createdAt || Date.now();
+        this.lastPlayed = options.lastPlayed || Date.now();
+
+        // Stats & attributes
+        this.stats = Object.assign({
+          strength: 10,
+          dexterity: 10,
+          vitality: 10,
+          intelligence: 10,
+          luck: 10,
+          charisma: 10,
+          fortune: 10
+        }, options.stats);
+        this.baseStats = Object.assign({}, this.stats);
+        this.derivedStats = options.derivedStats || {};
+        this.statPoints = options.statPoints || 0;
+        this.skillPoints = options.skillPoints || 0;
+        this.hp = options.hp || 100;
+        this.maxHp = options.maxHp || 100;
+        this.mp = options.mp || 30;
+        this.maxMp = options.maxMp || 30;
+        this.gold = options.gold || 0;
+
+        // Progression
+        this.pendingClassSelection = options.pendingClassSelection || false;
+        this.availablePoints = options.availablePoints || 0;
+        this.statsLocked = options.statsLocked || false;
+
+        // Skills & abilities
+        this.skills = options.skills || [];
+        this.spells = options.spells || [];
+        this.passives = options.passives || [];
+        this.masteredSkills = options.masteredSkills || [];
+        this.pendingSkillNotifications = options.pendingSkillNotifications || [];
+
+        // Equipment & inventory
+        this.equipment = Object.assign({
+          MAIN_HAND: null,
+          OFF_HAND: null,
+          HEAD: null,
+          BODY: null,
+          LEGS: null,
+          FEET: null,
+          RELIC_1: null,
+          RELIC_2: null
+        }, options.equipment);
+        this.inventory = options.inventory || [];
+
+        // Party & relationships
+        this.relationships = options.relationships || {};
+        this.partyOrder = options.partyOrder || 0;
+        this.partyActive = options.partyActive !== undefined ? options.partyActive : true;
+
+        // Status & effects
+        this.statusEffects = options.statusEffects || [];
+        this.effects = options.effects || [];
+
+        // Cosmic powers
+        this.cosmicPowers = options.cosmicPowers || [];
+        this.cosmicBalance = options.cosmicBalance || { harmony: 0, chaos: 0, stability: 0 };
+        this.cosmicCombos = options.cosmicCombos || [];
+
+        // Type mastery & achievements
+        this.typeMastery = options.typeMastery || {};
+        this.achievements = options.achievements || [];
+
+        // Quests & story
+        this.quests = options.quests || { active: [], completed: [] };
+        this.questStates = options.questStates || {};
+        this.storylinePosition = options.storylinePosition || { chapter: 1, scene: 1, flags: {} };
+
+        // Relics
+        this.relics = options.relics || {};
+        this.fury = options.fury || 0;
+        this.masteredRelicSkills = options.masteredRelicSkills || [];
+
+        // Animation state
+        this.sprite = options.sprite || null;
+        this.direction = options.direction || "down";
+        this.frame = options.frame || 0;
+        this.animationState = options.animationState || { isIdle: true };
+
+        this.calculateDerivedStats();
+        this.initSkills();
       }
-      loop(ts) {
-        const dt = (ts - this.lastTime) / 1000;
-        this.lastTime = ts;
-        this.update(dt);
-        this.render();
-        requestAnimationFrame(this.loop.bind(this));
+      initSkills() {
+        // Unlock skills for current level
+        const classData = CLASSES[this.class] || CLASSES.ASPIRING;
+        this.skills = [];
+        for (const lvl in classData.skillProgression) {
+          if (this.level >= parseInt(lvl)) {
+            for (const skill of classData.skillProgression[lvl]) {
+              this.skills.push({ ...skill, unlocked: true, levelUnlocked: parseInt(lvl) });
+            }
+          }
+        }
       }
-      update(dt) {
-        this.player.update(dt);
+      calculateDerivedStats() {
+        const classData = CLASSES[this.class] || CLASSES.ASPIRING;
+        this.derivedStats = {
+          maxHp: Math.floor(10 + (this.stats.vitality * (classData.vitToHpMult || 5)) + (this.level * 2)),
+          maxMp: Math.floor(5 + (this.stats.intelligence * (classData.intToMpMult || 3)) + this.level),
+          attack: Math.floor(this.stats.strength * (classData.strToAtkMult || 1)),
+          defense: Math.floor(this.stats.vitality * (classData.vitToDefMult || 0.5)),
+          speed: Math.floor(this.stats.dexterity * (classData.dexToSpdMult || 1)),
+          critChance: Math.min(5 + Math.floor(this.stats.fortune / 4), 30),
+          evasion: Math.min(Math.floor(this.stats.dexterity / 2), 25)
+        };
+        // Sync HP/MP if needed
+        if (!this.hp || this.hp > this.derivedStats.maxHp) this.hp = this.derivedStats.maxHp;
+        if (!this.mp || this.mp > this.derivedStats.maxMp) this.mp = this.derivedStats.maxMp;
+        this.maxHp = this.derivedStats.maxHp;
+        this.maxMp = this.derivedStats.maxMp;
       }
-      render() {
-        this.ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-        this.map.render(this.ctx);
-        this.player.render(this.ctx);
+      gainExperience(amount) {
+        this.experience += amount;
+        while (this.experience >= this.experienceToNextLevel) {
+          this.experience -= this.experienceToNextLevel;
+          this.levelUp();
+        }
+      }
+      levelUp() {
+        this.level += 1;
+        // Class-based stat growth
+        const classData = CLASSES[this.class] || CLASSES.ASPIRING;
+        for (const stat in classData.baseGrowth) {
+          if (this.stats[stat] !== undefined) {
+            this.stats[stat] += classData.baseGrowth[stat];
+          }
+        }
+        this.experienceToNextLevel = Math.floor(100 * Math.pow(1.5, this.level - 1));
+        this.calculateDerivedStats();
+        // Unlock new skills if available
+        this.initSkills();
+        // Class advancement at level 5
+        if (this.level === 5 && this.class === "ASPIRING") {
+          this.pendingClassSelection = true;
+        }
+        // Prestige at level 80 (example)
+        if (this.level === 80) {
+          this.prestige();
+        }
+      }
+      prestige() {
+        // Prestige: reset to level 1, retain skills/mastery, stat retention, assign talent
+        this.prestigeLevel = (this.prestigeLevel || 0) + 1;
+        // Retain 10% of stats
+        for (const stat in this.stats) {
+          this.stats[stat] = Math.floor(this.stats[stat] * 0.1);
+        }
+        this.level = 1;
+        this.experience = 0;
+        this.experienceToNextLevel = 100;
+        this.prestigeAura = true;
+        // Retain all mastered skills
+        this.masteredSkills = [...this.skills];
+        // Assign prestige talent based on class
+        const talents = {
+          FLEXECUTIONER: "Limitless Gains",
+          RIZZLER: "Endless Charisma",
+          "SUS-ASSASSIN": "Perfect Precision",
+          INFLUMANCER: "Reality Administrator"
+        };
+        this.prestigeTalent = talents[this.class] || null;
+        this.calculateDerivedStats();
       }
     }
 
     // --- Player Entity ---
     class Player {
       constructor(x, y, map) {
+        // Use Character for all player data
+        this.character = new Character({
+          name: "Hazel",
+          class: "ASPIRING",
+          level: 1,
+          experience: 0,
+          stats: {
+            strength: 10,
+            dexterity: 10,
+            vitality: 10,
+            intelligence: 10,
+            luck: 10,
+            charisma: 10,
+            fortune: 10
+          },
+          hp: 100,
+          maxHp: 100,
+          mp: 30,
+          maxMp: 30,
+          gold: 0,
+          sprite: null,
+          direction: "down",
+          frame: 0
+        });
         this.x = x;
         this.y = y;
         this.size = TILE_SIZE;
@@ -348,28 +1040,553 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       }
     }
 
+    // --- HUD ---
+    function updateHUD(player) {
+      let hud = document.getElementById('hud');
+      if (!hud) return;
+      const c = player.character;
+      hud.innerHTML = `
+        <b>${c.name}</b> (Lv.${c.level}${c.prestigeLevel > 0 ? '★'.repeat(c.prestigeLevel) : ''})<br>
+        HP: ${c.hp} / ${c.maxHp} &nbsp; MP: ${c.mp} / ${c.maxMp}<br>
+        STR: ${c.stats.strength} &nbsp; DEX: ${c.stats.dexterity} &nbsp; VIT: ${c.stats.vitality} &nbsp; INT: ${c.stats.intelligence}<br>
+        ATK: ${c.derivedStats.attack} &nbsp; DEF: ${c.derivedStats.defense} &nbsp; SPD: ${c.derivedStats.speed}<br>
+        CRIT: ${c.derivedStats.critChance}% &nbsp; EVA: ${c.derivedStats.evasion}%<br>
+        Gold: ${c.gold}
+      `;
+    }
+
+    // --- Game Engine ---
+    class Game {
+      constructor() {
+        this.canvas = document.getElementById('game-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.lastTime = 0;
+        this.map = new GameMap();
+        this.player = new Player(2 * TILE_SIZE, 2 * TILE_SIZE, this.map);
+        this.bindEvents();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+      bindEvents() {
+        window.addEventListener('keydown', e => this.player.handleKey(e.key, true));
+        window.addEventListener('keyup', e => this.player.handleKey(e.key, false));
+      }
+      loop(ts) {
+        const dt = (ts - this.lastTime) / 1000;
+        this.lastTime = ts;
+        this.update(dt);
+        this.render();
+        updateHUD(this.player);
+        requestAnimationFrame(this.loop.bind(this));
+      }
+      update(dt) {
+        this.player.update(dt);
+      }
+      render() {
+        this.ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        this.map.render(this.ctx);
+        this.player.render(this.ctx);
+      }
+    }
+
     // --- Start Game ---
     function startGame() {
+      window.debugLog && window.debugLog('startGame() called');
       document.getElementById('start-overlay').classList.add('hidden');
       setTimeout(() => {
         document.getElementById('start-overlay').style.display = 'none';
+        window.game = new Game();
+        window.gameReady = true;
+        // Initialize MenuManager after game is ready
+        if (!window.menuManager) {
+          window.menuManager = new MenuManager();
+        }
+        // Set up party members (for now, just the player character)
+        window.menuManager.partyMembers = [window.game.player.character];
+        window.menuManager.partyIndex = 0;
+        window.menuManager.updatePartyNav();
+        window.debugLog && window.debugLog('Game started: window.game is set. MenuManager initialized.');
       }, 350);
-      // Play intro cutscene, then start game
-      const cutscene = new CutsceneManager(() => new Game());
-      cutscene.play(introCutscene);
     }
     window.addEventListener('load', () => {
-      const overlay = document.getElementById('start-overlay');
-      function begin(e) {
-        startGame();
-        window.removeEventListener('keydown', begin);
-        window.removeEventListener('mousedown', begin);
-        window.removeEventListener('touchstart', begin);
+      const startBtn = document.getElementById('start-btn');
+      if (startBtn) {
+        startBtn.onclick = startGame;
+        window.debugLog && window.debugLog('startBtn.onclick set');
       }
-      window.addEventListener('keydown', begin);
-      window.addEventListener('mousedown', begin);
-      window.addEventListener('touchstart', begin);
+      // Start with cutscene
+      const cutscene = new CutsceneManager(() => {});
+      cutscene.play(introCutscene);
     });
+
+    // --- MenuManager ---
+    class MenuManager {
+      constructor() {
+        this.overlay = document.getElementById('menu-overlay');
+        this.tabs = Array.from(document.querySelectorAll('.menu-tab-btn'));
+        this.tabContents = {
+          character: document.getElementById('menu-tab-character'),
+          inventory: document.getElementById('menu-tab-inventory'),
+          skills: document.getElementById('menu-tab-skills'),
+          equipment: document.getElementById('menu-tab-equipment'),
+          relics: document.getElementById('menu-tab-relics'),
+          party: document.getElementById('menu-tab-party'),
+          quests: document.getElementById('menu-tab-quests'),
+          settings: document.getElementById('menu-tab-settings')
+        };
+        this.closeBtn = document.getElementById('menu-close-btn');
+        this.activeTab = 'character';
+        this.selectedItem = null;
+        this.partyIndex = 0;
+        this.partyMembers = [];
+        this._bindEvents();
+      }
+
+      _bindEvents() {
+        this.closeBtn.onclick = () => this.close();
+        this.tabs.forEach(tab => {
+          tab.onclick = () => this.switchTab(tab.dataset.tab);
+        });
+        document.querySelector('.prev-party').onclick = () => this.cycleParty(-1);
+        document.querySelector('.next-party').onclick = () => this.cycleParty(1);
+        window.addEventListener('keydown', e => {
+          if (e.key === 'Escape') this.close();
+          if (e.key === 'ArrowLeft') this.cycleParty(-1);
+          if (e.key === 'ArrowRight') this.cycleParty(1);
+        });
+      }
+
+      open() {
+        this.overlay.classList.add('open');
+        this.switchTab(this.activeTab);
+        this.updatePartyNav();
+      }
+
+      close() {
+        this.overlay.classList.remove('open');
+      }
+
+      switchTab(tab) {
+        this.activeTab = tab;
+        this.tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+        Object.keys(this.tabContents).forEach(key => {
+          this.tabContents[key].style.display = (key === tab) ? '' : 'none';
+        });
+        this.renderTab(tab);
+      }
+
+      cycleParty(direction) {
+        if (!this.partyMembers.length) return;
+        this.partyIndex = (this.partyIndex + direction + this.partyMembers.length) % this.partyMembers.length;
+        this.updatePartyNav();
+        this.renderTab(this.activeTab);
+      }
+
+      updatePartyNav() {
+        const nav = document.querySelector('.menu-party-nav');
+        if (!nav) return;
+        const member = this.partyMembers[this.partyIndex] || { name: 'None' };
+        const nameSpan = nav.querySelector('.menu-party-name');
+        const countSpan = nav.querySelector('.menu-party-count');
+        if (nameSpan) nameSpan.textContent = `[${member.name}]`;
+        if (countSpan) countSpan.textContent = `${this.partyIndex + 1}/${this.partyMembers.length} Members`;
+      }
+
+      selectItem(item) {
+        this.selectedItem = item;
+        const detailContent = document.querySelector('.menu-detail-content');
+        if (!detailContent) return;
+        
+        if (!item) {
+          detailContent.innerHTML = 'Select an item to view details';
+          return;
+        }
+
+        detailContent.innerHTML = `
+          <h3>${item.name}</h3>
+          ${item.description ? `<p>${item.description}</p>` : ''}
+          ${item.stats ? `
+            <div class="menu-stats-grid">
+              ${Object.entries(item.stats).map(([key, value]) => `
+                <div class="menu-stat">
+                  <span class="menu-stat-label">${key}</span>
+                  <span class="menu-stat-value">${value}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        `;
+      }
+
+      renderTab(tab) {
+        const player = window.game?.player?.character;
+        if (!player) return;
+
+        switch(tab) {
+          case 'character':
+            this.tabContents.character.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Character Info</div>
+                <div class="menu-stats-grid">
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">Level</span>
+                    <span class="menu-stat-value">${player.level}</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">Class</span>
+                    <span class="menu-stat-value">${player.class}</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">XP</span>
+                    <span class="menu-stat-value">${player.experience}/${player.experienceToNextLevel}</span>
+                  </div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: ${(player.experience / player.experienceToNextLevel) * 100}%"></div>
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Vitals</div>
+                <div class="menu-stats-grid">
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">HP</span>
+                    <span class="menu-stat-value">${player.hp}/${player.maxHp}</span>
+                  </div>
+                  <div class="menu-stat">
+                    <span class="menu-stat-label">MP</span>
+                    <span class="menu-stat-value">${player.mp}/${player.maxMp}</span>
+                  </div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: ${(player.hp / player.maxHp) * 100}%"></div>
+                </div>
+                <div class="menu-progress-bar">
+                  <div class="menu-progress-fill" style="width: ${(player.mp / player.maxMp) * 100}%"></div>
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'inventory':
+            this.tabContents.inventory.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Inventory</div>
+                <div class="menu-list">
+                  ${player.inventory.length > 0 
+                    ? player.inventory.map(item => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item)})">
+                          <span>${item.name}</span>
+                          <span>${item.quantity || 1}</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No items in inventory</div>'
+                  }
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'skills':
+            this.tabContents.skills.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Active Skills</div>
+                <div class="menu-list">
+                  ${player.skills.filter(s => s.type === 'active').map(skill => `
+                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
+                      <span>${skill.name}</span>
+                      <span>MP: ${skill.mpCost}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Passive Skills</div>
+                <div class="menu-list">
+                  ${player.skills.filter(s => s.type === 'passive').map(skill => `
+                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
+                      <span>${skill.name}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'equipment':
+            this.tabContents.equipment.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Equipment</div>
+                <div class="menu-list">
+                  ${Object.entries(player.equipment).map(([slot, item]) => `
+                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item || { name: 'Empty', slot })})">
+                      <span>${slot.replace('_', ' ')}</span>
+                      <span>${item ? item.name : 'Empty'}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'relics':
+            this.tabContents.relics.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Relics</div>
+                <div class="menu-list">
+                  ${Object.values(player.relics).length > 0
+                    ? Object.values(player.relics).map(relic => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(relic)})">
+                          <span>${relic.name} ${player.equipment.RELIC_1 === relic || player.equipment.RELIC_2 === relic ? '(Equipped)' : ''}</span>
+                          <span>Lv.${relic.level}</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No relics owned</div>'
+                  }
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'party':
+            this.tabContents.party.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Party Members</div>
+                <div class="menu-list">
+                  <div class="menu-list-item">
+                    <span>${player.name}</span>
+                    <span>Lv.${player.level} ${player.class}</span>
+                  </div>
+                  ${Object.entries(player.relationships).map(([name, rel]) => `
+                    <div class="menu-list-item">
+                      <span>${name}</span>
+                      <span>${rel.level}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'quests':
+            this.tabContents.quests.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Active Quests</div>
+                <div class="menu-list">
+                  ${player.quests.active.length > 0 
+                    ? player.quests.active.map(quest => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
+                          <span>${quest.name}</span>
+                          <span>${quest.progress || 0}%</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No active quests</div>'
+                  }
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Completed Quests</div>
+                <div class="menu-list">
+                  ${player.quests.completed.length > 0 
+                    ? player.quests.completed.map(quest => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
+                          <span>${quest.name}</span>
+                          <span>${new Date(quest.completedAt).toLocaleDateString()}</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No completed quests</div>'
+                  }
+                </div>
+              </div>
+            `;
+            break;
+
+          case 'settings':
+            this.tabContents.settings.innerHTML = `
+              <div class="menu-card">
+                <div class="menu-card-title">Game Settings</div>
+                <div class="menu-list">
+                  <div class="menu-list-item">
+                    <span>Audio</span>
+                    <span>[Sliders]</span>
+                  </div>
+                  <div class="menu-list-item">
+                    <span>Display</span>
+                    <span>[Toggles]</span>
+                  </div>
+                  <div class="menu-list-item">
+                    <span>Controls</span>
+                    <span>[View]</span>
+                  </div>
+                </div>
+              </div>
+            `;
+            break;
+        }
+      }
+    }
+    // --- Initialize MenuManager and keyboard shortcut ---
+    const menuManager = new MenuManager();
+    document.getElementById('menu-close-btn').onclick = () => window.menuManager && window.menuManager.close();
+    window.addEventListener('keydown', e => {
+      window.debugLog && window.debugLog('keydown event: ' + e.key);
+      console.log('keydown event:', e.key);
+      const menuOverlay = document.getElementById('menu-overlay');
+      window.debugLog && window.debugLog('menuOverlay open (every key): ' + menuOverlay.classList.contains('open'));
+      // Toggle debug overlay with ~
+      if (e.key === '`' || e.key === '~') {
+        window.debugLog && window.debugLog('Entered debug overlay toggle block');
+        debugVisible = !debugVisible;
+        debugOverlay.style.display = debugVisible ? 'block' : 'none';
+        updateDebugOverlay(e.key);
+      }
+      // Dev/test: '-' key gives Glitch Stick relic
+      if (e.key === '-' && document.activeElement.tagName !== 'INPUT' && !menuOverlay.classList.contains('open')) {
+        if (!window.gameReady) {
+          window.debugLog && window.debugLog('Game not started yet: cannot give relic.');
+          return;
+        }
+        window.debugLog && window.debugLog('Entered dev shortcut block');
+        window.debugLog && window.debugLog('window.giveTestRelic: ' + (typeof window.giveTestRelic));
+        window.debugLog && window.debugLog('window.game: ' + (typeof window.game));
+        window.debugLog && window.debugLog('window.game?.player: ' + (window.game && window.game.player ? 'exists' : 'undefined'));
+        window.debugLog && window.debugLog('window.game?.player?.character: ' + (window.game && window.game.player && window.game.player.character ? 'exists' : 'undefined'));
+        console.log('window.giveTestRelic:', window.giveTestRelic);
+        console.log('window.game:', window.game);
+        console.log('window.game?.player:', window.game && window.game.player);
+        console.log('window.game?.player?.character:', window.game && window.game.player && window.game.player.character);
+        window.giveTestRelic && window.giveTestRelic();
+        window.debugLog('Pressed - : called giveTestRelic()');
+        updateDebugOverlay(e.key);
+      }
+      // Menu open/close logic
+      if ((e.key === 'Escape' || e.key.toLowerCase() === 'm') && document.activeElement.tagName !== 'INPUT') {
+        window.debugLog && window.debugLog('Entered menu open/close block');
+        window.debugLog && window.debugLog('menuManager: ' + (typeof window.menuManager));
+        window.debugLog && window.debugLog('menuOverlay open before: ' + menuOverlay.classList.contains('open'));
+        console.log('menuManager:', window.menuManager);
+        console.log('menuOverlay open before:', menuOverlay.classList.contains('open'));
+        if (menuOverlay.classList.contains('open')) {
+          window.menuManager && window.menuManager.close();
+          window.debugLog('Menu closed via key');
+        } else {
+          window.menuManager && window.menuManager.open();
+          window.debugLog('Menu opened via key');
+        }
+        window.debugLog && window.debugLog('menuOverlay open after: ' + menuOverlay.classList.contains('open'));
+        console.log('menuOverlay open after:', menuOverlay.classList.contains('open'));
+        updateDebugOverlay(e.key);
+      }
+      updateDebugOverlay(e.key);
+    });
+
+    // --- Add global handlers for relic actions ---
+    window.useRelicAbility = function(relicId, abilityName) {
+      const player = window.game?.player?.character;
+      if (!player) return;
+      const relic = player.relics[relicId];
+      if (!relic) return;
+      const ability = relic.abilities.find(a => a.name === abilityName);
+      if (!ability) return;
+      // Simple cooldown check (not persistent)
+      const now = Date.now();
+      if (ability.cooldown && ability.lastUsed && now - ability.lastUsed < ability.cooldown * 1000) {
+        alert('Ability is on cooldown!');
+        return;
+      }
+      ability.lastUsed = now;
+      // Placeholder effect for Glitch Stick
+      if (relicId === 'glitch_stick' && abilityName === 'Reality Glitch') {
+        alert('Reality glitches! (Test effect)');
+        gainRelicXP(relic, 5);
+        menuManager.renderTab('relics');
+      } else {
+        alert(`Use ability '${abilityName}' from relic '${relicId}' (placeholder)`);
+      }
+    };
+    window.equipRelic = function(relicId) {
+      const player = window.game?.player?.character;
+      if (!player) return;
+      // Equip in first available slot
+      if (!player.equipment.RELIC_1) player.equipment.RELIC_1 = player.relics[relicId];
+      else if (!player.equipment.RELIC_2) player.equipment.RELIC_2 = player.relics[relicId];
+      else player.equipment.RELIC_1 = player.relics[relicId]; // Replace slot 1 for now
+      menuManager.renderTab('relics');
+      menuManager.renderTab('equipment');
+    };
+    window.unequipRelic = function(relicId) {
+      const player = window.game?.player?.character;
+      if (!player) return;
+      if (player.equipment.RELIC_1 && player.equipment.RELIC_1.id === relicId) player.equipment.RELIC_1 = null;
+      if (player.equipment.RELIC_2 && player.equipment.RELIC_2.id === relicId) player.equipment.RELIC_2 = null;
+      menuManager.renderTab('relics');
+      menuManager.renderTab('equipment');
+    };
+
+    // --- Sample Relic: Glitch Stick ---
+    const GLITCH_STICK = {
+      id: 'glitch_stick',
+      name: 'Glitch Stick',
+      description: 'A mysterious stick that pulses with unstable code. Can disrupt reality for a moment.',
+      level: 1,
+      xp: 0,
+      xpToNextLevel: 20,
+      abilities: [
+        {
+          name: 'Reality Glitch',
+          type: 'active',
+          description: 'Causes a random glitch effect. (Test ability)',
+          cooldown: 0,
+          lastUsed: 0
+        }
+      ]
+    };
+
+    // --- Relic XP/Leveling ---
+    function gainRelicXP(relic, amount) {
+      relic.xp += amount;
+      while (relic.xp >= relic.xpToNextLevel) {
+        relic.xp -= relic.xpToNextLevel;
+        relic.level++;
+        relic.xpToNextLevel = Math.floor(relic.xpToNextLevel * 1.5 + 10);
+        // Optionally: unlock new abilities, show message, etc.
+      }
+    }
+
+    // --- Give Test Relic (for dev/testing only) ---
+    window.giveTestRelic = function() {
+      const player = window.game?.player?.character;
+      if (!player) return;
+      if (!player.relics[GLITCH_STICK.id]) {
+        // Deep clone to avoid reference issues
+        player.relics[GLITCH_STICK.id] = JSON.parse(JSON.stringify(GLITCH_STICK));
+        menuManager.renderTab('relics');
+      }
+    };
+
+    // --- Debug Overlay ---
+    const debugOverlay = document.getElementById('debug-overlay');
+    const debugContent = document.getElementById('debug-content');
+    const debugCloseBtn = document.getElementById('debug-close-btn');
+    let debugVisible = false;
+    window.debugLog = function(msg) {
+      if (!debugContent) return;
+      const p = document.createElement('div');
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      debugContent.appendChild(p);
+      debugContent.scrollTop = debugContent.scrollHeight;
+    };
+    function updateDebugOverlay(lastKey) {
+      const menuOpen = document.getElementById('menu-overlay').classList.contains('open');
+      const player = window.game?.player?.character;
+      debugContent.innerHTML = `
+        <b>Menu Open:</b> ${menuOpen}<br>
+        <b>Last Key:</b> ${lastKey || ''}<br>
+        <b>Relics:</b><br>
+        <ul style="margin:0 0 8px 12px;">
+          ${player ? Object.values(player.relics).map(r => `<li>${r.name} (id: ${r.id}, lvl: ${r.level}, xp: ${r.xp}/${r.xpToNextLevel})</li>`).join('') : '<li>None</li>'}
+        </ul>
+      `;
+    }
+    debugCloseBtn.onclick = () => { debugOverlay.style.display = 'none'; debugVisible = false; };
   </script>
 </body>
 </html>
