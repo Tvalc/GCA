@@ -166,6 +166,44 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         box-shadow: 0 0 20px rgba(153,50,204,0.5);
       }
     }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      20% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      80% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+    }
     /* --- Menu Overlay Styles (inspired by gcaworking.html, clean version) --- */
     #menu-overlay {
       position: fixed;
@@ -319,19 +357,24 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       background: rgba(0,255,255,0.03);
       margin: 0;
       padding: 0;
+      font-size: 0.95em;
+      gap: 0;
+      justify-content: space-between;
     }
     .menu-tab-btn {
       flex: 1;
       background: none;
       border: none;
       color: #00ffff;
-      padding: 16px 12px;
-      font-size: 1.1em;
+      padding: 10px 4px;
+      font-size: 0.95em;
       cursor: pointer;
       text-align: center;
       border-top: 2px solid transparent;
       transition: all 0.2s;
       outline: none;
+      min-width: 0;
+      letter-spacing: 0.01em;
     }
     .menu-tab-btn:hover {
       background: rgba(0,255,255,0.1);
@@ -381,6 +424,20 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     .menu-detail-content {
       color: #00ffff;
       line-height: 1.4;
+    }
+    .menu-item-use-btn {
+      background: rgba(0,255,255,0.2);
+      border: 1px solid #00ffff;
+      color: #fff;
+      padding: 2px 10px;
+      font-size: 0.85em;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .menu-item-use-btn:hover {
+      background: rgba(0,255,255,0.4);
+      transform: scale(1.05);
     }
     @media (max-width: 600px) {
       #menu-content { min-width: 90vw; min-height: 60vh; padding: 0; }
@@ -442,7 +499,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                   </div>
                 </div>
                 <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 80%"></div>
+                  <div class="menu-progress-fill" style="width: ${(player.experience / player.experienceToNextLevel) * 100}%"></div>
                 </div>
               </div>
               <div class="menu-card">
@@ -450,18 +507,18 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-stats-grid">
                   <div class="menu-stat">
                     <span class="menu-stat-label">HP</span>
-                    <span class="menu-stat-value">85/85</span>
+                    <span class="menu-stat-value">${player.hp}/${player.maxHp}</span>
                   </div>
                   <div class="menu-stat">
                     <span class="menu-stat-label">MP</span>
-                    <span class="menu-stat-value">35/35</span>
+                    <span class="menu-stat-value">${player.mp}/${player.maxMp}</span>
                   </div>
                 </div>
                 <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 100%"></div>
+                  <div class="menu-progress-fill" style="width: ${(player.hp / player.maxHp) * 100}%"></div>
                 </div>
                 <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 70%"></div>
+                  <div class="menu-progress-fill" style="width: ${(player.mp / player.maxMp) * 100}%"></div>
                 </div>
               </div>
             </div>
@@ -513,6 +570,205 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     const MAP_HEIGHT = 15;
     const GAME_WIDTH = TILE_SIZE * MAP_WIDTH;
     const GAME_HEIGHT = TILE_SIZE * MAP_HEIGHT;
+
+    // --- Enemy Types & Weaknesses ---
+    const ENEMY_TYPES = {
+      BUG: { weaknesses: ['fire'], resistances: ['poison'] },
+      CONSTRUCT: { weaknesses: ['lightning'], resistances: [], nulls: ['charm'] },
+      BEAST: { weaknesses: ['ice'], resistances: ['earth'] },
+      MYSTIC: { weaknesses: ['holy'], resistances: ['dark'] },
+      AQUATIC: { weaknesses: ['lightning'], resistances: ['water', 'ice'] }
+    };
+
+    // --- Enemy Data (from B1: Digital Dawn) ---
+    const ENEMY_DATABASE = {
+      'roach': {
+        name: 'Roach',
+        level: 1,
+        type: 'BUG',
+        hp: { min: 27, max: 50 },
+        mp: 10,
+        stats: {
+          attack: { min: 4, max: 8 },
+          defense: { min: 2, max: 3 },
+          magic: { min: 1, max: 2 },
+          mDefense: { min: 1, max: 2 },
+          speed: { min: 8, max: 12 },
+          luck: { min: 5, max: 8 }
+        },
+        abilities: [
+          { name: 'Nibble', type: 'physical', power: 0.8, description: 'Light physical damage' },
+          { name: 'Scuttle', type: 'buff', effect: 'evasion', duration: 1, description: 'Increases evasion for 1 turn' }
+        ],
+        drops: [
+          { item: 'Bug Shell', chance: 100, quantity: 1 },
+          { item: 'Sticky Residue', chance: 30, quantity: 1 },
+          { item: 'Shiny Object', chance: 5, quantity: 1 }
+        ],
+        xp: { min: 10, max: 20 },
+        gold: { min: 5, max: 15 },
+        description: "Pesky digital vermin that multiply in the dark corners of the net."
+      },
+      'spamton': {
+        name: 'Spamton',
+        level: 1,
+        type: 'CONSTRUCT',
+        hp: { min: 35, max: 70 },
+        mp: 15,
+        stats: {
+          attack: { min: 3, max: 6 },
+          defense: { min: 3, max: 5 },
+          magic: { min: 5, max: 8 },
+          mDefense: { min: 4, max: 6 },
+          speed: { min: 6, max: 10 },
+          luck: { min: 10, max: 15 }
+        },
+        abilities: [
+          { name: 'Special Offer', type: 'status', effect: 'confuse', chance: 30, description: 'May confuse target' },
+          { name: 'Bulk Discount', type: 'magical', power: 0.6, targetAll: true, description: 'Light damage to all' },
+          { name: 'Limited Time', type: 'buff', effect: 'attack', power: 1.3, duration: 3, description: 'Increases ATK' }
+        ],
+        drops: [
+          { item: 'Spam Mail', chance: 100, quantity: 1 },
+          { item: 'Coupon', chance: 25, quantity: 1 },
+          { item: 'Golden Ticket', chance: 10, quantity: 1 }
+        ],
+        xp: { min: 10, max: 20 },
+        gold: { min: 5, max: 15 },
+        description: "A living advertisement that won't take no for an answer."
+      },
+      'wifi_yeti': {
+        name: 'WiFi Yeti',
+        level: 2,
+        type: 'BEAST',
+        hp: { min: 45, max: 90 },
+        mp: 20,
+        stats: {
+          attack: { min: 5, max: 10 },
+          defense: { min: 2, max: 4 },
+          magic: { min: 3, max: 6 },
+          mDefense: { min: 1, max: 3 },
+          speed: { min: 4, max: 8 },
+          luck: { min: 5, max: 10 }
+        },
+        abilities: [
+          { name: 'Icy Claw', type: 'physical', power: 1.2, element: 'ice', statusChance: 20, status: 'freeze' },
+          { name: 'Signal Jam', type: 'debuff', effect: 'accuracy', power: 0.7, targetAll: true },
+          { name: 'Hibernate', type: 'heal', power: 0.2, skipTurn: true }
+        ],
+        drops: [
+          { item: 'Yeti Fur', chance: 100, quantity: 1 },
+          { item: 'Frost Shard', chance: 35, quantity: 1 },
+          { item: 'Frozen Core', chance: 10, quantity: 1 }
+        ],
+        xp: { min: 15, max: 25 },
+        gold: { min: 10, max: 20 },
+        description: "A hulking beast that feeds on weak signals and slower connections."
+      }
+    };
+
+    // --- Enemy Class ---
+    class Enemy {
+      constructor(enemyId, level = null) {
+        const data = ENEMY_DATABASE[enemyId];
+        if (!data) throw new Error(`Unknown enemy: ${enemyId}`);
+        
+        this.id = `enemy_${Date.now()}_${Math.floor(Math.random()*10000)}`;
+        this.enemyId = enemyId;
+        this.name = data.name;
+        this.level = level || data.level;
+        this.type = data.type;
+        this.description = data.description;
+        
+        // Roll HP/MP within ranges
+        this.hp = Math.floor(Math.random() * (data.hp.max - data.hp.min + 1)) + data.hp.min;
+        this.maxHp = this.hp;
+        this.mp = data.mp;
+        this.maxMp = data.mp;
+        
+        // Roll stats within ranges
+        this.stats = {};
+        for (const stat in data.stats) {
+          const range = data.stats[stat];
+          this.stats[stat] = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+        }
+        
+        // Copy abilities, drops, rewards
+        this.abilities = [...data.abilities];
+        this.drops = data.drops;
+        this.xpReward = Math.floor(Math.random() * (data.xp.max - data.xp.min + 1)) + data.xp.min;
+        this.goldReward = Math.floor(Math.random() * (data.gold.max - data.gold.min + 1)) + data.gold.min;
+        
+        // Combat state
+        this.statusEffects = [];
+        this.buffs = [];
+        this.debuffs = [];
+        this.actionCooldowns = {};
+      }
+      
+      takeDamage(damage, damageType = 'physical', element = null) {
+        let finalDamage = damage;
+        
+        // Apply type weaknesses/resistances
+        const typeData = ENEMY_TYPES[this.type];
+        if (element && typeData) {
+          if (typeData.weaknesses.includes(element)) {
+            finalDamage *= 1.5; // 50% more damage
+          } else if (typeData.resistances.includes(element)) {
+            finalDamage *= 0.5; // 50% less damage
+          }
+        }
+        
+        // Apply defense
+        if (damageType === 'physical') {
+          finalDamage *= (100 / (100 + this.stats.defense));
+        } else if (damageType === 'magical') {
+          finalDamage *= (100 / (100 + this.stats.mDefense));
+        }
+        
+        finalDamage = Math.floor(finalDamage);
+        this.hp = Math.max(0, this.hp - finalDamage);
+        
+        return { damage: finalDamage, weakness: element && typeData?.weaknesses.includes(element) };
+      }
+      
+      chooseAction(party) {
+        // Simple AI: choose random available ability
+        const availableAbilities = this.abilities.filter(ability => {
+          const cooldown = this.actionCooldowns[ability.name] || 0;
+          return cooldown === 0;
+        });
+        
+        if (availableAbilities.length === 0) {
+          // Basic attack if no abilities available
+          return { type: 'attack', target: this.selectTarget(party) };
+        }
+        
+        const ability = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
+        const targets = ability.targetAll ? party : [this.selectTarget(party)];
+        
+        return { type: 'ability', ability, targets };
+      }
+      
+      selectTarget(party) {
+        // Simple targeting: pick random alive party member
+        const alive = party.filter(member => member.hp > 0);
+        return alive[Math.floor(Math.random() * alive.length)];
+      }
+      
+      rollDrops() {
+        const dropped = [];
+        for (const drop of this.drops) {
+          if (Math.random() * 100 < drop.chance) {
+            dropped.push({
+              item: drop.item,
+              quantity: drop.quantity || 1
+            });
+          }
+        }
+        return dropped;
+      }
+    }
 
     // --- Cutscene System ---
     class CutsceneManager {
@@ -650,10 +906,57 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.grid[5][5] = 1; this.grid[5][6] = 1;
         this.grid[6][5] = 1; this.grid[6][6] = 1;
         this.grid[8][10] = 1; this.grid[9][10] = 1;
+        
+        // Add spawn zones for enemies
+        this.enemySpawnZones = [
+          { x: 10, y: 7, radius: 3, enemyTypes: ['roach', 'spamton'] },
+          { x: 15, y: 12, radius: 2, enemyTypes: ['wifi_yeti'] }
+        ];
+        
+        // Track enemy encounters
+        this.enemies = [];
+        this.spawnEnemies();
       }
+      
+      spawnEnemies() {
+        // Spawn some enemies in zones
+        for (const zone of this.enemySpawnZones) {
+          const numEnemies = 2 + Math.floor(Math.random() * 2);
+          for (let i = 0; i < numEnemies; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * zone.radius;
+            const x = zone.x + Math.cos(angle) * dist;
+            const y = zone.y + Math.sin(angle) * dist;
+            
+            const enemyType = zone.enemyTypes[Math.floor(Math.random() * zone.enemyTypes.length)];
+            this.enemies.push({
+              x: Math.floor(x),
+              y: Math.floor(y),
+              type: enemyType,
+              engaged: false,
+              id: `map_enemy_${Date.now()}_${Math.floor(Math.random()*1000)}`
+            });
+          }
+        }
+      }
+      
+      checkEnemyEncounter(playerX, playerY) {
+        const px = Math.floor(playerX / TILE_SIZE);
+        const py = Math.floor(playerY / TILE_SIZE);
+        
+        for (const enemy of this.enemies) {
+          if (!enemy.engaged && enemy.x === px && enemy.y === py) {
+            enemy.engaged = true;
+            return enemy;
+          }
+        }
+        return null;
+      }
+      
       isWall(x, y) {
         return this.grid[y] && this.grid[y][x] === 1;
       }
+      
       render(ctx) {
         for (let y = 0; y < MAP_HEIGHT; y++) {
           for (let x = 0; x < MAP_WIDTH; x++) {
@@ -666,6 +969,14 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
             }
             ctx.strokeStyle = '#333';
             ctx.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+          }
+        }
+        
+        // Render enemies
+        ctx.fillStyle = '#f44';
+        for (const enemy of this.enemies) {
+          if (!enemy.engaged) {
+            ctx.fillRect(enemy.x * TILE_SIZE + 8, enemy.y * TILE_SIZE + 8, TILE_SIZE - 16, TILE_SIZE - 16);
           }
         }
       }
@@ -928,14 +1239,24 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
           }
         }
         this.experienceToNextLevel = Math.floor(100 * Math.pow(1.5, this.level - 1));
+        
+        // Give stat points for manual allocation
+        this.statPoints += 3; // 3 stat points per level
+        
+        // Full heal on level up
         this.calculateDerivedStats();
+        this.hp = this.maxHp;
+        this.mp = this.maxMp;
+        
         // Unlock new skills if available
         this.initSkills();
+        
         // Class advancement at level 5
         if (this.level === 5 && this.class === "ASPIRING") {
           this.pendingClassSelection = true;
         }
-        // Prestige at level 80 (example)
+        
+        // Prestige at level 80
         if (this.level === 80) {
           this.prestige();
         }
@@ -946,6 +1267,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         // Retain 10% of stats
         for (const stat in this.stats) {
           this.stats[stat] = Math.floor(this.stats[stat] * 0.1);
+          this.baseStats[stat] = this.stats[stat];
         }
         this.level = 1;
         this.experience = 0;
@@ -971,6 +1293,13 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         // Use Character for all player data
         this.character = new Character({
           name: "Hazel",
+          portraitFrames: [
+            "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_1-EHd6aTym2GZYG9YGUObU4C3UVzRM4J.png?yK6e",
+            "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_2-TIKd2Ng5h3f2XtIzD5OYUfmvwMcgCQ.png?9Lx1",
+            "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_2-TIKd2Ng5h3f2XtIzD5OYUfmvwMcgCQ.png?9Lx1",
+            "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_4-gSm4PyttYHunekRzEFgIHAKnZQDwfA.png?9b67",
+            "https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_5-FZ0aZQXgDbESB4PHVg49uHFLt0LmT0.png?7Y1S"
+          ],
           class: "ASPIRING",
           level: 1,
           experience: 0,
@@ -992,6 +1321,10 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
           direction: "down",
           frame: 0
         });
+        
+        // Make character methods available on player for convenience
+        this.gainExperience = (amount) => this.character.gainExperience(amount);
+        
         this.x = x;
         this.y = y;
         this.size = TILE_SIZE;
@@ -999,26 +1332,41 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.speed = 200;
         this.keys = {};
         this.map = map;
+        this.stepsSinceLastEncounter = 0;
       }
+      
       handleKey(key, isDown) {
         this.keys[key.toLowerCase()] = isDown;
       }
+      
       update(dt) {
         let dx = 0, dy = 0;
-        if (this.keys['arrowup'] || this.keys['w']) dy -= 1;
-        if (this.keys['arrowdown'] || this.keys['s']) dy += 1;
-        if (this.keys['arrowleft'] || this.keys['a']) dx -= 1;
-        if (this.keys['arrowright'] || this.keys['d']) dx += 1;
+        let moved = false;
+        
+        if (this.keys['arrowup'] || this.keys['w']) { dy -= 1; moved = true; }
+        if (this.keys['arrowdown'] || this.keys['s']) { dy += 1; moved = true; }
+        if (this.keys['arrowleft'] || this.keys['a']) { dx -= 1; moved = true; }
+        if (this.keys['arrowright'] || this.keys['d']) { dx += 1; moved = true; }
+        
         if (dx !== 0 && dy !== 0) { dx *= Math.SQRT1_2; dy *= Math.SQRT1_2; }
+        
         let newX = this.x + dx * this.speed * dt;
         let newY = this.y + dy * this.speed * dt;
+        
         // Collision detection
         if (!this.collides(newX, this.y)) this.x = newX;
         if (!this.collides(this.x, newY)) this.y = newY;
+        
         // Clamp to map
         this.x = Math.max(0, Math.min(GAME_WIDTH - this.size, this.x));
         this.y = Math.max(0, Math.min(GAME_HEIGHT - this.size, this.y));
+        
+        // Track steps for random encounters
+        if (moved) {
+          this.stepsSinceLastEncounter++;
+        }
       }
+      
       collides(x, y) {
         // Check all four corners
         const corners = [
@@ -1034,6 +1382,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         }
         return false;
       }
+      
       render(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.size, this.size);
@@ -1046,12 +1395,13 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       if (!hud) return;
       const c = player.character;
       hud.innerHTML = `
-        <b>${c.name}</b> (Lv.${c.level}${c.prestigeLevel > 0 ? '★'.repeat(c.prestigeLevel) : ''})<br>
+        <b>${c.name}</b> (Lv.${c.level}${c.prestigeLevel > 0 ? '★'.repeat(c.prestigeLevel) : ''}) ${c.class}<br>
         HP: ${c.hp} / ${c.maxHp} &nbsp; MP: ${c.mp} / ${c.maxMp}<br>
         STR: ${c.stats.strength} &nbsp; DEX: ${c.stats.dexterity} &nbsp; VIT: ${c.stats.vitality} &nbsp; INT: ${c.stats.intelligence}<br>
         ATK: ${c.derivedStats.attack} &nbsp; DEF: ${c.derivedStats.defense} &nbsp; SPD: ${c.derivedStats.speed}<br>
         CRIT: ${c.derivedStats.critChance}% &nbsp; EVA: ${c.derivedStats.evasion}%<br>
-        Gold: ${c.gold}
+        Gold: ${c.gold} &nbsp; XP: ${c.experience}/${c.experienceToNextLevel}
+        ${c.statPoints > 0 ? `<br><b style="color:#ff0;">Stat Points Available: ${c.statPoints}</b>` : ''}
       `;
     }
 
@@ -1063,60 +1413,128 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.lastTime = 0;
         this.map = new GameMap();
         this.player = new Player(2 * TILE_SIZE, 2 * TILE_SIZE, this.map);
+        this.combatSystem = new CombatSystem(this);
+        this.questManager = new QuestManager();
+        this.inCombat = false;
+        
+        // Create Glitch NPC
+        this.glitch = new GlitchNPC(5, 2);
+        this.map.npcs = [this.glitch];
+        
         this.bindEvents();
+        
+        // Make systems globally accessible for UI
+        window.combatSystem = this.combatSystem;
+        window.questManager = this.questManager;
+        
+        // Give player some starting items
+        this.player.character.addItem('potion', 3);
+        
         requestAnimationFrame(this.loop.bind(this));
       }
+      
       bindEvents() {
-        window.addEventListener('keydown', e => this.player.handleKey(e.key, true));
-        window.addEventListener('keyup', e => this.player.handleKey(e.key, false));
+        window.addEventListener('keydown', e => {
+          if (!this.inCombat) {
+            this.player.handleKey(e.key, true);
+            
+            // Check for NPC interaction
+            if (e.key === 'e' || e.key === 'Enter') {
+              this.checkNPCInteraction();
+            }
+          }
+        });
+        window.addEventListener('keyup', e => {
+          if (!this.inCombat) {
+            this.player.handleKey(e.key, false);
+          }
+        });
       }
+      
+      checkNPCInteraction() {
+        const px = Math.floor(this.player.x / TILE_SIZE);
+        const py = Math.floor(this.player.y / TILE_SIZE);
+        
+        // Check if player is adjacent to Glitch
+        const dx = Math.abs(px - this.glitch.x);
+        const dy = Math.abs(py - this.glitch.y);
+        
+        if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
+          this.glitch.interact();
+        }
+      }
+      
       loop(ts) {
         const dt = (ts - this.lastTime) / 1000;
         this.lastTime = ts;
-        this.update(dt);
-        this.render();
+        
+        if (!this.inCombat) {
+          this.update(dt);
+          this.render();
+        }
+        
         updateHUD(this.player);
         requestAnimationFrame(this.loop.bind(this));
       }
+      
       update(dt) {
         this.player.update(dt);
+        
+        // Check for enemy encounters
+        const encounter = this.map.checkEnemyEncounter(this.player.x, this.player.y);
+        if (encounter) {
+          this.startCombat([encounter.type]);
+        }
+        
+        // Random encounters
+        if (this.player.stepsSinceLastEncounter > 50 && Math.random() < 0.02) {
+          this.player.stepsSinceLastEncounter = 0;
+          const randomEnemies = ['roach', 'spamton', 'wifi_yeti'];
+          const enemyType = randomEnemies[Math.floor(Math.random() * randomEnemies.length)];
+          this.startCombat([enemyType]);
+        }
       }
+      
+      startCombat(enemyTypes) {
+        this.inCombat = true;
+        this.combatSystem.startCombat([this.player.character], enemyTypes);
+      }
+      
+      resumeFromCombat() {
+        this.inCombat = false;
+        // Reset player keys
+        this.player.keys = {};
+      }
+      
       render() {
         this.ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         this.map.render(this.ctx);
+        
+        // Render NPCs
+        this.ctx.fillStyle = '#ff0';
+        this.ctx.fillRect(this.glitch.x * TILE_SIZE + 4, this.glitch.y * TILE_SIZE + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+        this.ctx.fillStyle = '#000';
+        this.ctx.font = '12px Arial';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('G', this.glitch.x * TILE_SIZE + TILE_SIZE/2, this.glitch.y * TILE_SIZE + TILE_SIZE/2 + 4);
+        
+        // Render player
         this.player.render(this.ctx);
-      }
-    }
-
-    // --- Start Game ---
-    function startGame() {
-      window.debugLog && window.debugLog('startGame() called');
-      document.getElementById('start-overlay').classList.add('hidden');
-      setTimeout(() => {
-        document.getElementById('start-overlay').style.display = 'none';
-        window.game = new Game();
-        window.gameReady = true;
-        // Initialize MenuManager after game is ready
-        if (!window.menuManager) {
-          window.menuManager = new MenuManager();
+        
+        // Show interaction hint if near NPC
+        const px = Math.floor(this.player.x / TILE_SIZE);
+        const py = Math.floor(this.player.y / TILE_SIZE);
+        const dx = Math.abs(px - this.glitch.x);
+        const dy = Math.abs(py - this.glitch.y);
+        
+        if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
+          this.ctx.fillStyle = '#fff';
+          this.ctx.font = '10px Arial';
+          this.ctx.textAlign = 'center';
+          this.ctx.fillText('[E] Talk', this.player.x + TILE_SIZE/2, this.player.y - 5);
         }
-        // Set up party members (for now, just the player character)
-        window.menuManager.partyMembers = [window.game.player.character];
-        window.menuManager.partyIndex = 0;
-        window.menuManager.updatePartyNav();
-        window.debugLog && window.debugLog('Game started: window.game is set. MenuManager initialized.');
-      }, 350);
-    }
-    window.addEventListener('load', () => {
-      const startBtn = document.getElementById('start-btn');
-      if (startBtn) {
-        startBtn.onclick = startGame;
-        window.debugLog && window.debugLog('startBtn.onclick set');
       }
-      // Start with cutscene
-      const cutscene = new CutsceneManager(() => {});
-      cutscene.play(introCutscene);
-    });
+    }
 
     // --- MenuManager ---
     class MenuManager {
@@ -1272,12 +1690,18 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Inventory</div>
                 <div class="menu-list">
                   ${player.inventory.length > 0 
-                    ? player.inventory.map(item => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item)})">
-                          <span>${item.name}</span>
-                          <span>${item.quantity || 1}</span>
-                        </div>
-                      `).join('')
+                    ? player.inventory.map((item, idx) => {
+                        const itemData = ITEM_DATABASE[item.id];
+                        const isConsumable = itemData && itemData.type === 'consumable';
+                        return `
+                          <div class="menu-list-item" onclick="menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].inventory[${idx}])">
+                            <span>${item.name} ${item.quantity > 1 ? `x${item.quantity}` : ''}</span>
+                            <span>
+                              ${isConsumable ? `<button class="menu-item-use-btn" onclick="event.stopPropagation(); menuManager.useItem('${item.id}')">Use</button>` : ''}
+                            </span>
+                          </div>
+                        `;
+                      }).join('')
                     : '<div class="menu-list-item">No items in inventory</div>'
                   }
                 </div>
@@ -1290,22 +1714,29 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Active Skills</div>
                 <div class="menu-list">
-                  ${player.skills.filter(s => s.type === 'active').map(skill => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
-                      <span>${skill.name}</span>
-                      <span>MP: ${skill.mpCost}</span>
-                    </div>
-                  `).join('')}
+                  ${player.skills.filter(s => s.type === 'active').length > 0
+                    ? player.skills.filter(s => s.type === 'active').map((skill, idx) => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].skills.filter(s=>s.type==='active')[${idx}])">
+                          <span>${skill.name} ${skill.levelUnlocked ? `(Lv.${skill.levelUnlocked})` : ''}</span>
+                          <span>MP: ${skill.mpCost}</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No active skills learned yet</div>'
+                  }
                 </div>
               </div>
               <div class="menu-card">
                 <div class="menu-card-title">Passive Skills</div>
                 <div class="menu-list">
-                  ${player.skills.filter(s => s.type === 'passive').map(skill => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
-                      <span>${skill.name}</span>
-                    </div>
-                  `).join('')}
+                  ${player.skills.filter(s => s.type === 'passive').length > 0
+                    ? player.skills.filter(s => s.type === 'passive').map((skill, idx) => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].skills.filter(s=>s.type==='passive')[${idx}])">
+                          <span>${skill.name} ${skill.levelUnlocked ? `(Lv.${skill.levelUnlocked})` : ''}</span>
+                          <span>Passive</span>
+                        </div>
+                      `).join('')
+                    : '<div class="menu-list-item">No passive skills learned yet</div>'
+                  }
                 </div>
               </div>
             `;
@@ -1316,9 +1747,9 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Equipment</div>
                 <div class="menu-list">
-                  ${Object.entries(player.equipment).map(([slot, item]) => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item || { name: 'Empty', slot })})">
-                      <span>${slot.replace('_', ' ')}</span>
+                  ${Object.entries(player.equipment).map(([slot, item], idx) => `
+                    <div class="menu-list-item" onclick="menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].equipment['${slot}'])">
+                      <span>${slot.replace(/_/g, ' ')}</span>
                       <span>${item ? item.name : 'Empty'}</span>
                     </div>
                   `).join('')}
@@ -1333,15 +1764,16 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Relics</div>
                 <div class="menu-list">
                   ${Object.values(player.relics).length > 0
-                    ? Object.values(player.relics).map(relic => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(relic)})">
+                    ? Object.values(player.relics).map((relic, idx) => `
+                        <div class="menu-list-item" onclick="menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].relics[Object.keys(window.menuManager.partyMembers[window.menuManager.partyIndex].relics)[${idx}]])">
                           <span>${relic.name} ${player.equipment.RELIC_1 === relic || player.equipment.RELIC_2 === relic ? '(Equipped)' : ''}</span>
-                          <span>Lv.${relic.level}</span>
+                          <span>Lv.${relic.level} (${relic.xp}/${relic.xpToNextLevel} XP)</span>
                         </div>
                       `).join('')
                     : '<div class="menu-list-item">No relics owned</div>'
                   }
                 </div>
+                ${player.fury > 0 ? `<div style="margin-top: 10px; color: #f44;">Fury: ${player.fury}</div>` : ''}
               </div>
             `;
             break;
@@ -1351,33 +1783,43 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Party Members</div>
                 <div class="menu-list">
-                  <div class="menu-list-item">
+                  <div class="menu-list-item selected">
                     <span>${player.name}</span>
                     <span>Lv.${player.level} ${player.class}</span>
                   </div>
                   ${Object.entries(player.relationships).map(([name, rel]) => `
                     <div class="menu-list-item">
                       <span>${name}</span>
-                      <span>${rel.level}</span>
+                      <span>Relationship: ${rel.level}</span>
                     </div>
                   `).join('')}
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Party Formation</div>
+                <div style="text-align: center; color: #888; padding: 20px;">
+                  Formation system coming soon!
                 </div>
               </div>
             `;
             break;
 
           case 'quests':
+            const questManager = window.questManager;
             this.tabContents.quests.innerHTML = `
               <div class="menu-card">
                 <div class="menu-card-title">Active Quests</div>
                 <div class="menu-list">
-                  ${player.quests.active.length > 0 
-                    ? player.quests.active.map(quest => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
-                          <span>${quest.name}</span>
-                          <span>${quest.progress || 0}%</span>
-                        </div>
-                      `).join('')
+                  ${questManager && questManager.activeQuests.length > 0 
+                    ? questManager.activeQuests.map((quest, idx) => {
+                        const progress = quest.objectives.reduce((acc, obj) => acc + (obj.current / obj.required), 0) / quest.objectives.length * 100;
+                        return `
+                          <div class="menu-list-item" onclick="menuManager.selectQuest(${idx})">
+                            <span>${quest.name}</span>
+                            <span>${Math.floor(progress)}%</span>
+                          </div>
+                        `;
+                      }).join('')
                     : '<div class="menu-list-item">No active quests</div>'
                   }
                 </div>
@@ -1385,11 +1827,11 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Completed Quests</div>
                 <div class="menu-list">
-                  ${player.quests.completed.length > 0 
-                    ? player.quests.completed.map(quest => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
+                  ${questManager && questManager.completedQuests.length > 0 
+                    ? questManager.completedQuests.map((quest, idx) => `
+                        <div class="menu-list-item" onclick="menuManager.selectCompletedQuest(${idx})">
                           <span>${quest.name}</span>
-                          <span>${new Date(quest.completedAt).toLocaleDateString()}</span>
+                          <span>✓</span>
                         </div>
                       `).join('')
                     : '<div class="menu-list-item">No completed quests</div>'
@@ -1405,24 +1847,141 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Game Settings</div>
                 <div class="menu-list">
                   <div class="menu-list-item">
-                    <span>Audio</span>
-                    <span>[Sliders]</span>
+                    <span>Master Volume</span>
+                    <span>[Coming Soon]</span>
                   </div>
                   <div class="menu-list-item">
-                    <span>Display</span>
-                    <span>[Toggles]</span>
+                    <span>Text Speed</span>
+                    <span>[Coming Soon]</span>
                   </div>
                   <div class="menu-list-item">
-                    <span>Controls</span>
-                    <span>[View]</span>
+                    <span>Auto-Save</span>
+                    <span>[Coming Soon]</span>
                   </div>
+                </div>
+              </div>
+              <div class="menu-card">
+                <div class="menu-card-title">Controls</div>
+                <div style="padding: 10px; font-size: 0.9em;">
+                  <div>Movement: WASD or Arrow Keys</div>
+                  <div>Interact: E or Enter</div>
+                  <div>Menu: M or Escape</div>
+                  <div>Debug: ~ (tilde)</div>
                 </div>
               </div>
             `;
             break;
         }
       }
+      
+      useItem(itemId) {
+        const player = this.partyMembers[this.partyIndex];
+        if (!player) return;
+        
+        const result = player.useItem(itemId, player);
+        if (result) {
+          this.renderTab('inventory');
+          // Show effect notification
+          const itemData = ITEM_DATABASE[itemId];
+          if (itemData) {
+            this.showNotification(`Used ${itemData.name}!`);
+          }
+        }
+      }
+      
+      selectQuest(index) {
+        const quest = window.questManager?.activeQuests[index];
+        if (!quest) return;
+        
+        this.selectedItem = quest;
+        const detailContent = document.querySelector('.menu-detail-content');
+        if (!detailContent) return;
+        
+        this.sidebar.style.display = '';
+        detailContent.innerHTML = `
+          <h3>${quest.name}</h3>
+          <p style="color: #888; font-size: 0.9em;">From: ${quest.giver}</p>
+          <p>${quest.description}</p>
+          <div style="margin-top: 10px;">
+            <h4>Objectives:</h4>
+            ${quest.objectives.map(obj => `
+              <div style="margin: 5px 0;">
+                ${obj.current >= obj.required ? '✓' : '○'} 
+                ${obj.type === 'defeat' ? 'Defeat' : 'Collect'} ${obj.target}: ${obj.current}/${obj.required}
+              </div>
+            `).join('')}
+          </div>
+          <div style="margin-top: 10px;">
+            <h4>Rewards:</h4>
+            ${quest.rewards.xp ? `<div>• ${quest.rewards.xp} XP</div>` : ''}
+            ${quest.rewards.gold ? `<div>• ${quest.rewards.gold} Gold</div>` : ''}
+            ${quest.rewards.items && quest.rewards.items.length > 0 ? 
+              quest.rewards.items.map(item => `<div>• ${item.quantity}x ${ITEM_DATABASE[item.id]?.name || item.id}</div>`).join('') : ''
+            }
+          </div>
+        `;
+      }
+      
+      selectCompletedQuest(index) {
+        const quest = window.questManager?.completedQuests[index];
+        if (!quest) return;
+        
+        this.selectedItem = quest;
+        const detailContent = document.querySelector('.menu-detail-content');
+        if (!detailContent) return;
+        
+        this.sidebar.style.display = '';
+        detailContent.innerHTML = `
+          <h3>${quest.name}</h3>
+          <p style="color: #888; font-size: 0.9em;">From: ${quest.giver}</p>
+          <p>${quest.description}</p>
+          <p style="color: #4f4; margin-top: 10px;">✓ Completed</p>
+        `;
+      }
+      
+      showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed;
+          bottom: 100px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.8);
+          color: #0ff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          border: 1px solid #0ff;
+          z-index: 10000;
+          animation: fadeInOut 2s ease-out;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 2000);
+      }
+      
+      allocateStat(stat, amount) {
+        const player = window.game?.player?.character;
+        if (!player) return;
+        
+        if (amount > 0 && player.statPoints > 0) {
+          player.stats[stat] += 1;
+          player.statPoints -= 1;
+        } else if (amount < 0 && player.stats[stat] > player.baseStats[stat]) {
+          player.stats[stat] -= 1;
+          player.statPoints += 1;
+        }
+        
+        player.calculateDerivedStats();
+        this.renderTab('character');
+      }
+      
+      confirmStatAllocation() {
+        // In this simple version, just lock in the stats (could add more logic if needed)
+        this.renderTab('character');
+      }
     }
+
     // --- Initialize MenuManager and keyboard shortcut ---
     const menuManager = new MenuManager();
     document.getElementById('menu-close-btn').onclick = () => window.menuManager && window.menuManager.close();
@@ -1587,6 +2146,987 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       `;
     }
     debugCloseBtn.onclick = () => { debugOverlay.style.display = 'none'; debugVisible = false; };
+
+    // --- Combat System ---
+    class CombatSystem {
+      constructor(game) {
+        this.game = game;
+        this.inCombat = false;
+        this.currentTurn = 0;
+        this.turnOrder = [];
+        this.participants = {};
+        this.currentActor = null;
+        this.battleLog = [];
+        this.cosmicBalance = {
+          harmony: 50,
+          chaos: 50,
+          stability: 50
+        };
+        this.activeCombos = [];
+        this.selectedAction = null;
+        this.targetingMode = false;
+        this.selectedTargets = [];
+        
+        // Create combat UI container
+        this.createCombatUI();
+      }
+      
+      createCombatUI() {
+        // Combat container
+        this.combatContainer = document.createElement('div');
+        this.combatContainer.id = 'combat-container';
+        this.combatContainer.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.95);
+          display: none;
+          z-index: 5000;
+          color: #fff;
+          font-family: 'Segoe UI', Arial, sans-serif;
+        `;
+        
+        // Battle screen layout
+        this.combatContainer.innerHTML = `
+          <div id="combat-screen" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <!-- Cosmic Balance Meter -->
+            <div id="cosmic-balance" style="height: 40px; background: #111; display: flex; padding: 5px;">
+              <div style="flex: 1; text-align: center;">
+                <span style="color: #4f4;">Harmony: <span id="harmony-val">50</span>%</span>
+              </div>
+              <div style="flex: 1; text-align: center;">
+                <span style="color: #f44;">Chaos: <span id="chaos-val">50</span>%</span>
+              </div>
+              <div style="flex: 1; text-align: center;">
+                <span style="color: #44f;">Stability: <span id="stability-val">50</span>%</span>
+              </div>
+            </div>
+            
+            <!-- Turn Order -->
+            <div id="turn-order" style="height: 60px; background: #222; display: flex; align-items: center; padding: 0 10px; gap: 10px; overflow-x: auto;">
+              <!-- Turn order icons will go here -->
+            </div>
+            
+            <!-- Battle Arena -->
+            <div id="battle-arena" style="flex: 1; display: flex; flex-direction: column; padding: 20px;">
+              <!-- Enemy Area -->
+              <div id="enemy-area" style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <!-- Enemies will be rendered here -->
+              </div>
+              
+              <!-- Party Area -->
+              <div id="party-area" style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <!-- Party members will be rendered here -->
+              </div>
+            </div>
+            
+            <!-- Action Menu -->
+            <div id="action-menu" style="height: 150px; background: #111; padding: 10px; display: flex; gap: 10px;">
+              <div id="action-buttons" style="display: flex; flex-direction: column; gap: 5px;">
+                <button class="combat-btn" onclick="window.combatSystem.selectAction('attack')">Attack</button>
+                <button class="combat-btn" onclick="window.combatSystem.selectAction('skills')">Skills</button>
+                <button class="combat-btn" onclick="window.combatSystem.selectAction('cosmic')">Cosmic</button>
+                <button class="combat-btn" onclick="window.combatSystem.selectAction('items')">Items</button>
+                <button class="combat-btn" onclick="window.combatSystem.selectAction('defend')">Defend</button>
+              </div>
+              <div id="action-submenu" style="flex: 1; background: #222; padding: 10px; overflow-y: auto;">
+                <!-- Submenu content -->
+              </div>
+              <div id="battle-log" style="width: 300px; background: #222; padding: 10px; overflow-y: auto; font-size: 0.9em;">
+                <!-- Battle messages -->
+              </div>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(this.combatContainer);
+        
+        // Style combat buttons
+        const style = document.createElement('style');
+        style.textContent = `
+          .combat-btn {
+            background: #333;
+            border: 1px solid #666;
+            color: #fff;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 100px;
+          }
+          .combat-btn:hover {
+            background: #444;
+            border-color: #888;
+          }
+          .combat-btn:disabled {
+            background: #222;
+            color: #666;
+            cursor: not-allowed;
+          }
+          .combat-unit {
+            background: #333;
+            border: 2px solid #666;
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 120px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+          .combat-unit:hover {
+            border-color: #0ff;
+          }
+          .combat-unit.selected {
+            border-color: #ff0;
+            box-shadow: 0 0 10px #ff0;
+          }
+          .combat-unit.current-turn {
+            border-color: #0f0;
+            box-shadow: 0 0 15px #0f0;
+          }
+          .hp-bar {
+            width: 100%;
+            height: 8px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 4px 0;
+          }
+          .hp-fill {
+            height: 100%;
+            background: #4f4;
+            transition: width 0.3s;
+          }
+          .mp-bar {
+            width: 100%;
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 2px 0;
+          }
+          .mp-fill {
+            height: 100%;
+            background: #44f;
+            transition: width 0.3s;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      startCombat(party, enemyTypes) {
+        this.inCombat = true;
+        this.turnOrder = [];
+        this.battleLog = [];
+        this.currentTurn = 0;
+        
+        // Show combat UI
+        this.combatContainer.style.display = 'block';
+        
+        // Initialize enemies
+        const enemies = enemyTypes.map(type => new Enemy(type));
+        
+        // Initialize participants
+        this.participants = {};
+        
+        // Add party members
+        party.forEach((member, idx) => {
+          const id = member.id || `party_${idx}`;
+          this.participants[id] = {
+            ...member,
+            type: 'player',
+            side: 'party',
+            position: idx,
+            buffs: [],
+            debuffs: [],
+            statusEffects: []
+          };
+        });
+        
+        // Add enemies
+        enemies.forEach((enemy, idx) => {
+          this.participants[enemy.id] = {
+            ...enemy,
+            type: 'enemy',
+            side: 'enemy',
+            position: idx
+          };
+        });
+        
+        // Calculate initiative and sort turn order
+        const allCombatants = Object.values(this.participants).map(p => ({
+          id: p.id,
+          initiative: this.rollInitiative(p),
+          name: p.name
+        }));
+        
+        this.turnOrder = allCombatants.sort((a, b) => b.initiative - a.initiative).map(c => c.id);
+        
+        // Update UI
+        this.updateCombatUI();
+        
+        // Log battle start
+        this.logBattle('Battle started!');
+        
+        // Start first turn
+        this.nextTurn();
+      }
+      
+      rollInitiative(combatant) {
+        const baseSpeed = combatant.stats?.speed || combatant.derivedStats?.speed || 10;
+        const d8 = Math.floor(Math.random() * 8) + 1;
+        const levelBonus = Math.floor((combatant.level || 1) / 10);
+        return baseSpeed + d8 + levelBonus;
+      }
+      
+      nextTurn() {
+        // Get next actor
+        const currentIndex = this.turnOrder.findIndex(id => id === this.currentActor);
+        const nextIndex = (currentIndex + 1) % this.turnOrder.length;
+        this.currentActor = this.turnOrder[nextIndex];
+        
+        const actor = this.participants[this.currentActor];
+        if (!actor || actor.hp <= 0) {
+          this.nextTurn();
+          return;
+        }
+        
+        this.currentTurn++;
+        this.selectedAction = null;
+        this.targetingMode = false;
+        this.selectedTargets = [];
+        
+        // Process start-of-turn effects
+        this.processStartOfTurnEffects(actor);
+        
+        // Update UI
+        this.updateCombatUI();
+        
+        // If enemy turn, execute AI
+        if (actor.type === 'enemy') {
+          setTimeout(() => this.executeEnemyTurn(actor), 1000);
+        } else {
+          // Enable action buttons for player turn
+          this.enableActionButtons(true);
+        }
+      }
+      
+      executeEnemyTurn(enemy) {
+        const party = Object.values(this.participants).filter(p => p.side === 'party' && p.hp > 0);
+        const action = enemy.chooseAction(party);
+        
+        if (action.type === 'attack') {
+          const damage = this.calculateDamage(enemy, action.target, 'physical');
+          action.target.hp = Math.max(0, action.target.hp - damage);
+          this.logBattle(`${enemy.name} attacks ${action.target.name} for ${damage} damage!`);
+        } else if (action.type === 'ability') {
+          this.executeAbility(enemy, action.ability, action.targets);
+        }
+        
+        // Update UI and check for battle end
+        this.updateCombatUI();
+        
+        if (this.checkBattleEnd()) {
+          this.endBattle();
+        } else {
+          setTimeout(() => this.nextTurn(), 1500);
+        }
+      }
+      
+      calculateDamage(attacker, defender, type = 'physical') {
+        const atk = type === 'physical' 
+          ? (attacker.stats?.attack || attacker.derivedStats?.attack || 10)
+          : (attacker.stats?.magic || attacker.derivedStats?.magic || 10);
+        
+        const def = type === 'physical'
+          ? (defender.stats?.defense || defender.derivedStats?.defense || 5)
+          : (defender.stats?.mDefense || defender.derivedStats?.mDefense || 5);
+        
+        const baseDamage = atk * 2;
+        const reduction = (100 / (100 + def));
+        let finalDamage = Math.floor(baseDamage * reduction);
+        
+        // Add some variance
+        finalDamage = Math.floor(finalDamage * (0.9 + Math.random() * 0.2));
+        
+        return Math.max(1, finalDamage);
+      }
+      
+      executeAbility(user, ability, targets) {
+        this.logBattle(`${user.name} uses ${ability.name}!`);
+        
+        switch(ability.type) {
+          case 'physical':
+          case 'magical':
+            targets.forEach(target => {
+              const damage = Math.floor(this.calculateDamage(user, target, ability.type) * (ability.power || 1));
+              target.hp = Math.max(0, target.hp - damage);
+              this.logBattle(`${target.name} takes ${damage} damage!`);
+            });
+            break;
+            
+          case 'heal':
+            targets.forEach(target => {
+              const healing = Math.floor(target.maxHp * (ability.power || 0.3));
+              target.hp = Math.min(target.maxHp, target.hp + healing);
+              this.logBattle(`${target.name} heals ${healing} HP!`);
+            });
+            break;
+            
+          case 'buff':
+          case 'debuff':
+            targets.forEach(target => {
+              // Apply buff/debuff
+              const effect = {
+                type: ability.effect,
+                power: ability.power || 1.2,
+                duration: ability.duration || 3,
+                turnsRemaining: ability.duration || 3
+              };
+              
+              if (ability.type === 'buff') {
+                target.buffs.push(effect);
+                this.logBattle(`${target.name}'s ${ability.effect} increased!`);
+              } else {
+                target.debuffs.push(effect);
+                this.logBattle(`${target.name}'s ${ability.effect} decreased!`);
+              }
+            });
+            break;
+        }
+      }
+      
+      selectAction(action) {
+        this.selectedAction = action;
+        const submenu = document.getElementById('action-submenu');
+        
+        if (action === 'attack') {
+          this.targetingMode = true;
+          submenu.innerHTML = '<p>Select target...</p>';
+          this.updateCombatUI();
+        } else if (action === 'defend') {
+          const actor = this.participants[this.currentActor];
+          actor.defending = true;
+          this.logBattle(`${actor.name} defends!`);
+          this.enableActionButtons(false);
+          setTimeout(() => this.nextTurn(), 1000);
+        } else if (action === 'skills') {
+          const actor = this.participants[this.currentActor];
+          const skills = actor.skills || [];
+          submenu.innerHTML = skills.length > 0 
+            ? skills.map((skill, idx) => `
+                <div class="combat-btn" onclick="window.combatSystem.selectSkill(${idx})" style="margin-bottom: 5px;">
+                  ${skill.name} (MP: ${skill.mpCost})
+                </div>
+              `).join('')
+            : '<p>No skills available</p>';
+        }
+      }
+      
+      selectTarget(targetId) {
+        if (!this.targetingMode || !this.selectedAction) return;
+        
+        if (this.selectedAction === 'attack') {
+          const actor = this.participants[this.currentActor];
+          const target = this.participants[targetId];
+          
+          const damage = this.calculateDamage(actor, target, 'physical');
+          target.hp = Math.max(0, target.hp - damage);
+          
+          this.logBattle(`${actor.name} attacks ${target.name} for ${damage} damage!`);
+          
+          this.targetingMode = false;
+          this.enableActionButtons(false);
+          this.updateCombatUI();
+          
+          if (this.checkBattleEnd()) {
+            this.endBattle();
+          } else {
+            setTimeout(() => this.nextTurn(), 1500);
+          }
+        }
+      }
+      
+      processStartOfTurnEffects(actor) {
+        // Process buffs/debuffs duration
+        actor.buffs = actor.buffs.filter(buff => {
+          buff.turnsRemaining--;
+          if (buff.turnsRemaining <= 0) {
+            this.logBattle(`${actor.name}'s ${buff.type} boost wore off.`);
+            return false;
+          }
+          return true;
+        });
+        
+        actor.debuffs = actor.debuffs.filter(debuff => {
+          debuff.turnsRemaining--;
+          if (debuff.turnsRemaining <= 0) {
+            this.logBattle(`${actor.name} recovered from ${debuff.type} reduction.`);
+            return false;
+          }
+          return true;
+        });
+      }
+      
+      checkBattleEnd() {
+        const party = Object.values(this.participants).filter(p => p.side === 'party');
+        const enemies = Object.values(this.participants).filter(p => p.side === 'enemy');
+        
+        const partyAlive = party.some(p => p.hp > 0);
+        const enemiesAlive = enemies.some(e => e.hp > 0);
+        
+        return !partyAlive || !enemiesAlive;
+      }
+      
+      endBattle() {
+        const party = Object.values(this.participants).filter(p => p.side === 'party');
+        const enemies = Object.values(this.participants).filter(p => p.side === 'enemy');
+        
+        const victory = party.some(p => p.hp > 0);
+        
+        if (victory) {
+          this.logBattle('Victory!');
+          
+          // Calculate rewards
+          let totalXP = 0;
+          let totalGold = 0;
+          const drops = [];
+          const defeatedEnemies = [];
+          
+          enemies.forEach(enemy => {
+            totalXP += enemy.xpReward || 0;
+            totalGold += enemy.goldReward || 0;
+            
+            if (enemy.rollDrops) {
+              const enemyDrops = enemy.rollDrops();
+              drops.push(...enemyDrops);
+            }
+            
+            // Track defeated enemies for quests
+            defeatedEnemies.push(enemy.enemyId);
+          });
+          
+          // Apply rewards to party
+          party.forEach(member => {
+            const char = member.character || member;
+            if (char.hp > 0) {
+              // Check for level up
+              const oldLevel = char.level;
+              char.gainExperience(totalXP);
+              if (char.level > oldLevel) {
+                this.logBattle(`${char.name} leveled up to ${char.level}!`);
+              }
+              
+              char.gold += Math.floor(totalGold / party.filter(p => p.hp > 0).length);
+              
+              // Add dropped items
+              drops.forEach(drop => {
+                char.addItem(drop.item.toLowerCase().replace(/ /g, '_'), drop.quantity);
+              });
+            }
+          });
+          
+          // Update quest progress
+          defeatedEnemies.forEach(enemyId => {
+            this.game.questManager.updateQuestProgress('defeat', enemyId, 1);
+          });
+          
+          // Show rewards
+          setTimeout(() => {
+            let rewardText = `Victory!\nGained ${totalXP} XP and ${totalGold} gold!`;
+            if (drops.length > 0) {
+              rewardText += '\n\nItems obtained:';
+              drops.forEach(drop => {
+                rewardText += `\n• ${drop.item} x${drop.quantity}`;
+              });
+            }
+            alert(rewardText);
+            this.closeCombat();
+          }, 1000);
+          
+        } else {
+          this.logBattle('Defeat...');
+          setTimeout(() => {
+            alert('Game Over!');
+            location.reload(); // Simple game over for now
+          }, 1000);
+        }
+      }
+      
+      closeCombat() {
+        this.inCombat = false;
+        this.combatContainer.style.display = 'none';
+        this.game.resumeFromCombat();
+      }
+      
+      enableActionButtons(enabled) {
+        const buttons = document.querySelectorAll('#action-buttons .combat-btn');
+        buttons.forEach(btn => btn.disabled = !enabled);
+      }
+      
+      updateCombatUI() {
+        // Update turn order display
+        const turnOrderDiv = document.getElementById('turn-order');
+        turnOrderDiv.innerHTML = this.turnOrder.map((id, idx) => {
+          const participant = this.participants[id];
+          if (!participant || participant.hp <= 0) return '';
+          
+          const isCurrent = id === this.currentActor;
+          return `
+            <div class="combat-unit ${isCurrent ? 'current-turn' : ''}" style="padding: 5px 10px; font-size: 0.9em;">
+              ${participant.name}
+            </div>
+          `;
+        }).join('');
+        
+        // Update enemy area
+        const enemyArea = document.getElementById('enemy-area');
+        const enemies = Object.values(this.participants).filter(p => p.side === 'enemy');
+        enemyArea.innerHTML = enemies.map(enemy => `
+          <div class="combat-unit ${this.targetingMode && enemy.hp > 0 ? 'targetable' : ''}" 
+               onclick="window.combatSystem.selectTarget('${enemy.id}')"
+               style="${enemy.hp <= 0 ? 'opacity: 0.3;' : ''}">
+            <div style="font-weight: bold;">${enemy.name}</div>
+            <div style="font-size: 0.8em; color: #aaa;">${enemy.type} Lv.${enemy.level}</div>
+            <div class="hp-bar">
+              <div class="hp-fill" style="width: ${(enemy.hp / enemy.maxHp) * 100}%"></div>
+            </div>
+            <div style="font-size: 0.8em;">${enemy.hp}/${enemy.maxHp} HP</div>
+          </div>
+        `).join('');
+        
+        // Update party area
+        const partyArea = document.getElementById('party-area');
+        const party = Object.values(this.participants).filter(p => p.side === 'party');
+        partyArea.innerHTML = party.map(member => {
+          const char = member.character || member;
+          const isCurrent = member.id === this.currentActor;
+          return `
+            <div class="combat-unit ${isCurrent ? 'current-turn' : ''}" 
+                 style="${char.hp <= 0 ? 'opacity: 0.3;' : ''}">
+              <div style="font-weight: bold;">${char.name}</div>
+              <div style="font-size: 0.8em; color: #aaa;">${char.class} Lv.${char.level}</div>
+              <div class="hp-bar">
+                <div class="hp-fill" style="width: ${(char.hp / char.maxHp) * 100}%"></div>
+              </div>
+              <div style="font-size: 0.8em;">${char.hp}/${char.maxHp} HP</div>
+              <div class="mp-bar">
+                <div class="mp-fill" style="width: ${(char.mp / char.maxMp) * 100}%"></div>
+              </div>
+              <div style="font-size: 0.8em;">${char.mp}/${char.maxMp} MP</div>
+            </div>
+          `;
+        }).join('');
+        
+        // Update cosmic balance
+        document.getElementById('harmony-val').textContent = this.cosmicBalance.harmony;
+        document.getElementById('chaos-val').textContent = this.cosmicBalance.chaos;
+        document.getElementById('stability-val').textContent = this.cosmicBalance.stability;
+      }
+      
+      logBattle(message) {
+        this.battleLog.push(message);
+        const logDiv = document.getElementById('battle-log');
+        logDiv.innerHTML = this.battleLog.slice(-20).map(msg => `<div style="margin-bottom: 4px;">${msg}</div>`).join('');
+        logDiv.scrollTop = logDiv.scrollHeight;
+      }
+    }
+
+    // --- Start Game ---
+    function startGame() {
+      window.debugLog && window.debugLog('startGame() called');
+      document.getElementById('start-overlay').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('start-overlay').style.display = 'none';
+        window.game = new Game();
+        window.gameReady = true;
+        // Initialize MenuManager after game is ready
+        if (!window.menuManager) {
+          window.menuManager = new MenuManager();
+        }
+        // Set up party members (for now, just the player character)
+        window.menuManager.partyMembers = [window.game.player.character];
+        window.menuManager.partyIndex = 0;
+        window.menuManager.updatePartyNav();
+        window.debugLog && window.debugLog('Game started: window.game is set. MenuManager initialized.');
+      }, 350);
+    }
+    window.addEventListener('load', () => {
+      const startBtn = document.getElementById('start-btn');
+      if (startBtn) {
+        startBtn.onclick = startGame;
+        window.debugLog && window.debugLog('startBtn.onclick set');
+      }
+      // Start with cutscene
+      const cutscene = new CutsceneManager(() => {});
+      cutscene.play(introCutscene);
+    });
+
+    // --- Item System ---
+    const ITEM_DATABASE = {
+      // Consumables
+      'potion': {
+        name: 'Potion',
+        type: 'consumable',
+        description: 'Restores 50 HP',
+        effect: { type: 'heal', value: 50, target: 'single' },
+        stackable: true,
+        maxStack: 99,
+        value: 50
+      },
+      'ether': {
+        name: 'Ether',
+        type: 'consumable',
+        description: 'Restores 30 MP',
+        effect: { type: 'restore_mp', value: 30, target: 'single' },
+        stackable: true,
+        maxStack: 99,
+        value: 100
+      },
+      'phoenix_down': {
+        name: 'Phoenix Down',
+        type: 'consumable',
+        description: 'Revives a fallen ally with 25% HP',
+        effect: { type: 'revive', value: 0.25, target: 'single' },
+        stackable: true,
+        maxStack: 20,
+        value: 300
+      },
+      
+      // Materials (from enemy drops)
+      'bug_shell': {
+        name: 'Bug Shell',
+        type: 'material',
+        description: 'A shiny shell from a digital bug',
+        stackable: true,
+        maxStack: 999,
+        value: 5
+      },
+      'spam_mail': {
+        name: 'Spam Mail',
+        type: 'material',
+        description: 'Unwanted digital correspondence',
+        stackable: true,
+        maxStack: 999,
+        value: 8
+      },
+      'yeti_fur': {
+        name: 'Yeti Fur',
+        type: 'material',
+        description: 'Warm fur from a WiFi Yeti',
+        stackable: true,
+        maxStack: 999,
+        value: 10
+      },
+      'sticky_residue': {
+        name: 'Sticky Residue',
+        type: 'material',
+        description: 'Gross but useful crafting material',
+        stackable: true,
+        maxStack: 999,
+        value: 3
+      },
+      'frost_shard': {
+        name: 'Frost Shard',
+        type: 'material',
+        description: 'A frozen fragment of digital ice',
+        stackable: true,
+        maxStack: 999,
+        value: 15
+      },
+      
+      // Equipment
+      'frozen_core': {
+        name: 'Frozen Core',
+        type: 'accessory',
+        description: 'Increases ice damage by 5%',
+        stats: { iceDamage: 5 },
+        value: 200
+      },
+      'golden_ticket': {
+        name: 'Golden Ticket',
+        type: 'key_item',
+        description: 'Unlocks access to a special shop',
+        stackable: false,
+        value: 0
+      }
+    };
+
+    // --- Quest System ---
+    const QUEST_DATABASE = {
+      'tutorial_combat': {
+        id: 'tutorial_combat',
+        name: 'Welcome to the Glitch',
+        giver: 'Glitch',
+        description: "I'm Glitch, your... guide? Assistant? Look, I don't remember exactly. But I know you need to learn how to fight. Defeat 3 Roaches.",
+        objectives: [
+          { type: 'defeat', target: 'roach', required: 3, current: 0 }
+        ],
+        rewards: {
+          xp: 50,
+          gold: 100,
+          items: [{ id: 'potion', quantity: 3 }]
+        },
+        dialogue: {
+          start: "Hey there, fresh meat. Name's Glitch. I'm supposed to help you or something. Memory's a bit fuzzy. Let's start with the basics - go squash some bugs. Literally.",
+          progress: "Still alive? Good. Keep hunting those Roaches. They're annoying but manageable.",
+          complete: "Not bad for a newbie. Here, take these potions. You'll need them. Trust me on that... I think."
+        }
+      },
+      'find_memory_fragment': {
+        id: 'find_memory_fragment',
+        name: 'Fragmented Memories',
+        giver: 'Glitch',
+        description: "I keep having these... flashes. There's something important I'm forgetting. Help me find Memory Fragments scattered around.",
+        objectives: [
+          { type: 'collect', target: 'memory_fragment', required: 1, current: 0 }
+        ],
+        rewards: {
+          xp: 100,
+          gold: 200,
+          items: []
+        },
+        dialogue: {
+          start: "Something's wrong with my memory banks. I know there's more to this place than meets the eye. Find me a Memory Fragment - they look like glowing shards.",
+          progress: "Any luck? These fragments... they're pieces of something bigger. Something important.",
+          complete: "This fragment... I remember now! Well, part of it. We're not supposed to be here. None of us are. There's more to find."
+        }
+      }
+    };
+
+    class QuestManager {
+      constructor() {
+        this.activeQuests = [];
+        this.completedQuests = [];
+        this.questProgress = {};
+      }
+      
+      startQuest(questId) {
+        if (this.activeQuests.find(q => q.id === questId)) return;
+        
+        const questData = QUEST_DATABASE[questId];
+        if (!questData) return;
+        
+        const quest = {
+          ...questData,
+          startTime: Date.now(),
+          objectives: questData.objectives.map(obj => ({ ...obj }))
+        };
+        
+        this.activeQuests.push(quest);
+        this.showQuestNotification('New Quest: ' + quest.name);
+      }
+      
+      updateQuestProgress(type, target, amount = 1) {
+        let updated = false;
+        
+        this.activeQuests.forEach(quest => {
+          quest.objectives.forEach(obj => {
+            if (obj.type === type && obj.target === target && obj.current < obj.required) {
+              obj.current = Math.min(obj.current + amount, obj.required);
+              updated = true;
+              
+              if (obj.current >= obj.required) {
+                this.checkQuestCompletion(quest);
+              }
+            }
+          });
+        });
+        
+        if (updated) {
+          this.showQuestNotification('Quest progress updated!');
+        }
+      }
+      
+      checkQuestCompletion(quest) {
+        const allComplete = quest.objectives.every(obj => obj.current >= obj.required);
+        
+        if (allComplete) {
+          this.completeQuest(quest);
+        }
+      }
+      
+      completeQuest(quest) {
+        // Remove from active
+        this.activeQuests = this.activeQuests.filter(q => q.id !== quest.id);
+        
+        // Add to completed
+        quest.completedTime = Date.now();
+        this.completedQuests.push(quest);
+        
+        // Give rewards
+        const player = window.game?.player?.character;
+        if (player && quest.rewards) {
+          if (quest.rewards.xp) player.gainExperience(quest.rewards.xp);
+          if (quest.rewards.gold) player.gold += quest.rewards.gold;
+          if (quest.rewards.items) {
+            quest.rewards.items.forEach(item => {
+              player.addItem(item.id, item.quantity);
+            });
+          }
+        }
+        
+        this.showQuestNotification('Quest Complete: ' + quest.name);
+      }
+      
+      showQuestNotification(message) {
+        // Simple notification for now
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          background: rgba(0, 255, 255, 0.9);
+          color: #000;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-family: 'Courier New', monospace;
+          z-index: 10000;
+          animation: slideIn 0.3s ease-out;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease-out';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+    }
+
+    // --- Glitch NPC ---
+    class GlitchNPC {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.name = "Glitch";
+        this.dialogue = [
+          "Name's Glitch. I'm your... assistant? Guide? Something like that.",
+          "My memory's shot to hell, but I know this place isn't right.",
+          "Galaxander's got us all trapped here. You're gonna help me remember why.",
+          "Find Memory Fragments. They're scattered all over. Each one brings back... something.",
+          "Don't trust the shiny prizes. Nothing here is what it seems."
+        ];
+        this.currentDialogue = 0;
+        this.memoryFragments = 0;
+      }
+      
+      interact() {
+        const questManager = window.game?.questManager;
+        
+        // Start tutorial quest if not started
+        if (questManager && !questManager.activeQuests.find(q => q.id === 'tutorial_combat') && 
+            !questManager.completedQuests.find(q => q.id === 'tutorial_combat')) {
+          questManager.startQuest('tutorial_combat');
+          this.showDialogue(QUEST_DATABASE.tutorial_combat.dialogue.start);
+        } else {
+          // Show regular dialogue
+          this.showDialogue(this.dialogue[this.currentDialogue]);
+          this.currentDialogue = (this.currentDialogue + 1) % this.dialogue.length;
+        }
+      }
+      
+      showDialogue(text) {
+        // Create dialogue box
+        const dialogueBox = document.createElement('div');
+        dialogueBox.style.cssText = `
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.9);
+          border: 2px solid #0ff;
+          color: #0ff;
+          padding: 20px;
+          max-width: 600px;
+          font-family: 'Courier New', monospace;
+          z-index: 10000;
+          border-radius: 5px;
+        `;
+        dialogueBox.innerHTML = `
+          <div style="font-weight: bold; margin-bottom: 10px; color: #fff;">${this.name}:</div>
+          <div>${text}</div>
+          <div style="text-align: right; margin-top: 10px; font-size: 0.8em; opacity: 0.7;">Press any key to continue</div>
+        `;
+        document.body.appendChild(dialogueBox);
+        
+        const closeDialogue = (e) => {
+          dialogueBox.remove();
+          window.removeEventListener('keydown', closeDialogue);
+          window.removeEventListener('click', closeDialogue);
+        };
+        
+        window.addEventListener('keydown', closeDialogue);
+        window.addEventListener('click', closeDialogue);
+      }
+    }
+
+    // Update Character class to handle inventory
+    Character.prototype.addItem = function(itemId, quantity = 1) {
+      const itemData = ITEM_DATABASE[itemId];
+      if (!itemData) return false;
+      
+      // Find existing stack
+      let existingItem = this.inventory.find(item => item.id === itemId);
+      
+      if (existingItem && itemData.stackable) {
+        existingItem.quantity = Math.min(existingItem.quantity + quantity, itemData.maxStack);
+      } else if (!existingItem) {
+        this.inventory.push({
+          id: itemId,
+          name: itemData.name,
+          type: itemData.type,
+          description: itemData.description,
+          quantity: quantity,
+          stackable: itemData.stackable,
+          value: itemData.value
+        });
+      }
+      
+      return true;
+    };
+
+    Character.prototype.removeItem = function(itemId, quantity = 1) {
+      const itemIndex = this.inventory.findIndex(item => item.id === itemId);
+      if (itemIndex === -1) return false;
+      
+      const item = this.inventory[itemIndex];
+      if (item.quantity > quantity) {
+        item.quantity -= quantity;
+      } else {
+        this.inventory.splice(itemIndex, 1);
+      }
+      
+      return true;
+    };
+
+    Character.prototype.useItem = function(itemId, target = null) {
+      const itemData = ITEM_DATABASE[itemId];
+      if (!itemData || itemData.type !== 'consumable') return false;
+      
+      if (!this.removeItem(itemId, 1)) return false;
+      
+      // Apply item effect
+      const effect = itemData.effect;
+      switch(effect.type) {
+        case 'heal':
+          const healTarget = target || this;
+          healTarget.hp = Math.min(healTarget.maxHp, healTarget.hp + effect.value);
+          break;
+        case 'restore_mp':
+          const mpTarget = target || this;
+          mpTarget.mp = Math.min(mpTarget.maxMp, mpTarget.mp + effect.value);
+          break;
+        case 'revive':
+          if (target && target.hp <= 0) {
+            target.hp = Math.floor(target.maxHp * effect.value);
+          }
+          break;
+      }
+      
+      return true;
+    };
   </script>
 </body>
 </html>
