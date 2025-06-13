@@ -1,0 +1,519 @@
+/* Combat UI Styles */
+.combat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Combat Log */
+.combat-log {
+  height: 150px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  border: 2px solid #4a4a4a;
+  border-radius: 4px;
+}
+
+.log-entry {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.action-button {
+  background: #2a2a2a;
+  border: 2px solid #4a4a4a;
+  color: #fff;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+
+.action-button:hover {
+  background: #3a3a3a;
+  border-color: #5a5a5a;
+}
+
+/* Target Selection */
+.target-selection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  border: 2px solid #4a4a4a;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.target-button {
+  background: #2a2a2a;
+  border: 2px solid #4a4a4a;
+  color: #fff;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+
+.target-button:hover {
+  background: #3a3a3a;
+  border-color: #5a5a5a;
+}
+
+/* Status Effects */
+.status-effects {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.combatant-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.combatant-name {
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.status-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+/* Status effect colors */
+.status-icon.burn { background: #ff4400; }
+.status-icon.poison { background: #00ff00; }
+.status-icon.paralysis { background: #ffff00; }
+.status-icon.stun { background: #ff00ff; }
+.status-icon.blind { background: #000000; }
+.status-icon.silence { background: #808080; }
+
+/* HP/MP Bars */
+.hp-bars, .mp-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.bar-container {
+  height: 20px;
+  background: #2a2a2a;
+  border: 2px solid #4a4a4a;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  transition: width 0.3s ease-out;
+}
+
+.hp-bar .bar-fill {
+  background: linear-gradient(to right, #ff0000, #ff4400);
+}
+
+.mp-bar .bar-fill {
+  background: linear-gradient(to right, #0000ff, #4400ff);
+}
+
+.bar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.8rem;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Skill Selection */
+.skill-selection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.skill-button {
+  background: #2a2a2a;
+  border: 2px solid #4a4a4a;
+  color: #fff;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.skill-button:hover {
+  background: #3a3a3a;
+  border-color: #5a5a5a;
+}
+
+/* Item Selection */
+.item-selection {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.item-button {
+  background: #2a2a2a;
+  border: 2px solid #4a4a4a;
+  color: #fff;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.item-button:hover {
+  background: #3a3a3a;
+  border-color: #5a5a5a;
+}
+
+/* Animations */
+@keyframes damage-flash {
+  0% { background-color: rgba(255, 0, 0, 0.5); }
+  100% { background-color: transparent; }
+}
+
+.damage-flash {
+  animation: damage-flash 0.3s ease-out;
+}
+
+@keyframes heal-flash {
+  0% { background-color: rgba(0, 255, 0, 0.5); }
+  100% { background-color: transparent; }
+}
+
+.heal-flash {
+  animation: heal-flash 0.3s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .action-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skill-selection {
+    grid-template-columns: 1fr;
+  }
+
+  .item-selection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .combat-log {
+    height: 100px;
+  }
+}
+
+/* Combat UI Container */
+#combat {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-family: 'Press Start 2P', monospace;
+  z-index: 1000;
+}
+
+/* Combat Log */
+#combatLog {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  overflow-y: auto;
+  padding: 10px;
+  border: 2px solid #444;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+#combatLog::-webkit-scrollbar {
+  width: 8px;
+}
+
+#combatLog::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#combatLog::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+
+/* Action Buttons */
+#actionButtons {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+#actionButtons button {
+  background-color: #444;
+  color: white;
+  border: 2px solid #666;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#actionButtons button:hover {
+  background-color: #666;
+  border-color: #888;
+  transform: translateY(-2px);
+}
+
+#actionButtons button:active {
+  transform: translateY(0);
+}
+
+/* Target Selection */
+#targetSelection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  z-index: 1001;
+}
+
+#targetSelection button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border: 2px solid #666;
+  border-radius: 5px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#targetSelection button:hover {
+  background-color: #666;
+  border-color: #888;
+}
+
+/* Status Effects */
+#statusEffects {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1000;
+}
+
+.status-effect {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-effect.poison {
+  border-left: 3px solid #4CAF50;
+}
+
+.status-effect.burn {
+  border-left: 3px solid #F44336;
+}
+
+.status-effect.stun {
+  border-left: 3px solid #FFC107;
+}
+
+.status-effect.buff {
+  border-left: 3px solid #2196F3;
+}
+
+/* HP/MP Bars */
+.hp-bar, .mp-bar {
+  width: 100%;
+  height: 5px;
+  border-radius: 2px;
+  margin: 2px 0;
+}
+
+.hp-bar {
+  background-color: #F44336;
+}
+
+.mp-bar {
+  background-color: #2196F3;
+}
+
+/* Combat Animations */
+@keyframes damage {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes heal {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.damage-animation {
+  animation: damage 0.3s ease;
+}
+
+.heal-animation {
+  animation: heal 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #combat {
+    height: 150px;
+  }
+
+  #combatLog {
+    height: 70px;
+    font-size: 10px;
+  }
+
+  #actionButtons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #actionButtons button {
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .status-effect {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+/* Combat Messages */
+.combat-message {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.combat-message.damage {
+  color: #F44336;
+}
+
+.combat-message.heal {
+  color: #4CAF50;
+}
+
+.combat-message.buff {
+  color: #2196F3;
+}
+
+.combat-message.debuff {
+  color: #FFC107;
+}
+
+.combat-message.critical {
+  color: #FF5722;
+  font-weight: bold;
+}
+
+/* Combat Effects */
+.combat-effect {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.effect-text {
+  position: absolute;
+  color: white;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  animation: float-up 1s ease-out forwards;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+} 

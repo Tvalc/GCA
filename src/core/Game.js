@@ -40,6 +40,7 @@ class Game {
 
     // Initialize all systems
     this.systems.combat = new CombatSystem(this);
+    this.systems.skill = new SkillSystem(this);
     this.systems.inventory = new InventorySystem(this);
     this.systems.relic = new RelicSystem(this);
     this.systems.npc = new NPCSystem(this);
@@ -64,44 +65,61 @@ class Game {
   }
 
   async startNewGame() {
-    // Initialize new game state
-    this.state = {
-      ...this.state,
-      currentState: 'START',
-      player: null,
-      currentScene: 'arcade1',
-      map: [],
-      enemies: [],
-      gold: 0,
-      xp: 0,
-      level: 1,
-      inventory: [],
-      fury: 0,
-      relics: {}
-    };
-
     // Create player
     this.state.player = await this.createPlayer();
+
+    // Initialize starting enemies
+    this.initializeEnemies();
+
+    // Set initial state
+    this.state.currentState = 'EXPLORE';
   }
 
-  async createPlayer(characterClass = 'Flexecutioner', savedStats = null) {
-    const baseStats = savedStats || CHARACTER_CLASSES[characterClass].getBaseStats();
-    const hp = baseStats.vitality * 20;
-    const mp = baseStats.intelligence * 15;
-
-    return {
-      name: characterClass.substring(0, 5),
-      class: characterClass,
+  async createPlayer() {
+    // Create player with base stats
+    const player = {
+      id: 'player',
+      name: 'Hazel',
       level: 1,
-      hp,
-      maxHp: hp,
-      mp,
-      maxMp: mp,
-      stats: baseStats,
-      equipment: {},
-      skills: [],
-      position: { x: 0, y: 0 }
+      xp: 0,
+      gold: 0,
+      stats: {
+        strength: 10,
+        dexterity: 10,
+        vitality: 10,
+        intelligence: 10,
+        luck: 10,
+        charisma: 10,
+        fortune: 10,
+        speed: 10
+      },
+      hp: 100,
+      maxHp: 100,
+      mp: 30,
+      maxMp: 30,
+      position: { x: 0, y: 0 },
+      direction: 'down',
+      skills: new Set(['slash', 'defend']),
+      inventory: new Map(),
+      equipment: {
+        weapon: null,
+        armor: null,
+        helmet: null,
+        boots: null,
+        accessory: null
+      },
+      statusEffects: new Map(),
+      cooldowns: new Map()
     };
+
+    return player;
+  }
+
+  initializeEnemies() {
+    // Create some initial enemies at visible positions
+    const slime = new Enemy({ ...enemies.slime, position: { x: 300, y: 250 } });
+    const bat = new Enemy({ ...enemies.bat, position: { x: 400, y: 300 } });
+    this.state.enemies = [slime, bat];
   }
 
   startGameLoop() {
@@ -120,7 +138,7 @@ class Game {
       this.update(deltaTime);
 
       // Render game
-      this.managers.render.render();
+      this.render();
     };
 
     // Start the game loop
@@ -197,36 +215,75 @@ class Game {
   }
 
   isValidPosition(position) {
-    // Check if position is within map bounds
+    // Check map boundaries
     if (position.x < 0 || position.x >= this.state.mapWidth ||
         position.y < 0 || position.y >= this.state.mapHeight) {
       return false;
     }
 
-    // Check collision with map tiles
-    const tileX = Math.floor(position.x / GRID_SIZE);
-    const tileY = Math.floor(position.y / GRID_SIZE);
+    // Check collision with map objects
+    const tileX = Math.floor(position.x / TILE_SIZE);
+    const tileY = Math.floor(position.y / TILE_SIZE);
     
-    return !this.isCollisionTile(tileX, tileY);
+    return !this.isCollision(tileX, tileY);
   }
 
-  isCollisionTile(x, y) {
-    const collisionMap = this.storedCollisionMaps[this.state.currentScene];
-    return collisionMap && collisionMap[y] && collisionMap[y][x] === 1;
+  isCollision(x, y) {
+    // Check if position is blocked by map collision
+    const collisionMap = this.getCollisionMap();
+    return collisionMap[y]?.[x] === 1;
+  }
+
+  getCollisionMap() {
+    // Get or create collision map for current scene
+    if (!this.storedCollisionMaps[this.state.currentScene]) {
+      this.storedCollisionMaps[this.state.currentScene] = this.generateCollisionMap();
+    }
+    return this.storedCollisionMaps[this.state.currentScene];
+  }
+
+  generateCollisionMap() {
+    // Generate collision map based on current scene
+    const map = [];
+    for (let y = 0; y < this.state.mapHeight; y++) {
+      const row = [];
+      for (let x = 0; x < this.state.mapWidth; x++) {
+        // Add collision logic here
+        row.push(0);
+      }
+      map.push(row);
+    }
+    return map;
   }
 
   checkPassiveHealing(deltaTime) {
-    const now = Date.now();
-    if (now - this.lastPassiveHealTime >= PASSIVE_HEAL_INTERVAL) {
-      this.lastPassiveHealTime = now;
+    // Passive healing every 5 seconds
+    this.lastPassiveHealTime += deltaTime;
+    if (this.lastPassiveHealTime >= 5000) {
+      this.lastPassiveHealTime = 0;
       
-      if (this.state.player && this.state.player.hp < this.state.player.maxHp) {
+      if (this.state.player.hp < this.state.player.maxHp) {
+        const healAmount = Math.floor(this.state.player.maxHp * 0.05);
         this.state.player.hp = Math.min(
           this.state.player.maxHp,
-          this.state.player.hp + PASSIVE_HEAL_AMOUNT
+          this.state.player.hp + healAmount
         );
       }
     }
+  }
+
+  render() {
+    // Clear canvas
+    this.managers.render.clear();
+
+    // Render map
+    this.managers.render.renderMap();
+
+    // Render entities
+    this.managers.render.renderEntities();
+
+    // Render UI
+    this.managers.render.renderUI();
   }
 }
 

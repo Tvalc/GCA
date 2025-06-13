@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitter Cloud Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/combat.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="topNav">
+            <div class="nav-item" id="characterMenu">Character</div>
+            <div class="nav-item" id="inventoryMenu">Inventory</div>
+            <div class="nav-item" id="questMenu">Quests</div>
+            <div class="nav-item" id="mapMenu">Map</div>
+            <div class="nav-item" id="settingsMenu">Settings</div>
+        </div>
+        <div id="game-content"></div>
+    </div>
+
+    <!-- Core Systems -->
+    <script src="src/core/Game.js"></script>
+    <script src="src/core/Constants.js"></script>
+
+    <!-- Managers -->
+    <script src="src/managers/RenderManager.js"></script>
+    <script src="src/managers/InputManager.js"></script>
+    <script src="src/managers/UIManager.js"></script>
+    <script src="src/managers/AudioManager.js"></script>
+    <script src="src/managers/SaveManager.js"></script>
+
+    <!-- Systems -->
+    <script src="src/systems/CombatSystem.js"></script>
+    <script src="src/systems/SkillSystem.js"></script>
+    <script src="src/systems/InventorySystem.js"></script>
+    <script src="src/systems/RelicSystem.js"></script>
+    <script src="src/systems/NPCSystem.js"></script>
+
+    <!-- Entities -->
+    <script src="src/entities/Enemy.js"></script>
+    <script src="src/entities/Player.js"></script>
+
+    <!-- Data -->
+    <script src="src/data/enemies.js"></script>
+    <script src="src/data/items.js"></script>
+    <script src="src/data/skills.js"></script>
+
+    <!-- UI Components -->
+    <script src="src/ui/CombatUI.js"></script>
+    <script src="src/ui/CharacterMenu.js"></script>
+    <script src="src/ui/InventoryMenu.js"></script>
+    <script src="src/ui/QuestMenu.js"></script>
+    <script src="src/ui/MapMenu.js"></script>
+    <script src="src/ui/SettingsMenu.js"></script>
+
+    <!-- Initialize Game -->
+    <script>
+        window.addEventListener('load', async () => {
+            const game = new Game();
+            await game.init();
+        });
+    </script>
+</body>
+</html> 

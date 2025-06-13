@@ -192,37 +192,122 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     .menu-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       padding: 12px 24px;
       border-bottom: 2px solid #00ffff44;
       background: rgba(0,255,255,0.05);
     }
     .menu-title {
-      font-size: 1.4em;
-      color: #fff;
-      text-shadow: 0 0 10px #00ffff;
       display: flex;
-      align-items: center;
-      gap: 12px;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 18px;
     }
-    .menu-party-nav {
+    .menu-portrait {
+      width: 114px;
+      height: 114px;
+      border-radius: 8px;
+      border: 2px solid #00ffff;
+      background: #111;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-portrait-nav {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      font-size: 0.9em;
+      margin-top: 4px;
     }
-    .menu-party-nav button {
+    .menu-portrait-nav button {
       background: none;
       border: none;
       color: #00ffff;
       cursor: pointer;
-      font-size: 1.2em;
-      padding: 4px 8px;
-      transition: all 0.2s;
+      font-size: 1.1em;
+      padding: 2px 6px;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+      min-width: 0;
+      min-height: 0;
+      line-height: 1;
     }
-    .menu-party-nav button:hover {
+    .menu-portrait-nav button:hover {
+      background: #00ffff22;
       color: #fff;
+    }
+    .menu-title-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .menu-header-info {
+      margin-left: 0;
+      word-break: break-word;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 12px;
+      align-items: start;
+      font-size: 0.97em;
+    }
+    .menu-header-info > div {
+      white-space: nowrap;
+      font-size: 0.97em;
+    }
+    .menu-header-info .menu-stat-label {
+      color: #00ffff;
+      font-weight: bold;
+      margin-right: 4px;
+    }
+    .menu-header-info .menu-stat-value {
+      color: #fff;
+    }
+    .menu-card-title {
+      color: #fff;
+      font-size: 1.2em;
       text-shadow: 0 0 10px #00ffff;
+      margin-bottom: 8px;
+    }
+    .menu-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      font-size: 0.95em;
+    }
+    .gold-value {
+      color: #edd628;
+      font-weight: bold;
+    }
+    .menu-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 8px;
+      background: rgba(0,255,255,0.03);
+      border-radius: 4px;
+    }
+    .menu-stat-label {
+      color: #fff;
+      opacity: 0.8;
+    }
+    .menu-stat-value {
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .derived-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 0.93em;
+    }
+    .stat-points-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
     }
     .menu-close-btn {
       background: none;
@@ -319,19 +404,24 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       background: rgba(0,255,255,0.03);
       margin: 0;
       padding: 0;
+      font-size: 0.95em;
+      gap: 0;
+      justify-content: space-between;
     }
     .menu-tab-btn {
       flex: 1;
       background: none;
       border: none;
       color: #00ffff;
-      padding: 16px 12px;
-      font-size: 1.1em;
+      padding: 10px 4px;
+      font-size: 0.95em;
       cursor: pointer;
       text-align: center;
       border-top: 2px solid transparent;
       transition: all 0.2s;
       outline: none;
+      min-width: 0;
+      letter-spacing: 0.01em;
     }
     .menu-tab-btn:hover {
       background: rgba(0,255,255,0.1);
@@ -386,6 +476,269 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       #menu-content { min-width: 90vw; min-height: 60vh; padding: 0; }
       .menu-tab-content { padding: 10px 6px 0 6px; }
     }
+    #menu-overlay, #menu-content, .menu-content-wrapper, .menu-main-content {
+      height: 100vh;
+      max-height: 100vh;
+      box-sizing: border-box;
+    }
+    #menu-content {
+      padding-bottom: 0;
+    }
+    .menu-main-content {
+      padding: 12px 8px 0 8px;
+      gap: 8px;
+      font-size: 0.97em;
+    }
+    .menu-card-title, .menu-detail-title {
+      font-size: 1.05em;
+      margin-bottom: 6px;
+    }
+    .menu-stats-grid, .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      font-size: 0.95em;
+    }
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0,255,255,0.03);
+      border-radius: 4px;
+      padding: 2px 2px 2px 2px;
+      min-width: 0;
+    }
+    .stat-label {
+      color: #fff;
+      font-size: 0.92em;
+      margin-bottom: 1px;
+    }
+    .stat-controls {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .stat-button {
+      background: none;
+      border: 1px solid #00ffff44;
+      color: #00ffff;
+      font-size: 0.95em;
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0 1px;
+      line-height: 1;
+      transition: background 0.15s;
+    }
+    .stat-button:disabled {
+      color: #008080;
+      border-color: #00808044;
+      cursor: not-allowed;
+      background: rgba(0,255,255,0.04);
+    }
+    .stat-value {
+      color: #fff;
+      font-size: 0.97em;
+      min-width: 18px;
+      text-align: center;
+      display: inline-block;
+    }
+    .stat-points-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0 0 0;
+      font-size: 0.97em;
+    }
+    .stat-points-label {
+      color: #fff;
+      font-size: 0.97em;
+    }
+    .stat-points-value {
+      color: #edd628;
+      font-weight: bold;
+      font-size: 1.05em;
+    }
+    .stat-confirm-btn {
+      background: #00ffff22;
+      border: 1px solid #00ffff;
+      color: #fff;
+      font-size: 0.97em;
+      border-radius: 4px;
+      padding: 2px 10px;
+      margin-left: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .stat-confirm-btn:disabled {
+      color: #008080;
+      border-color: #00808044;
+      background: rgba(0,255,255,0.04);
+      cursor: not-allowed;
+    }
+    /* --- Add new class for portrait+nav+class row --- */
+    .menu-portrait-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 18px;
+    }
+    .menu-portrait-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .menu-class-label {
+      margin-left: 12px;
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .menu-class-value {
+      color: #fff;
+      font-weight: bold;
+    }
+    .menu-header-info {
+      margin-left: 0;
+      word-break: break-word;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 12px;
+      align-items: start;
+      font-size: 0.97em;
+    }
+    .menu-header-info > div {
+      white-space: nowrap;
+      font-size: 0.97em;
+    }
+    /* --- Add new class for hidden tab/content --- */
+    .menu-tab-content.hidden {
+      display: none;
+    }
+    .menu-sidebar.hidden {
+      display: none;
+    }
+    .menu-detail-close {
+      float: right;
+      background: none;
+      border: none;
+      color: #00ffff;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    /* --- Add new class for debug overlay and related elements --- */
+    .debug-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 340px;
+      max-width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.92);
+      color: #0ff;
+      z-index: 9999;
+      font-size: 0.95em;
+      font-family: monospace;
+      overflow-y: auto;
+      pointer-events: auto;
+      border-left: 2px solid #0ff;
+    }
+    .debug-overlay-header {
+      padding: 8px 12px;
+      border-bottom: 1px solid #0ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .debug-close-btn {
+      background: none;
+      border: none;
+      color: #0ff;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .debug-content {
+      padding: 10px;
+    }
+    /* --- Add new class for custom hr and ul styles --- */
+    .menu-hr {
+      border: none;
+      border-top: 1px solid #00ffff44;
+      margin: 12px 0 8px 0;
+    }
+    .debug-list {
+      margin: 0 0 8px 12px;
+    }
+    /* --- Add new class for menu header row layout --- */
+    .menu-header-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+    }
+    .menu-portrait-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 130px;
+      min-width: 130px;
+      margin-right: 0;
+    }
+    .menu-header-info {
+      margin-left: 0;
+      word-break: break-word;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+      align-items: start;
+    }
+    .menu-portrait-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .menu-portrait-nav-row .prev-party,
+    .menu-portrait-nav-row .next-party {
+      background: none;
+      border: 1px solid #00ffff44;
+      color: #00ffff;
+      font-size: 1em;
+      border-radius: 3px;
+      padding: 0 6px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .menu-portrait-nav-row .prev-party:hover,
+    .menu-portrait-nav-row .next-party:hover {
+      background: #00ffff22;
+      color: #fff;
+    }
+    .menu-party-name {
+      font-weight: bold;
+      color: #00ffff;
+      font-size: 1.05em;
+      margin: 0 2px;
+    }
+    .menu-class-label {
+      margin-left: 10px;
+      color: #00ffff;
+      font-weight: bold;
+      font-size: 1.05em;
+    }
+    .menu-class-value {
+      color: #fff;
+      font-weight: bold;
+      margin-left: 2px;
+      font-size: 1.05em;
+    }
   </style>
 </head>
 <body>
@@ -410,72 +763,24 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     <div id="menu-overlay">
       <div id="menu-content">
         <div class="menu-header">
-          <div class="menu-title">
-            <span>Menu</span>
-            <div class="menu-party-nav">
-              <button class="prev-party">◄</button>
-              <span class="menu-party-name">[Alex]</span>
-              <button class="next-party">►</button>
-              <span class="menu-party-count">1/3 Members</span>
-            </div>
-          </div>
           <button class="menu-close-btn" id="menu-close-btn" title="Close">×</button>
         </div>
         <div class="menu-content-wrapper">
           <div class="menu-main-content">
-            <!-- Character Tab -->
-            <div class="menu-tab-content" id="menu-tab-character">
-              <div class="menu-card">
-                <div class="menu-card-title">Character Info</div>
-                <div class="menu-stats-grid">
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">Level</span>
-                    <span class="menu-stat-value">5</span>
-                  </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">Class</span>
-                    <span class="menu-stat-value">Flexecutioner</span>
-                  </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">XP</span>
-                    <span class="menu-stat-value">1200/1500</span>
-                  </div>
-                </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 80%"></div>
-                </div>
-              </div>
-              <div class="menu-card">
-                <div class="menu-card-title">Vitals</div>
-                <div class="menu-stats-grid">
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">HP</span>
-                    <span class="menu-stat-value">85/85</span>
-                  </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">MP</span>
-                    <span class="menu-stat-value">35/35</span>
-                  </div>
-                </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 100%"></div>
-                </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: 70%"></div>
-                </div>
-              </div>
-            </div>
+            <!-- Character Tab: Rendered dynamically by MenuManager.renderTab('character'). Do not add static markup here. -->
+            <div class="menu-tab-content" id="menu-tab-character"></div>
             <!-- Other tabs will be populated dynamically -->
-            <div class="menu-tab-content" id="menu-tab-inventory" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-skills" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-equipment" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-relics" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-party" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-quests" style="display:none"></div>
-            <div class="menu-tab-content" id="menu-tab-settings" style="display:none"></div>
+            <div class="menu-tab-content" id="menu-tab-inventory" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-skills" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-equipment" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-relics" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-party" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-quests" class="menu-tab-content hidden"></div>
+            <div class="menu-tab-content" id="menu-tab-settings" class="menu-tab-content hidden"></div>
           </div>
-          <div class="menu-sidebar">
+          <div class="menu-sidebar hidden">
             <div class="menu-detail">
+              <button class="menu-detail-close" title="Close">×</button>
               <div class="menu-detail-title">Selected Item</div>
               <div class="menu-detail-content">
                 Select an item to view details
@@ -484,23 +789,22 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
           </div>
         </div>
         <div class="menu-tabs">
-          <button class="menu-tab-btn active" data-tab="character">Character</button>
-          <button class="menu-tab-btn" data-tab="inventory">Inventory</button>
+          <button class="menu-tab-btn active" data-tab="character">Char</button>
+          <button class="menu-tab-btn" data-tab="inventory">Inv</button>
           <button class="menu-tab-btn" data-tab="skills">Skills</button>
-          <button class="menu-tab-btn" data-tab="equipment">Equipment</button>
+          <button class="menu-tab-btn" data-tab="equipment">Equip</button>
           <button class="menu-tab-btn" data-tab="relics">Relics</button>
-          <button class="menu-tab-btn" data-tab="party">Party</button>
           <button class="menu-tab-btn" data-tab="quests">Quests</button>
-          <button class="menu-tab-btn" data-tab="settings">Settings</button>
+          <button class="menu-tab-btn" data-tab="settings"><span style="font-size:1.2em;vertical-align:middle;">&#9881;</span></button>
         </div>
       </div>
     </div>
-    <div id="debug-overlay" style="display:none; position:fixed; top:0; right:0; width:340px; max-width:100vw; height:100vh; background:rgba(0,0,0,0.92); color:#0ff; z-index:9999; font-size:0.95em; font-family:monospace; overflow-y:auto; pointer-events:auto; border-left:2px solid #0ff;">
-      <div style="padding:8px 12px; border-bottom:1px solid #0ff; display:flex; justify-content:space-between; align-items:center;">
+    <div id="debug-overlay" class="debug-overlay">
+      <div class="debug-overlay-header">
         <span><b>Debug Overlay</b></span>
-        <button id="debug-close-btn" style="background:none; border:none; color:#0ff; font-size:1.2em; cursor:pointer;">×</button>
+        <button id="debug-close-btn" class="debug-close-btn">×</button>
       </div>
-      <div id="debug-content" style="padding:10px;"></div>
+      <div id="debug-content" class="debug-content"></div>
     </div>
   </div>
   <script>
@@ -905,11 +1209,16 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
           critChance: Math.min(5 + Math.floor(this.stats.fortune / 4), 30),
           evasion: Math.min(Math.floor(this.stats.dexterity / 2), 25)
         };
-        // Sync HP/MP if needed
-        if (!this.hp || this.hp > this.derivedStats.maxHp) this.hp = this.derivedStats.maxHp;
-        if (!this.mp || this.mp > this.derivedStats.maxMp) this.mp = this.derivedStats.maxMp;
         this.maxHp = this.derivedStats.maxHp;
         this.maxMp = this.derivedStats.maxMp;
+        // If new character, always sync hp/mp to max
+        if (this.level === 1 && this.experience === 0) {
+          this.hp = this.maxHp;
+          this.mp = this.maxMp;
+        } else {
+          if (!this.hp || this.hp > this.maxHp) this.hp = this.maxHp;
+          if (!this.mp || this.mp > this.maxMp) this.mp = this.maxMp;
+        }
       }
       gainExperience(amount) {
         this.experience += amount;
@@ -1089,6 +1398,29 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
     }
 
     // --- Start Game ---
+    function setupMenuManager() {
+      if (!window.menuManager && window.game && window.game.player && window.game.player.character) {
+        window.menuManager = new MenuManager();
+        // Set up party members (for now, just the player character)
+        const hazelFrames = [
+          'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_1-EHd6aTym2GZYG9YGUObU4C3UVzRM4J.png?yK6e',
+          'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_1-EHd6aTym2GZYG9YGUObU4C3UVzRM4J.png?yK6e',
+          'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_3-CHy1ZtpTESzTZIRzKqWCAn8f1YeO3w.png?uMN1',
+          'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_4-gSm4PyttYHunekRzEFgIHAKnZQDwfA.png?9b67',
+          'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_5-FZ0aZQXgDbESB4PHVg49uHFLt0LmT0.png?7Y1S'
+        ];
+        window.menuManager.partyMembers = [window.game.player.character];
+        window.menuManager.partyMembers.forEach(member => {
+          if (member.name === 'Hazel') {
+            member.portraitFrames = hazelFrames;
+          } else if (!Array.isArray(member.portraitFrames)) {
+            member.portraitFrames = hazelFrames;
+          }
+        });
+        window.menuManager.partyIndex = 0;
+        window.menuManager.updatePartyNav();
+      }
+    }
     function startGame() {
       window.debugLog && window.debugLog('startGame() called');
       document.getElementById('start-overlay').classList.add('hidden');
@@ -1096,14 +1428,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         document.getElementById('start-overlay').style.display = 'none';
         window.game = new Game();
         window.gameReady = true;
-        // Initialize MenuManager after game is ready
-        if (!window.menuManager) {
-          window.menuManager = new MenuManager();
-        }
-        // Set up party members (for now, just the player character)
-        window.menuManager.partyMembers = [window.game.player.character];
-        window.menuManager.partyIndex = 0;
-        window.menuManager.updatePartyNav();
+        setupMenuManager();
         window.debugLog && window.debugLog('Game started: window.game is set. MenuManager initialized.');
       }, 350);
     }
@@ -1138,7 +1463,11 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.selectedItem = null;
         this.partyIndex = 0;
         this.partyMembers = [];
+        this.sidebar = document.querySelector('.menu-sidebar');
+        this.sidebarCloseBtn = this.sidebar.querySelector('.menu-detail-close');
+        this.sidebarCloseBtn.onclick = () => this.clearSelection();
         this._bindEvents();
+        this._setupPortraitAnimation();
       }
 
       _bindEvents() {
@@ -1146,13 +1475,81 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         this.tabs.forEach(tab => {
           tab.onclick = () => this.switchTab(tab.dataset.tab);
         });
-        document.querySelector('.prev-party').onclick = () => this.cycleParty(-1);
-        document.querySelector('.next-party').onclick = () => this.cycleParty(1);
+        // Remove static party nav button bindings here
+        // Global keyboard shortcuts
         window.addEventListener('keydown', e => {
           if (e.key === 'Escape') this.close();
           if (e.key === 'ArrowLeft') this.cycleParty(-1);
           if (e.key === 'ArrowRight') this.cycleParty(1);
+          // Menu toggle with 'M' key
+          if (e.key.toLowerCase() === 'm' && document.activeElement.tagName !== 'INPUT') {
+            if (this.overlay.classList.contains('open')) {
+              this.close();
+            } else {
+              this.open();
+            }
+          }
         });
+      }
+
+      _setupPortraitAnimation() {
+        let portraitFrameIdx = 0;
+        let portraitInterval = null;
+        let forward = true;
+
+        const updatePortrait = (forceFirstFrame = false) => {
+          const char = this.getCurrentChar();
+          const img = document.getElementById('menu-portrait-img');
+          if (!img) { console.log('[Portrait] <img> not found'); return; }
+          if (!char || !char.name) {
+            img.src = '';
+            img.alt = 'Portrait';
+            console.warn('[Portrait] No character selected for portrait animation.');
+            return;
+          }
+          let frames = Array.isArray(char.portraitFrames) ? char.portraitFrames : [];
+          if (frames.length > 0) {
+            if (forceFirstFrame) portraitFrameIdx = 0;
+            img.src = frames[portraitFrameIdx % frames.length];
+            img.alt = char.name + ' Portrait';
+          } else {
+            img.src = 'https://lqy3lriiybxcejon.public.blob.vercel-storage.com/02734c7f-ee83-4cb8-a785-4c5b9b9e62fc/Jump_1-EHd6aTym2GZYG9YGUObU4C3UVzRM4J.png?yK6e';
+            img.alt = char.name || 'Portrait';
+          }
+        };
+
+        const startPortraitAnimation = () => {
+          if (portraitInterval) clearInterval(portraitInterval);
+          portraitFrameIdx = 0;
+          forward = true;
+          const char = this.getCurrentChar();
+          if (!char || !char.name) return;
+          let frames = Array.isArray(char.portraitFrames) ? char.portraitFrames : [];
+          updatePortrait(true);
+          if (frames.length > 1) {
+            portraitInterval = setInterval(() => {
+              if (forward) {
+                portraitFrameIdx++;
+                if (portraitFrameIdx >= frames.length - 1) {
+                  forward = false;
+                }
+              } else {
+                portraitFrameIdx--;
+                if (portraitFrameIdx <= 0) {
+                  forward = true;
+                }
+              }
+              updatePortrait();
+            }, 180);
+          }
+        };
+
+        this.updatePortrait = updatePortrait;
+        this.startPortraitAnimation = startPortraitAnimation;
+      }
+
+      getCurrentChar() {
+        return this.partyMembers[this.partyIndex] || {};
       }
 
       open() {
@@ -1163,6 +1560,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
 
       close() {
         this.overlay.classList.remove('open');
+        this.clearSelection();
       }
 
       switchTab(tab) {
@@ -1171,6 +1569,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         Object.keys(this.tabContents).forEach(key => {
           this.tabContents[key].style.display = (key === tab) ? '' : 'none';
         });
+        // Always clear selection and hide sidebar on tab switch
+        this.clearSelection();
         this.renderTab(tab);
       }
 
@@ -1182,25 +1582,21 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       }
 
       updatePartyNav() {
-        const nav = document.querySelector('.menu-party-nav');
-        if (!nav) return;
-        const member = this.partyMembers[this.partyIndex] || { name: 'None' };
-        const nameSpan = nav.querySelector('.menu-party-name');
-        const countSpan = nav.querySelector('.menu-party-count');
-        if (nameSpan) nameSpan.textContent = `[${member.name}]`;
-        if (countSpan) countSpan.textContent = `${this.partyIndex + 1}/${this.partyMembers.length} Members`;
+        const nameEl = document.querySelector('.menu-party-name');
+        if (nameEl) nameEl.textContent = this.getCurrentChar().name || 'None';
+        this.startPortraitAnimation();
       }
 
       selectItem(item) {
         this.selectedItem = item;
         const detailContent = document.querySelector('.menu-detail-content');
         if (!detailContent) return;
-        
         if (!item) {
+          this.sidebar.style.display = 'none';
           detailContent.innerHTML = 'Select an item to view details';
           return;
         }
-
+        this.sidebar.style.display = '';
         detailContent.innerHTML = `
           <h3>${item.name}</h3>
           ${item.description ? `<p>${item.description}</p>` : ''}
@@ -1217,53 +1613,70 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         `;
       }
 
+      clearSelection() {
+        this.selectedItem = null;
+        this.sidebar.style.display = 'none';
+      }
+
       renderTab(tab) {
         const player = window.game?.player?.character;
         if (!player) return;
-
+        // Hide sidebar by default
+        this.sidebar.style.display = 'none';
         switch(tab) {
           case 'character':
             this.tabContents.character.innerHTML = `
               <div class="menu-card">
-                <div class="menu-card-title">Character Info</div>
-                <div class="menu-stats-grid">
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">Level</span>
-                    <span class="menu-stat-value">${player.level}</span>
+                <div class="menu-header-row">
+                  <div class="menu-portrait-block">
+                    <img id="menu-portrait-img" class="menu-portrait" src="${player.portraitFrames && player.portraitFrames[0] ? player.portraitFrames[0] : ''}" alt="Portrait" />
+                    <div class="menu-portrait-nav-row">
+                      <button class="prev-party">◄</button>
+                      <span class="menu-party-name">${player.name}</span>
+                      <button class="next-party">►</button>
+                      <span class="menu-class-label">Class:<span class="menu-class-value">${player.class}</span></span>
+                    </div>
                   </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">Class</span>
-                    <span class="menu-stat-value">${player.class}</span>
-                  </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">XP</span>
-                    <span class="menu-stat-value">${player.experience}/${player.experienceToNextLevel}</span>
-                  </div>
-                </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: ${(player.experience / player.experienceToNextLevel) * 100}%"></div>
-                </div>
-              </div>
-              <div class="menu-card">
-                <div class="menu-card-title">Vitals</div>
-                <div class="menu-stats-grid">
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">HP</span>
-                    <span class="menu-stat-value">${player.hp}/${player.maxHp}</span>
-                  </div>
-                  <div class="menu-stat">
-                    <span class="menu-stat-label">MP</span>
-                    <span class="menu-stat-value">${player.mp}/${player.maxMp}</span>
+                  <div class="menu-header-info">
+                    <div><span class="menu-stat-label">Level:</span><span class="menu-stat-value">${player.level}</span></div>
+                    <div><span class="menu-stat-label">HP:</span><span class="menu-stat-value">${player.hp}/${player.maxHp}</span></div>
+                    <div><span class="menu-stat-label">MP:</span><span class="menu-stat-value">${player.mp}/${player.maxMp}</span></div>
+                    <div><span class="menu-stat-label">XP:</span><span class="menu-stat-value">${player.experience}/${player.experienceToNextLevel}</span></div>
+                    <div><span class="menu-stat-label">Gold:</span><span class="menu-stat-value gold-value">${player.gold}</span></div>
                   </div>
                 </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: ${(player.hp / player.maxHp) * 100}%"></div>
+                <hr class="menu-hr" />
+                <div class="stat-grid">
+                  ${['strength','intelligence','vitality','dexterity','fortune','charisma'].map(stat => `
+                    <div class="stat-box">
+                      <span class="stat-label">${stat.charAt(0).toUpperCase() + stat.slice(1)}</span>
+                      <span class="stat-controls">
+                        <button class="stat-button" onclick="window.menuManager.allocateStat('${stat}',-1)" ${player.statPoints <= 0 || player.stats[stat] <= player.baseStats[stat] ? 'disabled' : ''}>-</button>
+                        <span class="stat-value">${player.stats[stat]}</span>
+                        <button class="stat-button" onclick="window.menuManager.allocateStat('${stat}',1)" ${player.statPoints <= 0 ? 'disabled' : ''}>+</button>
+                      </span>
+                    </div>
+                  `).join('')}
                 </div>
-                <div class="menu-progress-bar">
-                  <div class="menu-progress-fill" style="width: ${(player.mp / player.maxMp) * 100}%"></div>
+                <div class="derived-stats-grid">
+                  <div><span>ATK:</span> <b>${player.derivedStats.attack}</b></div>
+                  <div><span>DEF:</span> <b>${player.derivedStats.defense}</b></div>
+                  <div><span>SPD:</span> <b>${player.derivedStats.speed}</b></div>
+                  <div><span>CRIT:</span> <b>${player.derivedStats.critChance}%</b></div>
+                  <div><span>EVA:</span> <b>${player.derivedStats.evasion}%</b></div>
+                </div>
+                <div class="stat-points-row">
+                  <span class="stat-points-label">Stat Points:</span>
+                  <span class="stat-points-value">${player.statPoints}</span>
+                  <button class="stat-confirm-btn" onclick="window.menuManager.confirmStatAllocation()" ${player.statPoints === 0 ? 'disabled' : ''}>Confirm</button>
                 </div>
               </div>
             `;
+            // Bind party nav buttons after dynamic HTML is injected
+            const prevBtn = this.tabContents.character.querySelector('.prev-party');
+            const nextBtn = this.tabContents.character.querySelector('.next-party');
+            if (prevBtn) prevBtn.onclick = () => this.cycleParty(-1);
+            if (nextBtn) nextBtn.onclick = () => this.cycleParty(1);
             break;
 
           case 'inventory':
@@ -1272,8 +1685,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Inventory</div>
                 <div class="menu-list">
                   ${player.inventory.length > 0 
-                    ? player.inventory.map(item => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item)})">
+                    ? player.inventory.map((item, idx) => `
+                        <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].inventory[${idx}])">
                           <span>${item.name}</span>
                           <span>${item.quantity || 1}</span>
                         </div>
@@ -1290,8 +1703,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Active Skills</div>
                 <div class="menu-list">
-                  ${player.skills.filter(s => s.type === 'active').map(skill => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
+                  ${player.skills.filter(s => s.type === 'active').map((skill, idx) => `
+                    <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].skills.filter(s=>s.type==='active')[${idx}])">
                       <span>${skill.name}</span>
                       <span>MP: ${skill.mpCost}</span>
                     </div>
@@ -1301,8 +1714,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Passive Skills</div>
                 <div class="menu-list">
-                  ${player.skills.filter(s => s.type === 'passive').map(skill => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(skill)})">
+                  ${player.skills.filter(s => s.type === 'passive').map((skill, idx) => `
+                    <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].skills.filter(s=>s.type==='passive')[${idx}])">
                       <span>${skill.name}</span>
                     </div>
                   `).join('')}
@@ -1316,8 +1729,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
               <div class="menu-card">
                 <div class="menu-card-title">Equipment</div>
                 <div class="menu-list">
-                  ${Object.entries(player.equipment).map(([slot, item]) => `
-                    <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(item || { name: 'Empty', slot })})">
+                  ${Object.entries(player.equipment).map(([slot, item], idx) => `
+                    <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].equipment['${slot}'])">
                       <span>${slot.replace('_', ' ')}</span>
                       <span>${item ? item.name : 'Empty'}</span>
                     </div>
@@ -1333,8 +1746,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Relics</div>
                 <div class="menu-list">
                   ${Object.values(player.relics).length > 0
-                    ? Object.values(player.relics).map(relic => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(relic)})">
+                    ? Object.values(player.relics).map((relic, idx) => `
+                        <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].relics[Object.keys(window.menuManager.partyMembers[window.menuManager.partyIndex].relics)[${idx}]])">
                           <span>${relic.name} ${player.equipment.RELIC_1 === relic || player.equipment.RELIC_2 === relic ? '(Equipped)' : ''}</span>
                           <span>Lv.${relic.level}</span>
                         </div>
@@ -1372,8 +1785,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Active Quests</div>
                 <div class="menu-list">
                   ${player.quests.active.length > 0 
-                    ? player.quests.active.map(quest => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
+                    ? player.quests.active.map((quest, idx) => `
+                        <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].quests.active[${idx}])">
                           <span>${quest.name}</span>
                           <span>${quest.progress || 0}%</span>
                         </div>
@@ -1386,8 +1799,8 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
                 <div class="menu-card-title">Completed Quests</div>
                 <div class="menu-list">
                   ${player.quests.completed.length > 0 
-                    ? player.quests.completed.map(quest => `
-                        <div class="menu-list-item" onclick="menuManager.selectItem(${JSON.stringify(quest)})">
+                    ? player.quests.completed.map((quest, idx) => `
+                        <div class="menu-list-item" onclick="window.menuManager.selectItem(window.menuManager.partyMembers[window.menuManager.partyIndex].quests.completed[${idx}])">
                           <span>${quest.name}</span>
                           <span>${new Date(quest.completedAt).toLocaleDateString()}</span>
                         </div>
@@ -1422,151 +1835,112 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
             break;
         }
       }
+      allocateStat(stat, amount) {
+        const player = window.game?.player?.character;
+        if (!player) return;
+        if (amount > 0 && player.statPoints > 0) {
+          player.stats[stat] += 1;
+          player.statPoints -= 1;
+        } else if (amount < 0 && player.stats[stat] > player.baseStats[stat]) {
+          player.stats[stat] -= 1;
+          player.statPoints += 1;
+        }
+        player.calculateDerivedStats();
+        this.renderTab('character');
+      }
+      confirmStatAllocation() {
+        // In this simple version, just lock in the stats (could add more logic if needed)
+        this.renderTab('character');
+      }
     }
-    // --- Initialize MenuManager and keyboard shortcut ---
-    const menuManager = new MenuManager();
-    document.getElementById('menu-close-btn').onclick = () => window.menuManager && window.menuManager.close();
+
+    // --- DebugManager ---
+    class DebugManager {
+      constructor() {
+        this.overlay = document.getElementById('debug-overlay');
+        this.content = document.getElementById('debug-content');
+        this.closeBtn = document.getElementById('debug-close-btn');
+        this.visible = false;
+        this._bindEvents();
+      }
+
+      _bindEvents() {
+        this.closeBtn.onclick = () => {
+          this.overlay.style.display = 'none';
+          this.visible = false;
+        };
+
+        window.addEventListener('keydown', e => {
+          if (e.key === '`' || e.key === '~') {
+            this.visible = !this.visible;
+            this.overlay.style.display = this.visible ? 'block' : 'none';
+            this.update(e.key);
+          }
+        });
+      }
+
+      log(msg) {
+        if (!this.content) return;
+        const p = document.createElement('div');
+        p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        this.content.appendChild(p);
+        this.content.scrollTop = this.content.scrollHeight;
+      }
+
+      update(lastKey) {
+        const menuOpen = document.getElementById('menu-overlay').classList.contains('open');
+        const player = window.game?.player?.character;
+        this.content.innerHTML = `
+          <b>Menu Open:</b> ${menuOpen}<br>
+          <b>Last Key:</b> ${lastKey || ''}<br>
+          <b>Relics:</b><br>
+          <ul class="debug-list">
+            ${player ? Object.values(player.relics).map(r => `<li>${r.name} (id: ${r.id}, lvl: ${r.level}, xp: ${r.xp}/${r.xpToNextLevel})</li>`).join('') : '<li>None</li>'}
+          </ul>
+        `;
+      }
+    }
+
+    // --- Initialize Managers ---
+    const debugManager = new DebugManager();
+    window.debugLog = msg => debugManager.log(msg);
+
+    // Add key listener for Glitch Stick
     window.addEventListener('keydown', e => {
-      window.debugLog && window.debugLog('keydown event: ' + e.key);
-      console.log('keydown event:', e.key);
-      const menuOverlay = document.getElementById('menu-overlay');
-      window.debugLog && window.debugLog('menuOverlay open (every key): ' + menuOverlay.classList.contains('open'));
-      // Toggle debug overlay with ~
-      if (e.key === '`' || e.key === '~') {
-        window.debugLog && window.debugLog('Entered debug overlay toggle block');
-        debugVisible = !debugVisible;
-        debugOverlay.style.display = debugVisible ? 'block' : 'none';
-        updateDebugOverlay(e.key);
+      if (e.key === '-' && window.game?.player?.character) {
+        window.game.player.character.relics = window.game.player.character.relics || {};
+        window.game.player.character.relics.glitchStick = {
+          id: 'glitchStick',
+          name: 'Glitch Stick',
+          level: 1,
+          xp: 0,
+          xpToNextLevel: 100,
+          abilities: {
+            glitch: {
+              name: 'Glitch',
+              description: 'Temporarily glitch the game',
+              cooldown: 30,
+              lastUsed: 0
+            }
+          }
+        };
+        debugManager.log('Glitch Stick added!');
       }
-      // Dev/test: '-' key gives Glitch Stick relic
-      if (e.key === '-' && document.activeElement.tagName !== 'INPUT' && !menuOverlay.classList.contains('open')) {
-        if (!window.gameReady) {
-          window.debugLog && window.debugLog('Game not started yet: cannot give relic.');
-          return;
-        }
-        window.debugLog && window.debugLog('Entered dev shortcut block');
-        window.debugLog && window.debugLog('window.giveTestRelic: ' + (typeof window.giveTestRelic));
-        window.debugLog && window.debugLog('window.game: ' + (typeof window.game));
-        window.debugLog && window.debugLog('window.game?.player: ' + (window.game && window.game.player ? 'exists' : 'undefined'));
-        window.debugLog && window.debugLog('window.game?.player?.character: ' + (window.game && window.game.player && window.game.player.character ? 'exists' : 'undefined'));
-        console.log('window.giveTestRelic:', window.giveTestRelic);
-        console.log('window.game:', window.game);
-        console.log('window.game?.player:', window.game && window.game.player);
-        console.log('window.game?.player?.character:', window.game && window.game.player && window.game.player.character);
-        window.giveTestRelic && window.giveTestRelic();
-        window.debugLog('Pressed - : called giveTestRelic()');
-        updateDebugOverlay(e.key);
-      }
-      // Menu open/close logic
-      if ((e.key === 'Escape' || e.key.toLowerCase() === 'm') && document.activeElement.tagName !== 'INPUT') {
-        window.debugLog && window.debugLog('Entered menu open/close block');
-        window.debugLog && window.debugLog('menuManager: ' + (typeof window.menuManager));
-        window.debugLog && window.debugLog('menuOverlay open before: ' + menuOverlay.classList.contains('open'));
-        console.log('menuManager:', window.menuManager);
-        console.log('menuOverlay open before:', menuOverlay.classList.contains('open'));
-        if (menuOverlay.classList.contains('open')) {
-          window.menuManager && window.menuManager.close();
-          window.debugLog('Menu closed via key');
-        } else {
-          window.menuManager && window.menuManager.open();
-          window.debugLog('Menu opened via key');
-        }
-        window.debugLog && window.debugLog('menuOverlay open after: ' + menuOverlay.classList.contains('open'));
-        console.log('menuOverlay open after:', menuOverlay.classList.contains('open'));
-        updateDebugOverlay(e.key);
-      }
-      updateDebugOverlay(e.key);
     });
 
-    // --- Add global handlers for relic actions ---
-    window.useRelicAbility = function(relicId, abilityName) {
-      const player = window.game?.player?.character;
-      if (!player) return;
-      const relic = player.relics[relicId];
-      if (!relic) return;
-      const ability = relic.abilities.find(a => a.name === abilityName);
-      if (!ability) return;
-      // Simple cooldown check (not persistent)
-      const now = Date.now();
-      if (ability.cooldown && ability.lastUsed && now - ability.lastUsed < ability.cooldown * 1000) {
-        alert('Ability is on cooldown!');
-        return;
-      }
-      ability.lastUsed = now;
-      // Placeholder effect for Glitch Stick
-      if (relicId === 'glitch_stick' && abilityName === 'Reality Glitch') {
-        alert('Reality glitches! (Test effect)');
-        gainRelicXP(relic, 5);
-        menuManager.renderTab('relics');
-      } else {
-        alert(`Use ability '${abilityName}' from relic '${relicId}' (placeholder)`);
-      }
-    };
-    window.equipRelic = function(relicId) {
-      const player = window.game?.player?.character;
-      if (!player) return;
-      // Equip in first available slot
-      if (!player.equipment.RELIC_1) player.equipment.RELIC_1 = player.relics[relicId];
-      else if (!player.equipment.RELIC_2) player.equipment.RELIC_2 = player.relics[relicId];
-      else player.equipment.RELIC_1 = player.relics[relicId]; // Replace slot 1 for now
-      menuManager.renderTab('relics');
-      menuManager.renderTab('equipment');
-    };
-    window.unequipRelic = function(relicId) {
-      const player = window.game?.player?.character;
-      if (!player) return;
-      if (player.equipment.RELIC_1 && player.equipment.RELIC_1.id === relicId) player.equipment.RELIC_1 = null;
-      if (player.equipment.RELIC_2 && player.equipment.RELIC_2.id === relicId) player.equipment.RELIC_2 = null;
-      menuManager.renderTab('relics');
-      menuManager.renderTab('equipment');
-    };
-
-    // --- Sample Relic: Glitch Stick ---
-    const GLITCH_STICK = {
-      id: 'glitch_stick',
-      name: 'Glitch Stick',
-      description: 'A mysterious stick that pulses with unstable code. Can disrupt reality for a moment.',
-      level: 1,
-      xp: 0,
-      xpToNextLevel: 20,
-      abilities: [
-        {
-          name: 'Reality Glitch',
-          type: 'active',
-          description: 'Causes a random glitch effect. (Test ability)',
-          cooldown: 0,
-          lastUsed: 0
-        }
-      ]
-    };
-
-    // --- Relic XP/Leveling ---
-    function gainRelicXP(relic, amount) {
-      relic.xp += amount;
-      while (relic.xp >= relic.xpToNextLevel) {
-        relic.xp -= relic.xpToNextLevel;
-        relic.level++;
-        relic.xpToNextLevel = Math.floor(relic.xpToNextLevel * 1.5 + 10);
-        // Optionally: unlock new abilities, show message, etc.
-      }
-    }
-
-    // --- Give Test Relic (for dev/testing only) ---
-    window.giveTestRelic = function() {
-      const player = window.game?.player?.character;
-      if (!player) return;
-      if (!player.relics[GLITCH_STICK.id]) {
-        // Deep clone to avoid reference issues
-        player.relics[GLITCH_STICK.id] = JSON.parse(JSON.stringify(GLITCH_STICK));
-        menuManager.renderTab('relics');
-      }
-    };
+    // Ensure portrait animation is set up when menu is opened
+   // window.menuManager.overlay.addEventListener('transitionend', () => {
+  //    if (window.menuManager.overlay.classList.contains('open')) {
+  //      window.menuManager.startPortraitAnimation();
+ //    }
+ //   });
 
     // --- Debug Overlay ---
     const debugOverlay = document.getElementById('debug-overlay');
     const debugContent = document.getElementById('debug-content');
     const debugCloseBtn = document.getElementById('debug-close-btn');
     let debugVisible = false;
+
     window.debugLog = function(msg) {
       if (!debugContent) return;
       const p = document.createElement('div');
@@ -1574,6 +1948,7 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
       debugContent.appendChild(p);
       debugContent.scrollTop = debugContent.scrollHeight;
     };
+
     function updateDebugOverlay(lastKey) {
       const menuOpen = document.getElementById('menu-overlay').classList.contains('open');
       const player = window.game?.player?.character;
@@ -1581,12 +1956,53 @@ MODULARITY RULE: Build features in a modular, maintainable way. Avoid bloat and 
         <b>Menu Open:</b> ${menuOpen}<br>
         <b>Last Key:</b> ${lastKey || ''}<br>
         <b>Relics:</b><br>
-        <ul style="margin:0 0 8px 12px;">
+        <ul class="debug-list">
           ${player ? Object.values(player.relics).map(r => `<li>${r.name} (id: ${r.id}, lvl: ${r.level}, xp: ${r.xp}/${r.xpToNextLevel})</li>`).join('') : '<li>None</li>'}
         </ul>
       `;
     }
+
     debugCloseBtn.onclick = () => { debugOverlay.style.display = 'none'; debugVisible = false; };
+
+    // Add keyboard shortcut for debug overlay
+    window.addEventListener('keydown', e => {
+      if (e.key === '`' || e.key === '~') {
+        debugVisible = !debugVisible;
+        debugOverlay.style.display = debugVisible ? 'block' : 'none';
+        updateDebugOverlay(e.key);
+      }
+    });
+
+    // Ensure a single, global MenuManager instance is available before any UI or event handler uses it
+    window.addEventListener('DOMContentLoaded', function() {
+      // ... other setup ...
+      // Defensive guard for game and player
+      if (window.game && window.game.player) {
+        if (!window.menuManager) {
+          window.menuManager = new MenuManager();
+          // Set up party members (for now, just the player character)
+          window.menuManager.partyMembers = [window.game.player.character];
+          window.menuManager.partyMembers.forEach(member => {
+            if (member.name === 'Hazel') {
+              member.portraitFrames = hazelFrames;
+            } else if (!Array.isArray(member.portraitFrames)) {
+              // Set a default or fallback portraitFrames for other characters if needed
+              member.portraitFrames = hazelFrames;
+            }
+          });
+          window.menuManager.partyIndex = 0;
+          window.menuManager.updatePartyNav();
+        }
+      }
+      // Defensive check for overlay
+      if (window.menuManager && window.menuManager.overlay) {
+        window.menuManager.overlay.addEventListener('transitionend', () => {
+          if (window.menuManager.overlay.classList.contains('open')) {
+            window.menuManager.startPortraitAnimation();
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>

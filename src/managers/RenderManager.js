@@ -14,25 +14,20 @@ class RenderManager {
     this.sprites = new Map();
     this.animations = new Map();
     this.backgroundImage = null;
+    this.uiElements = new Map();
   }
 
   async init() {
     // Create main canvas
     this.canvas = document.createElement('canvas');
+    this.canvas.id = 'gameCanvas';
+    document.body.appendChild(this.canvas);
+    
+    // Get context
     this.ctx = this.canvas.getContext('2d');
     
-    // Set canvas size based on game container
-    const gameContainer = document.getElementById('game-container');
-    const containerWidth = gameContainer ? gameContainer.offsetWidth : 800;
-    const containerHeight = gameContainer ? gameContainer.offsetHeight : 600;
-    
-    // Get nav height with fallback
-    const nav = document.querySelector('#topNav');
-    const navHeight = nav ? nav.offsetHeight : 0;
-    
-    // Set canvas dimensions
-    this.canvas.width = containerWidth;
-    this.canvas.height = containerHeight - navHeight;
+    // Set canvas size
+    this.resizeCanvas();
     
     // Create layer canvases
     for (const layer in this.layers) {
@@ -42,11 +37,19 @@ class RenderManager {
       this.layers[layer].getContext('2d');
     }
     
-    // Add canvas to game container
-    gameContainer.appendChild(this.canvas);
-    
     // Load initial assets
     await this.loadAssets();
+    
+    // Initialize UI elements
+    this.initUI();
+    
+    // Handle window resize
+    window.addEventListener('resize', () => this.resizeCanvas());
+  }
+
+  resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
   }
 
   async loadAssets() {
@@ -92,45 +95,27 @@ class RenderManager {
   }
 
   async loadSprites() {
-    const spritePromises = [];
-    
     // Load player sprites
-    for (const classType in CHARACTER_CLASSES) {
-      const spriteUrl = CHARACTER_CLASSES[classType].spriteSheet;
-      spritePromises.push(this.loadSprite(classType, spriteUrl));
-    }
+    await this.loadSprite('player', 'assets/sprites/player.png');
+    await this.loadSprite('enemies', 'assets/sprites/enemies.png');
+    await this.loadSprite('ui', 'assets/sprites/ui.png');
     
-    // Load enemy sprites
-    for (const enemyType in ENEMY_TYPES) {
-      const spriteUrl = ENEMY_TYPES[enemyType].spriteSheet;
-      spritePromises.push(this.loadSprite(enemyType, spriteUrl));
-    }
-    
-    // Load item sprites
-    for (const itemType in ITEM_TYPES) {
-      const spriteUrl = ITEM_TYPES[itemType].sprite;
-      spritePromises.push(this.loadSprite(itemType, spriteUrl));
-    }
-    
-    await Promise.all(spritePromises);
+    // Load map tiles
+    await this.loadSprite('tiles', 'assets/sprites/tiles.png');
   }
 
-  async loadSprite(key, url) {
+  async loadSprite(name, src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       
       img.onload = () => {
-        this.sprites.set(key, img);
+        this.sprites.set(name, img);
         resolve();
       };
       
-      img.onerror = () => {
-        console.error(`Failed to load sprite: ${key}`);
-        reject(new Error(`Failed to load sprite: ${key}`));
-      };
-      
-      img.src = url;
+      img.onerror = reject;
+      img.src = src;
     });
   }
 
@@ -193,46 +178,76 @@ class RenderManager {
   }
 
   renderEntities() {
-    const ctx = this.layers.entities.getContext('2d');
-    
     // Render player
-    if (this.game.state.player) {
-      this.renderEntity(ctx, this.game.state.player);
-    }
+    this.renderPlayer();
     
     // Render enemies
-    this.game.state.enemies.forEach(enemy => {
-      this.renderEntity(ctx, enemy);
-    });
-    
-    // Render NPCs
-    if (this.game.systems.npc) {
-      this.game.systems.npc.getNPCs().forEach(npc => {
-        this.renderEntity(ctx, npc);
-      });
-    }
+    this.renderEnemies();
   }
 
-  renderEntity(ctx, entity) {
-    const sprite = this.sprites.get(entity.spriteKey);
-    if (!sprite) return;
-    
-    // Calculate screen position
-    const screenX = entity.position.x - this.game.state.camera.x;
-    const screenY = entity.position.y - this.game.state.camera.y;
-    
-    // Draw entity sprite
-    ctx.drawImage(
-      sprite,
-      entity.animationFrame * GRID_SIZE,
-      0,
-      GRID_SIZE,
-      GRID_SIZE,
-      screenX,
-      screenY,
-      GRID_SIZE,
-      GRID_SIZE
+  renderPlayer() {
+    const { player } = this.game.state;
+    if (!player) return;
+
+    const playerSprite = this.sprites.get('player');
+    if (!playerSprite) return;
+
+    // Calculate sprite position
+    const spriteX = (player.direction === 'left' ? 1 : 0) * GRID_SIZE;
+    const spriteY = (['up', 'down', 'left', 'right'].indexOf(player.direction)) * GRID_SIZE;
+
+    // Draw player sprite
+    this.ctx.drawImage(
+      playerSprite,
+      spriteX, spriteY,
+      GRID_SIZE, GRID_SIZE,
+      player.position.x, player.position.y,
+      GRID_SIZE, GRID_SIZE
     );
+
+    // Draw player HP/MP bars
+    this.renderEntityBars(player);
+  }
+
+  renderEnemies() {
+    const { enemies } = this.game.state;
+    const enemiesSprite = this.sprites.get('enemies');
+    
+    if (!enemiesSprite) return;
+
+    enemies.forEach(enemy => {
+      // Draw enemy sprite
+      this.ctx.drawImage(
+        enemiesSprite,
+        enemy.spriteX, enemy.spriteY,
+        GRID_SIZE, GRID_SIZE,
+        enemy.position.x, enemy.position.y,
+        GRID_SIZE, GRID_SIZE
+      );
+
+      // Draw enemy HP/MP bars
+      this.renderEntityBars(enemy);
+    });
+  }
+
+  renderEntityBars(entity) {
+    const barWidth = GRID_SIZE;
+    const barHeight = 5;
+    const barSpacing = 2;
+    const x = entity.position.x;
+    const y = entity.position.y - barHeight * 2 - barSpacing;
+
+    // HP Bar
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillRect(x, y, barWidth, barHeight);
+    this.ctx.fillStyle = 'green';
+    this.ctx.fillRect(x, y, barWidth * (entity.hp / entity.maxHp), barHeight);
+
+    // MP Bar
+    this.ctx.fillStyle = 'blue';
+    this.ctx.fillRect(x, y + barHeight + barSpacing, barWidth, barHeight);
+    this.ctx.fillStyle = 'cyan';
+    this.ctx.fillRect(x, y + barHeight + barSpacing, barWidth * (entity.mp / entity.maxMp), barHeight);
   }
 
   renderEffects() {
@@ -260,156 +275,165 @@ class RenderManager {
   }
 
   renderUI() {
-    const ctx = this.layers.ui.getContext('2d');
-    
-    // Render HUD
-    this.renderHUD(ctx);
-    
-    // Render active menus
-    if (this.game.managers.ui) {
-      this.game.managers.ui.getActiveMenus().forEach(menu => {
-        this.renderMenu(ctx, menu);
-      });
+    // Render combat UI if in battle
+    if (this.game.state.currentState === 'BATTLE') {
+      this.renderCombatUI();
     }
+
+    // Render status effects
+    this.renderStatusEffects();
   }
 
-  renderHUD(ctx) {
-    const player = this.game.state.player;
-    if (!player) return;
-    
-    // Render health bar
-    this.renderHealthBar(ctx, player);
-    
-    // Render MP bar
-    this.renderMPBar(ctx, player);
-    
-    // Render level and XP
-    this.renderLevelInfo(ctx, player);
-    
-    // Render inventory
-    this.renderInventory(ctx);
-  }
+  renderCombatUI() {
+    const combatContainer = this.uiElements.get('combat');
+    combatContainer.style.display = 'block';
 
-  renderHealthBar(ctx, player) {
-    const barWidth = 200;
-    const barHeight = 20;
-    const x = 10;
-    const y = 10;
-    
-    // Draw background
-    ctx.fillStyle = '#333';
-    ctx.fillRect(x, y, barWidth, barHeight);
-    
-    // Draw health
-    const healthPercent = player.hp / player.maxHp;
-    ctx.fillStyle = '#f00';
-    ctx.fillRect(x, y, barWidth * healthPercent, barHeight);
-    
-    // Draw border
-    ctx.strokeStyle = '#fff';
-    ctx.strokeRect(x, y, barWidth, barHeight);
-    
-    // Draw text
-    ctx.fillStyle = '#fff';
-    ctx.font = '12px Arial';
-    ctx.fillText(
-      `HP: ${player.hp}/${player.maxHp}`,
-      x + 5,
-      y + 15
-    );
-  }
+    // Update combat log
+    const combatLog = this.uiElements.get('combatLog');
+    combatLog.innerHTML = this.game.systems.combat.getCombatLog();
 
-  renderMPBar(ctx, player) {
-    const barWidth = 200;
-    const barHeight = 20;
-    const x = 10;
-    const y = 35;
+    // Update action buttons
+    const actionButtons = this.uiElements.get('actionButtons');
+    actionButtons.innerHTML = '';
     
-    // Draw background
-    ctx.fillStyle = '#333';
-    ctx.fillRect(x, y, barWidth, barHeight);
-    
-    // Draw MP
-    const mpPercent = player.mp / player.maxMp;
-    ctx.fillStyle = '#00f';
-    ctx.fillRect(x, y, barWidth * mpPercent, barHeight);
-    
-    // Draw border
-    ctx.strokeStyle = '#fff';
-    ctx.strokeRect(x, y, barWidth, barHeight);
-    
-    // Draw text
-    ctx.fillStyle = '#fff';
-    ctx.font = '12px Arial';
-    ctx.fillText(
-      `MP: ${player.mp}/${player.maxMp}`,
-      x + 5,
-      y + 15
-    );
-  }
-
-  renderLevelInfo(ctx, player) {
-    const x = 10;
-    const y = 65;
-    
-    ctx.fillStyle = '#fff';
-    ctx.font = '12px Arial';
-    ctx.fillText(
-      `Level: ${player.level} | XP: ${this.game.state.xp}`,
-      x,
-      y
-    );
-  }
-
-  renderInventory(ctx) {
-    const x = this.canvas.width - 210;
-    const y = 10;
-    const itemSize = 40;
-    const padding = 5;
-    
-    // Draw inventory background
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(x, y, 200, 200);
-    
-    // Draw inventory items
-    this.game.state.inventory.forEach((item, index) => {
-      const itemX = x + (index % 4) * (itemSize + padding);
-      const itemY = y + Math.floor(index / 4) * (itemSize + padding);
-      
-      // Draw item sprite
-      const sprite = this.sprites.get(item.spriteKey);
-      if (sprite) {
-        ctx.drawImage(sprite, itemX, itemY, itemSize, itemSize);
-      }
-      
-      // Draw item count if stackable
-      if (item.count > 1) {
-        ctx.fillStyle = '#fff';
-        ctx.font = '12px Arial';
-        ctx.fillText(item.count.toString(), itemX + itemSize - 15, itemY + itemSize - 5);
-      }
+    const actions = ['Attack', 'Skills', 'Items', 'Defend'];
+    actions.forEach(action => {
+      const button = document.createElement('button');
+      button.textContent = action;
+      button.onclick = () => this.game.systems.combat.handleAction(action);
+      actionButtons.appendChild(button);
     });
   }
 
-  renderMenu(ctx, menu) {
-    // Draw menu background
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-    ctx.fillRect(menu.x, menu.y, menu.width, menu.height);
-    
-    // Draw menu items
-    menu.items.forEach((item, index) => {
-      const y = menu.y + (index * 30) + 20;
-      
-      // Draw selected item highlight
-      if (index === menu.selectedIndex) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.fillRect(menu.x, y - 15, menu.width, 30);
-      }
-      
-      // Draw item text
-      ctx.fillStyle = '#fff';
-      ctx.font = '14px Arial';
-      ctx.fillText(item.text, menu.x + 10, y);
+  renderStatusEffects() {
+    const statusContainer = this.uiElements.get('statusEffects');
+    statusContainer.innerHTML = '';
+
+    const { player } = this.game.state;
+    if (!player) return;
+
+    // Render player status effects
+    player.statusEffects.forEach((effect, id) => {
+      const effectElement = document.createElement('div');
+      effectElement.className = 'status-effect';
+      effectElement.textContent = `${id} (${effect.duration})`;
+      statusContainer.appendChild(effectElement);
+    });
+  }
+
+  initUI() {
+    // Create UI containers
+    this.createUIContainer('combat', {
+      position: 'fixed',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      height: '200px',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      display: 'none'
+    });
+
+    this.createUIContainer('combatLog', {
+      position: 'absolute',
+      top: '10px',
+      left: '10px',
+      right: '10px',
+      height: '100px',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      color: 'white',
+      overflowY: 'auto',
+      padding: '10px'
+    });
+
+    this.createUIContainer('actionButtons', {
+      position: 'absolute',
+      bottom: '10px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      gap: '10px',
+      padding: '10px'
+    });
+
+    this.createUIContainer('targetSelection', {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      padding: '20px',
+      borderRadius: '10px',
+      display: 'none'
+    });
+
+    this.createUIContainer('statusEffects', {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '5px'
+    });
+  }
+
+  createUIContainer(id, styles) {
+    const container = document.createElement('div');
+    container.id = id;
+    Object.assign(container.style, styles);
+    document.body.appendChild(container);
+    this.uiElements.set(id, container);
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  showTargetSelection(targets) {
+    const targetContainer = this.uiElements.get('targetSelection');
+    targetContainer.style.display = 'block';
+    targetContainer.innerHTML = '';
+
+    targets.forEach(target => {
+      const button = document.createElement('button');
+      button.textContent = target.name;
+      button.onclick = () => {
+        this.game.systems.combat.selectTarget(target);
+        targetContainer.style.display = 'none';
+      };
+      targetContainer.appendChild(button);
+    });
+  }
+
+  showSkillSelection(skills) {
+    const targetContainer = this.uiElements.get('targetSelection');
+    targetContainer.style.display = 'block';
+    targetContainer.innerHTML = '';
+
+    skills.forEach(skill => {
+      const button = document.createElement('button');
+      button.textContent = `${skill.name} (${skill.mpCost} MP)`;
+      button.onclick = () => {
+        this.game.systems.combat.selectSkill(skill);
+        targetContainer.style.display = 'none';
+      };
+      targetContainer.appendChild(button);
+    });
+  }
+
+  showItemSelection(items) {
+    const targetContainer = this.uiElements.get('targetSelection');
+    targetContainer.style.display = 'block';
+    targetContainer.innerHTML = '';
+
+    items.forEach(item => {
+      const button = document.createElement('button');
+      button.textContent = `${item.name} (${item.quantity})`;
+      button.onclick = () => {
+        this.game.systems.combat.selectItem(item);
+        targetContainer.style.display = 'none';
+      };
+      targetContainer.appendChild(button);
     });
   }
 }
